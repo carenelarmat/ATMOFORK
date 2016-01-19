@@ -23,6 +23,8 @@
 ! with this program; if not, write to the Free Software Foundation, Inc.,
 ! 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 !
+
+! Modified Carene Larmat starting to change the Ricker function! f0 still freq?
 !=====================================================================
 
   double precision function comp_source_time_function(t,hdur)
@@ -147,9 +149,14 @@
   ! local variables
   double precision :: a
 
+!Carene - Adding quickly a shift of the Ricker 
+! the shift to is defined as a local constant
+  double precision , parameter :: t0=0.d0
+
   ! Ricker wavelet
   a = PI**2 * f0**2
-  comp_source_time_function_rickr = (1.d0 - 2.d0*a*t*t) * exp( -a*t*t )
+!Carene  comp_source_time_function_rickr = (1.d0 - 2.d0*a*t*t) * exp( -a*t*t )
+  comp_source_time_function_rickr = (1.d0 - 2.d0*a*(t-t0)*(t-t0)) * exp( -a*(t-t0)*(t-t0))
 
   !!! another source time function they have called 'ricker' in some old papers,
   !!! e.g., 'Finite-Frequency Kernels Based on Adjoint Methods' by Liu & Tromp, BSSA (2006)

@@ -461,12 +461,18 @@
     if (ier /= 0) stop 'error allocating array seismograms_a'
     allocate(seismograms_p(NDIM,nrec_local,NSTEP),stat=ier)
     if (ier /= 0) stop 'error allocating array seismograms_p'
-
     ! initialize seismograms
     seismograms_d(:,:,:) = 0._CUSTOM_REAL
     seismograms_v(:,:,:) = 0._CUSTOM_REAL
     seismograms_a(:,:,:) = 0._CUSTOM_REAL
     seismograms_p(:,:,:) = 0._CUSTOM_REAL
+
+    if (DERIVATIVES_SEISMOS) then
+      allocate(seismograms_der(NDIM+1,nrec_local,NSTEP),stat=ier)
+      if ( ier /= 0) stop 'error allocating array seismograms_der'
+      seismograms_der(:,:,:) = 0._CUSTOM_REAL
+    endif
+
   endif
 
   ! opens source time function file

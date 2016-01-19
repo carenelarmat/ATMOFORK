@@ -1,0 +1,29 @@
+
+Files to be changed for version ATMO 
+src/specfem3D/write_seismograms.f90
+src/specfem3D/write_output_ASCII.f90
+src/specfem3D/specfem3D_par.f90
+src/specfem3D/specfem3D.f90
+src/specfem3D/read_mesh_databases.f90
+src/specfem3D/prepare_timerun.F90
+src/specfem3D/locate_source.f90
+src/specfem3D/locate_receivers.f90
+src/specfem3D/iterate_time.F90
+src/specfem3D/create_color_image.f90
+src/specfem3D/compute_interpolated_dva.f90
+src/specfem3D/comp_source_time_function.f90
+src/shared/read_topo_bathy_file.f90
+src/shared/create_movie_shakemap_AVS_DX_GMT.f90
+src/shared/constants.h.in
+src/shared/check_mesh_resolution.f90
+src/meshfem3D/create_regions_mesh.f90
+src/generate_databases/model_tomography.f90
+Version ATMO 
+
+List of Modifications:
+-DERIVATIVE SEISMOGRAMS AND SEISMOGRAMS: vel and div for "DER" seismo; velocity for normal
+-surface.h has to be put in the same directory than /create_movie_shakemap_AVS_DX_GMT.f90
+-Location of receivers and sources modified
+  * BEHAVIOR CHANGED through USE_SOURCES_RECEIVERS_Z and MODELING_ATMO set to true in constants.h
+  receivers: stbur(irec) given in km - line 391 in locate_receivers
+  sources: depth is entered in km - line 269 in locate_sources

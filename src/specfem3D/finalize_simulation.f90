@@ -114,6 +114,15 @@
     endif
   endif
 
+!Carene deallocate seismo
+ if (nrec_local > 0) then 
+    deallocate(seismograms_d)
+    deallocate(seismograms_v)
+    deallocate(seismograms_a)
+    deallocate(seismograms_p)
+    if (DERIVATIVES_SEISMOS) deallocate(seismograms_der)
+ endif
+
   ! closing source time function file
   if (PRINT_SOURCE_TIME_FUNCTION .and. myrank == 0) then
     close(IOSTF)

@@ -25,6 +25,7 @@
 !
 !=====================================================================
 
+
   subroutine write_seismograms()
 
 ! writes the seismograms with time shift
@@ -45,6 +46,10 @@
 
   integer :: irec_local,irec
   integer :: iglob,ispec,i,j,k
+  
+  !Derivative seismograms
+  double precision :: div,curlx,curly,curlz
+
 
   ! adjoint locals
   real(kind=CUSTOM_REAL),dimension(NDIM,NDIM):: eps_s
@@ -53,6 +58,10 @@
   double precision :: stf
 
   ! TODO: Test and Fix CUDA seismograms code.
+
+  !Derivative seismograms
+  !DERIVATIVE_SEISMO FLAG is now defined in specfem3D_par.f90 
+  
   logical, parameter :: USE_CUDA_SEISMOGRAMS = .false.
 
   ! checks if anything to do
@@ -92,6 +101,7 @@
       endif
 
       ! this transfers fields only in elements with stations for efficiency
+
       if (ELASTIC_SIMULATION) then
         if (USE_CUDA_SEISMOGRAMS) then
           call transfer_seismograms_el_from_d(nrec_local,Mesh_pointer, &
@@ -109,7 +119,14 @@
       endif
     endif
   endif
-
+  
+  !Carene check that derivatives_seismos is called only with the correct modes
+  if (DERIVATIVES_SEISMOS.and.(GPU_MODE.or.SU_FORMAT.or.USE_CUDA_SEISMOGRAMS)) then
+     write(*,*) "DERIVATIVES_SEISMOS HAS ONLY BEEN IMPLEMENTED FOR not.GPUMODE, not.SU"
+     write(IMAIN,*) "DERIVATIVES_SEISMOS HAS ONLY BEEN IMPLEMENTED FOR not.GPUMODE, not.SU"
+     stop
+  endif
+  
   if (.not. GPU_MODE .or. (GPU_MODE .and. (.not. USE_CUDA_SEISMOGRAMS))) then
 
     do irec_local = 1,nrec_local
@@ -162,11 +179,24 @@
         ! elastic wave field
         if (ispec_is_elastic(ispec)) then
           ! interpolates displ/veloc/accel at receiver locations
-          call compute_interpolated_dva(displ,veloc,accel,NGLOB_AB, &
-                                        ispec,NSPEC_AB,ibool, &
-                                        xi_r,eta_r,gamma_r, &
-                                        hxir,hetar,hgammar, &
-                                        dxd,dyd,dzd,vxd,vyd,vzd,axd,ayd,azd)
+!Carene 
+          if (DERIVATIVES_SEISMOS) then 
+          call compute_interpolated_dva_div(displ,veloc,accel,NGLOB_AB, &
+                          ispec,NSPEC_AB, &
+                          xix,xiy,xiz,etax,etay,etaz,gammax,gammay,gammaz, &
+                          hprime_xx,hprime_yy,hprime_zz, &
+                          jacobian, ibool, &
+                          xi_receiver(irec),eta_receiver(irec),gamma_receiver(irec), &
+                          hxir,hetar,hgammar, &
+                          dxd,dyd,dzd,vxd,vyd,vzd,axd,ayd,azd, &
+                          div,curlx,curly,curlz)
+          else !call original subroutine
+            call compute_interpolated_dva(displ,veloc,accel,NGLOB_AB, &
+                                          ispec,NSPEC_AB,ibool, &
+                                          xi_r,eta_r,gamma_r, &
+                                          hxir,hetar,hgammar, &
+                                          dxd,dyd,dzd,vxd,vyd,vzd,axd,ayd,azd)
+         endif
         endif ! elastic
 
         ! acoustic wave field
@@ -193,12 +223,27 @@
                           ibool,rhostore,GRAVITY)
 
           ! interpolates displ/veloc/accel/pressure at receiver locations
-          call compute_interpolated_dva_acoust(displ_element,veloc_element,accel_element, &
-                                               potential_dot_dot_acoustic,potential_acoustic,NGLOB_AB, &
-                                               ispec,NSPEC_AB,ibool, &
-                                               xi_r,eta_r,gamma_r, &
-                                               hxir,hetar,hgammar, &
-                                               dxd,dyd,dzd,vxd,vyd,vzd,axd,ayd,azd,pd,USE_TRICK_FOR_BETTER_PRESSURE)
+  
+!Carene 
+          if ( DERIVATIVES_SEISMOS) then 
+               call compute_interpolated_dva_ac_div(displ_element,veloc_element,&
+                          potential_dot_dot_acoustic,potential_dot_acoustic,&
+                          potential_acoustic,NGLOB_AB, &
+                          ispec,NSPEC_AB,&
+                          xix,xiy,xiz,etax,etay,etaz,gammax,gammay,gammaz, &
+                          hprime_xx,hprime_yy,hprime_zz, &
+                          jacobian, ibool, &
+                          xi_receiver(irec),eta_receiver(irec),gamma_receiver(irec), &
+                          hxir,hetar,hgammar, &
+                          dxd,dyd,dzd,vxd,vyd,vzd,axd,ayd,azd,div)
+          else
+               call compute_interpolated_dva_acoust(displ_element,veloc_element,accel_element, &
+                          potential_dot_dot_acoustic,potential_acoustic,NGLOB_AB, &
+                          ispec,NSPEC_AB,ibool, &
+                          xi_r,eta_r,gamma_r, &
+                          hxir,hetar,hgammar, &
+                          dxd,dyd,dzd,vxd,vyd,vzd,axd,ayd,azd,pd,USE_TRICK_FOR_BETTER_PRESSURE)
+         endif
         endif ! acoustic
 
         ! poroelastic wave field
@@ -321,7 +366,19 @@
           seismograms_a(:,irec_local,it) = real(nu_source(:,1,irec)*axd &
                                               + nu_source(:,2,irec)*ayd &
                                               + nu_source(:,3,irec)*azd,kind=CUSTOM_REAL)
-      else
+!Carene Apparently no need to test CUSTOM_REAL anymore, removing it
+        if (DERIVATIVES_SEISMOS) then 
+          !velocity x,y,z, and div
+          !if (CUSTOM_REAL == SIZE_REAL) then 
+           seismograms_der(1:3,irec_local,it) = real((nu_source(:,1,irec)*vxd + nu_source(:,2,irec)*vyd + nu_source(:,3,irec)*vzd))
+           seismograms_der(4,irec_local,it) = real(div)
+          !else
+          ! seismograms_der(1:3,irec_local,it) = nu(:,1,irec)*vxd + nu(:,2,irec)*vyd + nu(:,3,irec)*vzd
+          ! seismograms_der(4,irec_local,it) = div
+          !endif
+        endif
+
+      else !Case 2 and 3
         ! forward & kernel simulations
         if(SAVE_SEISMOGRAMS_DISPLACEMENT) &
           seismograms_d(:,irec_local,it) = real(nu(:,1,irec)*dxd + nu(:,2,irec)*dyd + nu(:,3,irec)*dzd,kind=CUSTOM_REAL)
@@ -331,6 +388,19 @@
 
         if(SAVE_SEISMOGRAMS_ACCELERATION) &
           seismograms_a(:,irec_local,it) = real(nu(:,1,irec)*axd + nu(:,2,irec)*ayd + nu(:,3,irec)*azd,kind=CUSTOM_REAL)
+!Carene Apparently no need to test CUSTOM_REAL anymore, removing it
+        if (DERIVATIVES_SEISMOS) then 
+          !velocity x,y,z, and div
+          !if (CUSTOM_REAL == SIZE_REAL) then 
+          seismograms_der(1:3,irec_local,it) = real((nu(:,1,irec)*vxd + nu(:,2,irec)*vyd + nu(:,3,irec)*vzd))
+          seismograms_der(4,irec_local,it) = real(div)
+          !else
+          !seismograms_der(1:3,irec_local,it) = nu(:,1,irec)*vxd + nu(:,2,irec)*vyd + nu(:,3,irec)*vzd
+          !seismograms_der(4,irec_local,it) = div
+          !endif
+        endif
+
+
       endif
 
       ! only one scalar in the case of pressure
@@ -345,6 +415,7 @@
   endif
 
   ! write the current or final seismograms
+
   if ((mod(it,NTSTEP_BETWEEN_OUTPUT_SEISMOS) == 0 .or. it == NSTEP) .and. .not. SU_FORMAT) then
     if (SIMULATION_TYPE == 2) then
       ! adjoint simulations
@@ -356,6 +427,11 @@
         call write_adj_seismograms_to_file(myrank,seismograms_a,number_receiver_global,nrec_local,it,DT,NSTEP,t0,3)
       if(SAVE_SEISMOGRAMS_PRESSURE) &
         call write_adj_seismograms_to_file(myrank,seismograms_p,number_receiver_global,nrec_local,it,DT,NSTEP,t0,4)
+      !Carene Change to new subroutine
+      if(DERIVATIVES_SEISMOS) & 
+        call write_adj_seismograms_to_file_der(myrank,seismograms_der,number_receiver_global,nrec_local,it,DT,NSTEP,t0,5)
+
+        
     else
       ! forward & kernel simulations
       if(SAVE_SEISMOGRAMS_DISPLACEMENT) &
@@ -366,18 +442,23 @@
         call write_seismograms_to_file(seismograms_a,3)
       if(SAVE_SEISMOGRAMS_PRESSURE) &
         call write_seismograms_to_file(seismograms_p,4)
+      if(DERIVATIVES_SEISMOS) &
+        !Carene 
+        call write_seismograms_to_file(seismograms_der,5)
     endif
   endif
 
   ! write ONE binary file for all receivers (nrec_local) within one proc
   ! SU format, with 240-byte-header for each trace
   if ((mod(it,NTSTEP_BETWEEN_OUTPUT_SEISMOS) == 0 .or. it==NSTEP) .and. SU_FORMAT) &
+
     call write_output_SU()
 
   end subroutine write_seismograms
 
 
 !================================================================
+
 
 ! write seismograms to text files
 
@@ -388,15 +469,18 @@
   use specfem_par,only: &
           myrank,number_receiver_global,station_name,network_name, &
           nrec,nrec_local,islice_selected_rec, &
-          it,DT,NSTEP,t0,SIMULATION_TYPE,WRITE_SEISMOGRAMS_BY_MASTER,SAVE_ALL_SEISMOS_IN_ONE_FILE,USE_BINARY_FOR_SEISMOGRAMS
+          it,DT,NSTEP,t0,SIMULATION_TYPE,WRITE_SEISMOGRAMS_BY_MASTER,SAVE_ALL_SEISMOS_IN_ONE_FILE,USE_BINARY_FOR_SEISMOGRAMS, &
+          seismograms_der
 
   implicit none
 
   integer :: istore
+  ! Carene Add case istore 5 for derivatives (4 comp)
   real(kind=CUSTOM_REAL), dimension(NDIM,nrec_local,NSTEP) :: seismograms
 
   ! local parameters
   integer irec,irec_local
+
 
   character(len=1) component
 
@@ -406,6 +490,7 @@
   integer :: iproc,ier
   integer,dimension(1) :: tmp_nrec_local_received,tmp_irec,tmp_nrec_local
   integer,dimension(:),allocatable:: islice_num_rec_local
+
 
   character(len=MAX_STRING_LEN) :: sisname
 
@@ -418,18 +503,29 @@
     component = 'a'
   else if (istore == 4) then
     component = 'p'
+  else if (istore == 5) then 
+    component = 'r'
   else
     call exit_MPI(myrank,'wrong component to save for seismograms')
   endif
 
-  allocate(one_seismogram(NDIM,NSTEP),stat=ier)
+  if (istore<5) then 
+    allocate(one_seismogram(NDIM,NSTEP),stat=ier)
+  else
+    allocate(one_seismogram(NDIM+1,NSTEP),stat=ier)
+  endif
+
   if (ier /= 0) stop 'error while allocating one temporary seismogram'
 
   ! write out seismograms: all processes write their local seismograms themselves
   if (.not. WRITE_SEISMOGRAMS_BY_MASTER) then
 
     if (SAVE_ALL_SEISMOS_IN_ONE_FILE) then
-      write(sisname,'(A,I5.5)') '/all_seismograms_node_',myrank
+      if (istore<5) then 
+        write(sisname,'(A,I5.5)') '/all_seismograms_node_',myrank
+      else
+        write(sisname,'(A,I5.5)') '/all_seismograms_der_node_',myrank      
+      endif
       if (USE_BINARY_FOR_SEISMOGRAMS) then
         open(unit=IOUT,file=trim(OUTPUT_FILES)//trim(sisname)//'.bin',status='unknown',form='unformatted',action='write')
       else
@@ -443,14 +539,23 @@
       ! get global number of that receiver
       irec = number_receiver_global(irec_local)
 
-      ! writes out this seismogram
-      one_seismogram = seismograms(:,irec_local,:)
 
-      call write_one_seismogram(one_seismogram,irec, &
+      ! writes out this seismogram
+      if (istore<5) then 
+        one_seismogram = seismograms(:,irec_local,:)
+
+        call write_one_seismogram(one_seismogram,irec, &
                                 station_name,network_name,nrec, &
                                 DT,t0,it,NSTEP,SIMULATION_TYPE, &
                                 myrank,component,istore)
+      else
+        one_seismogram = seismograms_der(:,irec_local,:)
 
+        call write_one_seismogram_der(one_seismogram,irec, &
+                                station_name,network_name,nrec, &
+                                DT,t0,it,NSTEP,SIMULATION_TYPE, &
+                                myrank,component,istore)
+      endif
     enddo ! nrec_local
 
     ! create one large file instead of one small file per station to avoid file system overload
@@ -465,7 +570,11 @@
 
       ! create one large file instead of one small file per station to avoid file system overload
       if (SAVE_ALL_SEISMOS_IN_ONE_FILE) then
-        write(sisname,'(A)') '/all_seismograms'
+        if (istore<5) then 
+          write(sisname,'(A)') '/all_seismograms'
+        else
+          write(sisname,'(A)') '/all_seismograms_der'
+        endif
         if (USE_BINARY_FOR_SEISMOGRAMS) then
           open(unit=IOUT,file=trim(OUTPUT_FILES)//trim(sisname)//'.bin',status='unknown',form='unformatted',action='write')
         else
@@ -480,12 +589,14 @@
 
       ! counts number of local receivers for each slice
       allocate(islice_num_rec_local(0:NPROCTOT-1),stat=ier)
+
       if (ier /= 0) call exit_mpi(myrank,'error allocating islice_num_rec_local')
       islice_num_rec_local(:) = 0
       do irec = 1,nrec
         iproc = islice_selected_rec(irec)
         islice_num_rec_local(iproc) = islice_num_rec_local(iproc) + 1
       enddo
+
 
       ! loop on all the slices
       do iproc = 0,NPROCTOT-1
@@ -506,26 +617,43 @@
         if (nrec_local_received > 0) then
           do irec_local = 1,nrec_local_received
             ! receive except from proc 0, which is myself and therefore I already have these values
+
             if (iproc == 0) then
               ! get global number of that receiver
               irec = number_receiver_global(irec_local)
-              one_seismogram(:,:) = seismograms(:,irec_local,:)
+              if (istore<5) then
+                one_seismogram(:,:) = seismograms(:,irec_local,:)
+              else
+                one_seismogram(:,:) = seismograms_der(:,irec_local,:)
+              endif
             else
               call recv_i(tmp_irec,1,sender,itag)
               irec = tmp_irec(1)
+
               if (irec < 1 .or. irec > nrec) call exit_MPI(myrank,'error while receiving global receiver number')
 
-              call recvv_cr(one_seismogram,NDIM*NSTEP,sender,itag)
+              if (istore>5) then 
+                call recvv_cr(one_seismogram,NDIM*NSTEP,sender,itag)
+              else
+                call recvv_cr(one_seismogram,(NDIM+1)*NSTEP,sender,itag)
+              endif
             endif
 
             total_seismos = total_seismos + 1
 
+
             ! writes out this seismogram
-            call write_one_seismogram(one_seismogram,irec, &
+            if (istore<5) then 
+                       call write_one_seismogram(one_seismogram,irec, &
                                       station_name,network_name,nrec, &
                                       DT,t0,it,NSTEP,SIMULATION_TYPE, &
                                       myrank,component,istore)
-
+            else
+                       call write_one_seismogram_der(one_seismogram,irec, &
+                                      station_name,network_name,nrec, &
+                                      DT,t0,it,NSTEP,SIMULATION_TYPE, &
+                                      myrank,component,istore)
+            endif
           enddo ! nrec_local_received
         endif ! if (nrec_local_received > 0)
       enddo ! NPROCTOT-1
@@ -534,6 +662,7 @@
       write(IMAIN,*) 'Component: .sem'//component
       write(IMAIN,*) '  total number of receivers saved is ',total_seismos,' out of ',nrec
       write(IMAIN,*)
+
 
       if (total_seismos /= nrec) call exit_MPI(myrank,'incorrect total number of receivers saved')
 
@@ -553,8 +682,14 @@
           call send_i(tmp_irec,1,receiver,itag)
 
           ! sends seismogram of that receiver
-          one_seismogram(:,:) = seismograms(:,irec_local,:)
-          call sendv_cr(one_seismogram,NDIM*NSTEP,receiver,itag)
+          if (istore<5) then
+            one_seismogram(:,:) = seismograms(:,irec_local,:)
+           call sendv_cr(one_seismogram,NDIM*NSTEP,receiver,itag)
+          else
+            one_seismogram(:,:) = seismograms_der(:,irec_local,:)
+            call sendv_cr(one_seismogram,(NDIM+1)*NSTEP,receiver,itag)
+          endif
+          
         enddo
       endif
     endif ! myrank
@@ -607,7 +742,7 @@
     if(istore == 4) then ! this is for pressure
       call write_channel_name(istore,channel)
     else
-      call write_channel_name(iorientation,channel)
+      call write_channel_name(iorientation,channel)     
     endif
 
     ! create the name of the seismogram file for each slice
@@ -616,6 +751,7 @@
     length_network_name = len_trim(network_name(irec))
 
     ! check that length conforms to standard
+
     if (length_station_name < 1 .or. length_station_name > MAX_LENGTH_STATION_NAME) &
       call exit_MPI(myrank,'wrong length of station name')
 
@@ -701,17 +837,17 @@
       ! create the name of the seismogram file for each slice
       ! file name includes the name of the station, the network and the component
       write(sisname,"(a3,'.',a1,i6.6,'.',a3,'.sem',a1)") '/NT','S',irec,channel,component
-
       ! save seismograms in text format with no subsampling.
       ! Because we do not subsample the output, this can result in large files
       ! if the simulation uses many time steps. However, subsampling the output
       ! here would result in a loss of accuracy when one later convolves
       ! the results with the source time function
-      open(unit=IOUT,file=OUTPUT_FILES(1:len_trim(OUTPUT_FILES))//sisname(1:len_trim(sisname)),status='unknown')
 
+      open(unit=IOUT,file=OUTPUT_FILES(1:len_trim(OUTPUT_FILES))//sisname(1:len_trim(sisname)),status='unknown')
       ! make sure we never write more than the maximum number of time steps
       ! subtract half duration of the source to make sure travel time is correct
       do isample = 1,min(it,NSTEP)
+
         ! distinguish between single and double precision for reals
         write(IOUT,*) real(dble(isample-1)*DT - t0,kind=CUSTOM_REAL),' ',seismograms(iorientation,irec_local,isample)
       enddo
@@ -776,6 +912,7 @@
 
         ! create the name of the seismogram file for each slice
         ! file name includes the name of the station, the network and the component
+
         write(sisname,"(a3,'.',a1,i6.6,'.',a3,'.sem',a1)") '/NT','S',irec,chn,component
 
         ! save seismograms in text format with no subsampling.
@@ -783,16 +920,19 @@
         ! if the simulation uses many time steps. However, subsampling the output
         ! here would result in a loss of accuracy when one later convolves
         ! the results with the source time function
+
         open(unit=IOUT,file=OUTPUT_FILES(1:len_trim(OUTPUT_FILES))//sisname(1:len_trim(sisname)),status='unknown')
 
         ! make sure we never write more than the maximum number of time steps
         ! subtract half duration of the source to make sure travel time is correct
         do isample = 1,min(it,NSTEP)
+
           ! distinguish between single and double precision for reals
           write(IOUT,*) real(dble(isample-1)*DT - t0,kind=CUSTOM_REAL),' ',seismograms(jdimval,idimval,irec_local,isample)
         enddo
 
         close(IOUT)
+
 
       enddo ! jdimval
     enddo ! idimval
@@ -819,6 +959,7 @@
   call band_instrument_code(sampling_rate,bic)
 
   ! sets channel name
+
   if (SUPPRESS_UTM_PROJECTION) then
 
     ! no UTM, pure Cartesian reference
@@ -840,6 +981,7 @@
 
     ! UTM conversion
     ! uses convention for N/E/Z to denote channel
+
     select case (iorientation)
     case (1)
       channel = bic(1:2)//'E'
@@ -867,6 +1009,7 @@
   ! SEM seismograms governed by their sampling rate.
   ! Instrument code (second letter in channel codes) is fixed to "X" which is assigned by IRIS for synthetic seismograms.
   ! See the manual for further explanations!
+
   ! Ebru Bozdag, November 2010
   implicit none
   double precision :: DT
@@ -883,9 +1026,163 @@
   if (DT <= 0.001d0) bic = 'FX'
 
   ! ignores IRIS convention, uses previous, constant band and instrument code
+
   if (SUPPRESS_IRIS_CONVENTION) then
     bic = 'BH'
   endif
 
  end subroutine band_instrument_code
 
+
+!Carene
+!=====================================================================
+
+ 
+ subroutine write_one_seismogram_der(one_seismogram,irec, &
+              station_name,network_name,nrec, &
+              DT,t0,it,NSTEP,SIMULATION_TYPE, &
+              myrank,component,istore)
+
+  use constants
+
+  implicit none
+
+  integer, intent(in) :: NSTEP,it,SIMULATION_TYPE,istore
+  !Carene add to create an entire new subroutine because of the following argument passing
+  real(kind=CUSTOM_REAL), dimension(NDIM+1,NSTEP) :: one_seismogram
+  !Carene Add case istore=5  for seismo_der
+
+  integer myrank
+  double precision t0,DT
+
+  integer :: nrec,irec
+  character(len=MAX_LENGTH_STATION_NAME), dimension(nrec) :: station_name
+  character(len=MAX_LENGTH_NETWORK_NAME), dimension(nrec) :: network_name
+  character(len=1) component
+
+  ! local parameters
+  integer :: iorientation,number_of_components
+  integer :: length_station_name,length_network_name
+  character(len=MAX_STRING_LEN) :: sisname,final_LOCAL_PATH
+  character(len=3) :: channel
+
+  ! see how many components we need to store: 1 for pressure, NDIM for a vector
+  if(istore /= 5 ) then
+    !ERROR
+    call exit_MPI(myrank,'wrong code istore to save for seismograms')
+  else
+    number_of_components = NDIM+1
+  endif
+
+  ! loop over each seismogram component
+  do iorientation = 1,number_of_components
+
+    
+    channel=""
+    channel="DER"
+ 
+    ! create the name of the seismogram file for each slice
+    ! file name includes the name of the station, the network and the component
+    length_station_name = len_trim(station_name(irec))
+    length_network_name = len_trim(network_name(irec))
+
+    ! check that length conforms to standard
+
+    if (length_station_name < 1 .or. length_station_name > MAX_LENGTH_STATION_NAME) &
+      call exit_MPI(myrank,'wrong length of station name')
+
+    if (length_network_name < 1 .or. length_network_name > MAX_LENGTH_NETWORK_NAME) &
+      call exit_MPI(myrank,'wrong length of network name')
+
+    ! writes out **net**.**sta**.**BH**.sem* files
+    write(sisname,"(a,'.',a,'.',a3,'.sem',a1)") network_name(irec)(1:length_network_name), &
+       station_name(irec)(1:length_station_name),channel,component
+
+    ! directory to store seismograms
+    final_LOCAL_PATH = OUTPUT_FILES(1:len_trim(OUTPUT_FILES)) // '/'
+
+    ! ASCII output format
+    call write_output_ASCII_or_binary_der(one_seismogram, &
+                                      NSTEP,it,SIMULATION_TYPE,DT,t0, &
+                                      iorientation,sisname,final_LOCAL_PATH)
+
+  enddo ! do iorientation
+
+  end subroutine write_one_seismogram_der
+
+
+!=====================================================================
+
+! write adjoint seismograms (displacement) to text files
+
+  subroutine write_adj_seismograms_to_file_der(myrank,seismograms,number_receiver_global, &
+                                           nrec_local,it,DT,NSTEP,t0,istore)
+
+  use constants,only: CUSTOM_REAL,NDIM,MAX_STRING_LEN,IOUT,OUTPUT_FILES
+
+  implicit none
+
+  integer :: myrank
+  integer :: nrec_local,NSTEP,it,istore
+  integer, dimension(nrec_local) :: number_receiver_global
+  !Carene had to write an entire new subroutine because of the next argument passing
+  real(kind=CUSTOM_REAL), dimension(NDIM+1,nrec_local,NSTEP) :: seismograms
+  double precision :: t0,DT
+
+  ! local parameters
+  integer :: irec,irec_local
+  integer :: iorientation,isample,number_of_components
+
+  character(len=3) :: channel
+  character(len=1) :: component
+  character(len=MAX_STRING_LEN) :: sisname
+
+  ! saves displacement, velocity, acceleration, or pressure
+  if (istore /= 5) then
+    call exit_MPI(myrank,'wrong code istore to save for seismograms')
+  else
+    component = 'r'
+  endif
+
+  do irec_local = 1,nrec_local
+
+    ! get global number of that receiver
+    irec = number_receiver_global(irec_local)
+
+    ! number of components we need to store: 4 for der
+    number_of_components = 4
+
+    ! loop over each seismogram component
+    do iorientation = 1,number_of_components
+
+      ! gets channel name
+      channel=""
+      channel="DER"
+
+      ! create the name of the seismogram file for each slice
+      ! file name includes the name of the station, the network and the component
+      write(sisname,"(a3,'.',a1,i6.6,'.',a3,'.sem',a1)") '/NT','S',irec,channel,component
+      ! save seismograms in text format with no subsampling.
+      ! Because we do not subsample the output, this can result in large files
+      ! if the simulation uses many time steps. However, subsampling the output
+      ! here would result in a loss of accuracy when one later convolves
+      ! the results with the source time function
+
+      open(unit=IOUT,file=OUTPUT_FILES(1:len_trim(OUTPUT_FILES))//sisname(1:len_trim(sisname)),status='unknown')
+      ! make sure we never write more than the maximum number of time steps
+      ! subtract half duration of the source to make sure travel time is correct
+      do isample = 1,min(it,NSTEP)
+
+        ! distinguish between single and double precision for reals
+        write(IOUT,*) real(dble(isample-1)*DT - t0,kind=CUSTOM_REAL),' ',seismograms(iorientation,irec_local,isample)
+      enddo
+
+      close(IOUT)
+
+    enddo
+
+  enddo
+
+  end subroutine write_adj_seismograms_to_file_der
+
+  

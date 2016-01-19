@@ -241,7 +241,16 @@
     ! calculating gravity field at current timestep
     if (GRAVITY_SIMULATION) call gravity_timeseries()
 
+! Carene TEST GRADIENT AT ITERATE LEVEL ELASTIC
+!      if (nrec_local > 0 .or. (WRITE_SEISMOGRAMS_BY_MASTER.and.myrank==0)) then
+!      veloc(1,:) = 8.00*xstore(:)+5.00*ystore(:)+10.0*zstore(:)
+!      veloc(2,:) = 8.00*xstore(:)+5.00*ystore(:)+10.0*zstore(:)
+!      veloc(3,:) = 8.00*xstore(:)+5.00*ystore(:)+10.0*zstore(:)
+! Carene TEST GRADIENT AT ITERATE LEVEL ACOUSTIC
+!      potential_dot_acoustic(:)=4.0*xstore(:)**2+2.50*ystore(:)**2+5.0*zstore(:)**2
     ! write the seismograms with time shift (GPU_MODE transfer included)
+!      endif
+
     call write_seismograms()
 
     ! adjoint simulations: kernels

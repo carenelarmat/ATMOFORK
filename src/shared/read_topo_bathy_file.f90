@@ -48,6 +48,9 @@
   if (ier /= 0) then
     print *,'error opening topography file: ',trim(TOPO_FILE)
     stop 'error opening topography file'
+!Carene Debug
+!  else
+!    print *,'reading topography file ',trim(TOPO_FILE)    
   endif
 
   ! reads in values

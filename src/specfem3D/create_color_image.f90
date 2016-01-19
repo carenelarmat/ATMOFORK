@@ -45,6 +45,10 @@
   real(kind=CUSTOM_REAL),parameter:: section_xorg = 0.0 ! 67000.0
   real(kind=CUSTOM_REAL),parameter:: section_yorg = 0.0 ! 0.0
   real(kind=CUSTOM_REAL),parameter:: section_zorg = -100.0 ! 0.0
+!Carene some test? coordinates corresponding to? 
+!  real(kind=CUSTOM_REAL),parameter:: section_xorg = 292547.0 ! 67000.0
+!  real(kind=CUSTOM_REAL),parameter:: section_yorg = -2187095.0 ! 0.0
+!  real(kind=CUSTOM_REAL),parameter:: section_zorg = 250000.0 ! 100000.0! 100000.0 ! 0.0
 
   ! cross-section surface normal
   real(kind=CUSTOM_REAL),parameter:: section_nx = 0.0 !1.0

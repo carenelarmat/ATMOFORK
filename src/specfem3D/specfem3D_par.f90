@@ -1,5 +1,6 @@
 !=====================================================================
 !
+!                             July 2012
 !               S p e c f e m 3 D  V e r s i o n  3 . 0
 !               ---------------------------------------
 !
@@ -23,6 +24,8 @@
 ! with this program; if not, write to the Free Software Foundation, Inc.,
 ! 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 !
+
+! Modified Carene Larmat FLAG FOR DERIVATIVE SEISMOGRAMS
 !=====================================================================
 !
 ! United States and French Government Sponsorship Acknowledged.
@@ -133,6 +136,8 @@ module specfem_par
 
 ! seismograms
   real(kind=CUSTOM_REAL), dimension(:,:,:), allocatable :: seismograms_d,seismograms_v,seismograms_a,seismograms_p
+  logical, parameter :: DERIVATIVES_SEISMOS = .true.
+  real(kind=CUSTOM_REAL), dimension(:,:,:), allocatable :: seismograms_der
 
 ! Gauss-Lobatto-Legendre points of integration and weights
   double precision, dimension(NGLLX) :: xigll,wxgll
@@ -515,7 +520,6 @@ module specfem_par_poroelastic
   integer, dimension(:), allocatable :: b_request_send_vector_ext_meshw
   integer, dimension(:), allocatable :: b_request_recv_vector_ext_meshs
   integer, dimension(:), allocatable :: b_request_recv_vector_ext_meshw
-
 
 end module specfem_par_poroelastic
 

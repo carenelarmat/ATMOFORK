@@ -23,6 +23,10 @@
 ! with this program; if not, write to the Free Software Foundation, Inc.,
 ! 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 !
+
+! Modified Carene Larmat MODELING_ATMO; stbur is used as the altitude of the
+! receiver (entered in km)
+! NB: Z is positive upward; 0 is the ground level
 !=====================================================================
 
 !----
@@ -353,6 +357,14 @@
       z_target(irec) = elevation(irec) - stbur(irec)
     endif
 
+    if (MODELING_ATMO) then
+      if (SUPPRESS_UTM_PROJECTION) then 
+       !cartesian coordinate in m 
+        z_target(irec) = stbur(irec)
+      else
+        z_target(irec) = stbur(irec)*1000.0d0
+      endif
+    endif
     ! reset distance to huge initial value
     distmin_squared = HUGEVAL
 

@@ -1,26 +1,45 @@
+Fork on https://github.com/geodynamics/specfem3d.git created. 
 
-Files to be changed for version ATMO 
-src/specfem3D/write_seismograms.f90
-src/specfem3D/write_output_ASCII.f90
-src/specfem3D/specfem3D_par.f90
-src/specfem3D/specfem3D.f90
-src/specfem3D/read_mesh_databases.f90
-src/specfem3D/prepare_timerun.F90
-src/specfem3D/locate_source.f90
-src/specfem3D/locate_receivers.f90
-src/specfem3D/iterate_time.F90
-src/specfem3D/create_color_image.f90
-src/specfem3D/compute_interpolated_dva.f90
-src/specfem3D/comp_source_time_function.f90
-src/shared/read_topo_bathy_file.f90
-src/shared/create_movie_shakemap_AVS_DX_GMT.f90
-src/shared/constants.h.in
-src/shared/check_mesh_resolution.f90
-src/meshfem3D/create_regions_mesh.f90
-src/generate_databases/model_tomography.f90
-Version ATMO 
+1. local directory created by cloning my fork
+git clone https://github.com/carenelarmat/ATMOFORK.git 
+2. Add https://github.com/geodynamics/specfem3d.git as upstream 
+git remote add upstream https://github.com/geodynamics/specfem3d.git
 
-List of Modifications:
+3.Prepare new directory for compilation; configure and test make
+
+4.create a devel branch 
+git checkout -b develATMO
+
+5."Import" version ATMO into version 3.0 by solving conflicts detected. 
+(Conflicts were detected by a merge between version 2.1 ATMO and 3.0 on directory ATMOSEM)
+
+M src/specfem3D/write_seismograms.f90
+M src/specfem3D/write_output_ASCII.f90
+M src/specfem3D/specfem3D_par.f90
+M src/specfem3D/prepare_timerun.F90
+M src/shared/constants.h.in
+M src/specfem3D/compute_interpolated_dva.f90
+M src/specfem3D/iterate_time.F90
+Changes ignored src/specfem3D/specfem3D.f90
+
+M src/shared/create_movie_shakemap_AVS_DX_GMT.f90 #directory indicated by user
+M src/specfem3D/create_color_image.f90 #unknow system of coordinates
+M src/specfem3D/comp_source_time_function.f90 #Ricker function
+M src/shared/read_topo_bathy_file.f90 #add a Debug indication
+Changes ignored src/specfem3D/read_mesh_databases.f90
+Changes ignored src/shared/check_mesh_resolution.f90
+Changes ignored src/meshfem3D/create_regions_mesh.f90
+
+## Add 1D vertical (or horizontal) profile
+M src/generate_databases/model_tomography.f90 
+
+## Location source and receiver changed for version ATMO
+# controlled by USE_SOURCE_RECEIVER_Z and MODEL_ATMO 
+# Added a change depth given in m if SUPPRESS_UTM_PROJECTION; in km if geographical coords
+M src/specfem3D/locate_source.f90
+M src/specfem3D/locate_receivers.f90
+
+Summary of Modifications:
 -DERIVATIVE SEISMOGRAMS AND SEISMOGRAMS: vel and div for "DER" seismo; velocity for normal
 -surface.h has to be put in the same directory than /create_movie_shakemap_AVS_DX_GMT.f90
 -Location of receivers and sources modified

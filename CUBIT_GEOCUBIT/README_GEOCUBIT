@@ -1,0 +1,21 @@
+More details are given in README_LANL_Clusters, here is a quick set up.
+
+-Copying customized modulefiles into your personal module file and load the path
+copy Example_LANL_modulefiles_cubit and Example_LANL_modulefiles_geocubit into your directory ${HOME}/modulefiles; rename them simply cubit and geocubit
+setenv MODULEPATH ${HOME}/modulefiles:$MODULEPATH
+
+-Load cubit
+module load cubit
+
+-Build your GEOCUBIT 
+python setup.py build 
+I think this is all that is needed and all is now in the build; However you can create a "proper" directory GEOCUBIT that way
+python setup.py install --prefix=directory you have permissions on
+
+-Once geocubit is installed, open the ${HOME}/modulefiles/geocubit and change the path accordingly; then load the module
+module load geocubit
+
+-GEOCUBIT is ready!! 
+-For the loading to be automatic, look at the example_tcshrc given
+
+

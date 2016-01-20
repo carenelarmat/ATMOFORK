@@ -1,0 +1,10 @@
+#%Module1.0
+
+set prefix       /turquoise/usr/projects/trevimg/carene/MyGeoCubit
+set GEOCUBITHOME $prefix
+
+prepend-path   PATH              $GEOCUBITHOME/bin;
+prepend-path   PYTHONPATH        $GEOCUBITHOME/bin;
+prepend-path   PYTHONPATH        $GEOCUBITHOME/lib/python2.6/site-packages;
+
+##############################################################

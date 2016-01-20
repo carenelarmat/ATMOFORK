@@ -1,0 +1,27 @@
+#%Module1.0
+
+ 
+
+set prefix      /turquoise/usr/projects/spewave/zlei/SofterPackages/cubit
+setenv CUBITDIR $prefix
+
+
+set bindir      $prefix/bin;
+
+set mandir      $prefix/bin/help;
+
+set libdir      $prefix/bin/lib;
+
+ 
+
+prepend-path   PATH              $bindir;
+
+prepend-path   MANPATH           $mandir;
+
+prepend-path   LD_LIBRARY_PATH   $libdir;
+
+prepend-path   PYTHONPATH        $bindir/structure;
+
+prepend-path   PYTHONPATH        $bindir;
+
+##############################################################

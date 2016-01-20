@@ -1,0 +1,33 @@
+###Sac
+setenv PATH "${PATH}:/usr/projects/trevimg/COMMON/sac-linux/bin:/usr/projects/trevimg/COMMON/gmt-4.5.12/bin"
+setenv SACAUX "/usr/projects/trevimg/COMMON/sac-linux/aux"
+
+##having intel and openmpi automatically loaded
+module load intel openmpi
+
+##Newer version of git 
+#Jan 14 2016 setenv PATH "/usr/projects/trevimg/COMMON/git:${PATH}"
+module load git
+
+##############################################################
+#Adding my local modulefiles to the path of module/Tcl
+setenv MODULEPATH /users/carene/modulefiles/:$MODULEPATH
+
+module load cubit
+#setenv PATH,LD_LIBRARY_PATH, and PYTHONPATH
+
+alias cubit cubit -batch -nographics
+alias claro claro -batch -nographics
+
+##to run from cubit from python
+#setenv PYTHONPATH /turquoise/usr/projects/spewave/zlei/SofterPackages/cubit/bin/
+
+##CUBIT & GEOCUBIT Setup
+#setenv CUBITLIB ${CUBITDIR}/bin:${CUBITDIR}/structure
+#if (! $?PYTHONPATH ) then
+#    setenv PYTHONPATH ${CUBITDIR}/bin:${CUBITDIR}/structure
+#else 
+#    setenv PYTHONPATH ${PYTHONPATH}:${CUBITDIR}/bin:${CUBITDIR}/structure
+#endif
+module load geocubit
+##############################################################

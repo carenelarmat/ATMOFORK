@@ -1,0 +1,75 @@
+#!/bin/tcsh
+###########################################################
+#MSUB -V
+
+## USER PARAMETERS
+#MSUB -N TEST1
+
+# ##processors, queue, clock time
+#MSUB -l procs=4
+#MSUB -l walltime=0:15:00
+
+## TimeReverse account
+#MSUB -A w15_ionisphere
+
+#MSUB -u foivos@lanl.gov
+#MSUB -m be
+
+###########################################################
+setenv DIRSRC "/usr/projects/trevimg/foivos/specfem3d"
+setenv DIRSRC "/turquoise/users/carene/specfem3d/"
+
+echo "running example: `date`"
+set currentdir=`pwd`
+
+echo
+echo "(will take about 15 minutes)"
+echo
+
+# sets up directory structure in current example directory
+echo
+echo "   setting up example..."
+echo
+
+#Cleaning up the databases 
+rm -f -r OUTPUT_FILES
+mkdir -p OUTPUT_FILES
+mkdir -p OUTPUT_FILES/DATABASES_MPI
+
+
+# stores setup
+cp DATA/Par_file ./OUTPUT_FILES/
+cp ${DIRSRC}/setup/constants.h ./OUTPUT_FILES/
+cp -r DATA/meshfem3D_files ./OUTPUT_FILES/
+
+# get the number of processors, ignoring comments in the Par_file
+set NPROC=`grep ^NPROC DATA/Par_file | grep -v -E '^[[:space:]]*#' | cut -d = -f 2`
+
+# decomposes mesh using the pre-saved mesh files in MESH-default
+echo
+echo "  Generating mesh using "$NPROC" processors..."
+echo
+mpirun -np $NPROC ./bin/xmeshfem3D
+
+# runs database generation
+echo
+echo "  running database generation on $NPROC processors..."
+echo
+mpirun -np $NPROC ./bin/xgenerate_databases
+
+#save parameter files
+cp DATA/STATIONS OUTPUT_FILES/
+cp DATA/CMTSOLUTION DATA/FORCESOLUTION OUTPUT_FILES/
+# runs simulation
+echo
+echo "  running solver on $NPROC processors..."
+echo
+mpirun -np $NPROC ./bin/xspecfem3D
+
+echo
+echo "see results in directory: OUTPUT_FILES/"
+echo
+echo "done"
+date
+
+

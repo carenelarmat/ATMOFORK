@@ -1,0 +1,15 @@
+ Time step #         7000
+ Time:    69.89000      seconds
+ Elapsed time in seconds =    323.742592811584     
+ Elapsed time in hh:mm:ss =      0 h 05 m 23 s
+ Mean elapsed time per time step in seconds =   4.624894183022635E-002
+ Max norm displacement vector U in all slices (m) =    22929.75    
+ Max norm pressure P in all slices (Pa) =   1.3848146E+09
+ Time steps done =         7000  out of        10000
+ Time steps remaining =         3000
+ Estimated remaining time in seconds =    138.746825490679     
+ Estimated remaining time in hh:mm:ss =      0 h 02 m 18 s
+ Estimated total run time in seconds =    462.489418302264     
+ Estimated total run time in hh:mm:ss =      0 h 07 m 42 s
+ We have done    70.00000     % of that
+ The run will finish approximately on (in local time): Thu Jan 28, 2016 00:00

@@ -1,0 +1,14 @@
+ Time step #         1800
+ Time:    89.45000      seconds
+ Elapsed time in seconds =    455.438461065292     
+ Elapsed time in hh:mm:ss =      0 h 07 m 35 s
+ Mean elapsed time per time step in seconds =   0.253021367258496     
+ Max norm displacement vector U in all slices (m) =    91.98533    
+ Time steps done =         1800  out of         2000
+ Time steps remaining =          200
+ Estimated remaining time in seconds =    50.6042734516992     
+ Estimated remaining time in hh:mm:ss =      0 h 00 m 50 s
+ Estimated total run time in seconds =    506.042734516992     
+ Estimated total run time in hh:mm:ss =      0 h 08 m 26 s
+ We have done    90.00000     % of that
+ The run will finish approximately on (in local time): Tue Dec 01, 2015 19:34

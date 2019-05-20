@@ -1,0 +1,182 @@
+ 
+ ******************************************
+ *** Specfem3D MPI Mesher - f90 version ***
+ ******************************************
+ 
+ This is process            0
+ There are            4  MPI processes
+ Processes are numbered from 0 to            3
+ 
+ There is a total of            4  slices
+ 
+ NGLLX =            5
+ NGLLY =            5
+ NGLLZ =            5
+ 
+ Shape functions defined by NGNOD =            8  control nodes
+ Surface shape functions defined by NGNOD2D =            4  control nodes
+ Beware! Curvature (i.e. HEX27 elements) is not handled by our internal mesher
+ 
+ velocity model:   default 
+ 
+ 
+ suppressing UTM projection
+ 
+ no attenuation
+ 
+ no anisotropy
+ 
+ no oceans
+ 
+ incorporating Stacey absorbing conditions
+ 
+ using a CMTSOLUTION source
+ 
+ 
+ using a Gaussian source time function
+ 
+ 
+ **************************
+ creating mesh in the model
+ **************************
+ 
+ external mesh points :        69696
+ defined materials    :            1
+ undefined materials  :            0
+ total number of spectral elements:        61440
+ absorbing boundaries: 
+   xmin,xmax :          960         960
+   ymin,ymax :          960         960
+   bottom,top:         4096        4096
+ total number of C-PML elements in the global mesh:            0
+ number of MPI partition interfaces:           12
+ 
+   minimum memory used so far     :    52.48198     MB per process
+   minimum total memory requested :    246.018158912659      MB per process
+ 
+ create regions: 
+ 
+   ...allocating arrays 
+ File DATA/Par_file_faults not found: assume no faults
+   ...setting up jacobian 
+   ...indexing global points
+   ...preparing MPI interfaces 
+      total MPI interface points:        63196
+      total assembled MPI interface points:       62708
+   ...setting up absorbing boundaries 
+      absorbing boundary:
+      total number of free faces =         4096
+      total number of faces =         7936
+   ...determining velocity model
+               10  % time remaining:  9.854102245299146E-008 s
+               20  % time remaining:  8.876547089478972E-008 s
+               30  % time remaining:  7.802076553581078E-008 s
+               40  % time remaining:  6.721560160790805E-008 s
+               50  % time remaining:  5.634602673371570E-008 s
+               60  % time remaining:  4.520188701489483E-008 s
+               70  % time remaining:  3.387378432430900E-008 s
+               80  % time remaining:  2.252747654599017E-008 s
+               90  % time remaining:  1.119754165504136E-008 s
+              100  % time remaining:  0.000000000000000E+000 s
+   ...detecting acoustic-elastic-poroelastic surfaces 
+      total acoustic elements   :           0
+      total elastic elements    :       61440
+      total poroelastic elements:           0
+   ...element inner/outer separation 
+      for overlapping of communications with calculations:
+      percentage of   edge elements    6.152344     %
+      percentage of volume elements    93.84766     %
+   ...element mesh coloring 
+      use coloring =  F
+   ...external binary models 
+      no external binary model used 
+   ...creating mass matrix 
+   ...saving databases
+      saving mesh files for AVS, OpenDX, Paraview
+   ...checking mesh resolution
+ 
+ ********
+ minimum and maximum number of elements
+ and points in the CUBIT + SCOTCH mesh:
+ 
+ NSPEC_global_min =        15360
+ NSPEC_global_max =        15360
+ NSPEC_global_max / NSPEC_global_min imbalance =    1.000000      = 
+  0.0000000E+00  %
+ NSPEC_global_sum =        61440
+ 
+ NGLOB_global_min =      1015101
+ NGLOB_global_max =      1015101
+ NGLOB_global_max / NGLOB_global_min imbalance =    1.000000      = 
+  0.0000000E+00  %
+ NGLOB_global_sum =      4060404
+ 
+ If you have elements of a single type (all acoustic, all elastic, all poroelast
+ ic, and without CPML)
+ in the whole mesh, then there should be no significant imbalance in the above n
+ umbers.
+ Otherwise, it is normal to have imbalance in elements and points because the do
+ main decomposer
+ compensates for the different cost of different elements by partitioning them u
+ nevenly among processes.
+ ********
+ 
+ 
+ ********
+ Model: P velocity min,max =    1500.000       1500.000    
+ Model: S velocity min,max =    750.0000       750.0000    
+ ********
+ 
+ *********************************************
+ *** Verification of simulation parameters ***
+ *********************************************
+ 
+ *** Xmin and Xmax of the model =   0.0000000E+00   100000.0    
+ *** Ymin and Ymax of the model =   0.0000000E+00   100000.0    
+ *** Zmin and Zmax of the model =   -30000.00      0.0000000E+00
+ 
+ *** Max GLL point distance =    654.6543    
+ *** Min GLL point distance =    269.8008    
+ *** Max/min ratio =    2.426436    
+ 
+ *** Max element size =    2000.000    
+ *** Min element size =    1562.500    
+ *** Max/min ratio =    1.280000    
+ 
+ *** Minimum period resolved =    3.333333    
+ *** Maximum suggested time step =   8.9933597E-02
+ 
+ Elapsed time for checking mesh resolution in seconds =   3.086876869201660E-002
+ saving VTK files for Courant number and minimum period
+ 
+ 
+ min and max of topography included in mesh in m is   0.000000000000000E+000  
+  0.000000000000000E+000
+ 
+ 
+ Repartition of elements:
+ -----------------------
+ 
+ total number of elements in mesh slice 0:        15360
+ total number of points in mesh slice 0:      1015101
+ 
+ total number of elements in entire mesh:        61440
+ approximate total number of points in entire mesh (with duplicates on MPI edges
+ ):    4060404.00000000     
+ approximate total number of DOFs in entire mesh (with duplicates on MPI edges):
+     12181212.0000000     
+ 
+ total number of time steps in the solver will be:         2000
+ 
+ using single precision for the calculations
+ 
+ smallest and largest possible floating-point numbers are:   1.1754944E-38
+  3.4028235E+38
+ 
+ 
+ Elapsed time for mesh generation and buffer creation in seconds = 
+   16.2089369297028     
+ End of mesh generation
+ 
+ done
+ 

@@ -1,0 +1,25 @@
+M src/specfem3D/write_seismograms.f90
+M src/specfem3D/write_output_ASCII.f90
+M src/specfem3D/specfem3D_par.f90
+M src/specfem3D/prepare_timerun.F90
+M src/shared/constants.h.in
+M src/specfem3D/compute_interpolated_dva.f90
+M src/specfem3D/iterate_time.F90
+Changes ignored src/specfem3D/specfem3D.f90
+
+M src/shared/create_movie_shakemap_AVS_DX_GMT.f90 #directory indicated by user
+M src/specfem3D/create_color_image.f90 #unknow system of coordinates
+M src/specfem3D/comp_source_time_function.f90 #Ricker function
+M src/shared/read_topo_bathy_file.f90 #add a Debug indication
+Changes ignored src/specfem3D/read_mesh_databases.f90
+Changes ignored src/shared/check_mesh_resolution.f90
+Changes ignored src/meshfem3D/create_regions_mesh.f90
+
+## 1D vertical profile
+M src/generate_databases/model_tomography.f90 
+
+## Location source and receiver changed for version ATMO
+# controlled by USE_SOURCE_RECEIVER_Z and MODEL_ATMO 
+# Added a change depth given in m if SUPPRESS_UTM_PROJECTION; in km if geographical coords
+M src/specfem3D/locate_source.f90
+M src/specfem3D/locate_receivers.f90

@@ -482,6 +482,13 @@
       write(*,*)
     endif
 
+    call read_value_logical(SAVE_SEISMOGRAMS_DERIVATIVE, 'SAVE_SEISMOGRAMS_DERIVATIVE', ier)
+    if (ier /= 0) then
+      some_parameters_missing_from_Par_file = .true.
+      write(*,'(a)') 'SAVE_SEISMOGRAMS_DERIVATIVEE       = .false.'
+      write(*,*)
+    endif
+
     call read_value_logical(SAVE_SEISMOGRAMS_IN_ADJOINT_RUN, 'SAVE_SEISMOGRAMS_IN_ADJOINT_RUN', ier)
     if (ier /= 0) then
       some_parameters_missing_from_Par_file = .true.

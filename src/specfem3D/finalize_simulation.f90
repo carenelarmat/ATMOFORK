@@ -114,6 +114,21 @@
     endif
   endif
 
+!Carene deallocate seismo
+ if (nrec_local > 0) then 
+    if (allocated(seismograms_d)) deallocate(seismograms_d)
+    if (allocated(seismograms_v)) deallocate(seismograms_v)
+    if (allocated(seismograms_a)) deallocate(seismograms_a)
+    if (allocated(seismograms_p)) deallocate(seismograms_p)
+    if (SAVE_SEISMOGRAMS_DERIVATIVE) deallocate(seismograms_der)
+
+ endif
+
+  ! closing source time function file
+  if (PRINT_SOURCE_TIME_FUNCTION .and. myrank == 0) then
+    close(IOSTF)
+  endif
+
   ! stacey absorbing fields will be reconstructed for adjoint simulations
   ! using snapshot files of wavefields
   if (STACEY_ABSORBING_CONDITIONS) then

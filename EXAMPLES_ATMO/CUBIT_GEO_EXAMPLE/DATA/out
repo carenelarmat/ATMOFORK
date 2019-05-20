@@ -1,0 +1,4 @@
+  Enter 0 for long-lat to UTM; 1 for UTM to long-lat 
+ Enter x,y
+ Enter UTM_PROJECTION_ZONE
+ long,lat   -171.770370846054       -12.0006251267356     

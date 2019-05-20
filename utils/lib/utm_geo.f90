@@ -13,6 +13,7 @@
   implicit none
 
   include "constants.h"
+  include "constants2.h"
 
 !
 !-----CAMx v2.03
@@ -45,7 +46,7 @@
   double precision, parameter :: north=0.d0, east=500000.d0
 
   double precision e2,e4,e6,ep2,xx,yy,dlat,dlon,zone,cm,cmr,delam
-  double precision f1,f2,f3,f4,rm,rn,t,c,a,e1,u,rlat1,dlat1,c1,t1,rn1,r1,d
+  double precision f1,f2,f3,f4,rm,rn,t,cc,aa,e1,u,rlat1,dlat1,c1,t1,rn1,r1,d
   double precision rx_save,ry_save,rlon_save,rlat_save
 
   if (SUPPRESS_UTM_PROJECTION) then
@@ -111,18 +112,18 @@
   else
     rn = semimaj/sqrt(1. - e2*sin(rlat)**2)
     t = tan(rlat)**2
-    c = ep2*cos(rlat)**2
-    a = cos(rlat)*delam
+    cc = ep2*cos(rlat)**2
+    aa = cos(rlat)*delam
 
-    f1 = (1. - t + c)*a**3/6.
-    f2 = 5. - 18.*t + t**2 + 72.*c - 58.*ep2
-    f2 = f2*a**5/120.
-    xx = scfa*rn*(a + f1 + f2)
-    f1 = a**2/2.
-    f2 = 5. - t + 9.*c + 4.*c**2
-    f2 = f2*a**4/24.
-    f3 = 61. - 58.*t + t**2 + 600.*c - 330.*ep2
-    f3 = f3*a**6/720.
+    f1 = (1. - t + cc)*aa**3/6.
+    f2 = 5. - 18.*t + t**2 + 72.*cc - 58.*ep2
+    f2 = f2*aa**5/120.
+    xx = scfa*rn*(aa + f1 + f2)
+    f1 = aa**2/2.
+    f2 = 5. - t + 9.*cc + 4.*cc**2
+    f2 = f2*aa**4/24.
+    f3 = 61. - 58.*t + t**2 + 600.*cc - 330.*ep2
+    f3 = f3*aa**6/720.
     yy = scfa*(rm + rn*tan(rlat)*(f1 + f2 + f3))
   endif
   xx = xx + east

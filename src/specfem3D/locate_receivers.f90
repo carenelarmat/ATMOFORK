@@ -230,7 +230,20 @@
 
   ! determines target point locations (need to locate z coordinate of all receivers)
   ! note: we first locate all the target positions in the mesh to reduces the need of MPI communication
-  call get_elevation_and_z_coordinate_all(nrec,stlon,stlat,stbur,stutm_x,stutm_y,elevation,x_target,y_target,z_target)
+  if (.not.MODELING_ATMO) then
+    call get_elevation_and_z_coordinate_all(nrec,stlon,stlat,stbur,stutm_x,stutm_y,elevation,x_target,y_target,z_target)
+  else
+   if (MODELING_ATMO) then
+      elevation=0
+      if (SUPPRESS_UTM_PROJECTION) then
+       !cartesian coordinate in m 
+        z_target = stbur
+      else
+        z_target = stbur*1000.0d0
+      endif
+    endif
+  endif
+
 
   ! note: we loop over subsets of receivers to fill first MPI buffers, thus reducing the MPI communication for each receiver
   !

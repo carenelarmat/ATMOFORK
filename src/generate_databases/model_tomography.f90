@@ -640,6 +640,9 @@ end subroutine init_tomography_files
   real(kind=CUSTOM_REAL) :: qp_final,qs_final
   real(kind=CUSTOM_REAL) :: L_val
 
+  !Increment variables to handle 1D profile
+  integer :: incx,incy,incz
+
   ! initializes flag
   has_tomo_value = .false.
 
@@ -665,54 +668,79 @@ end subroutine init_tomography_files
   endif
 
   ! determine spacing and cell for linear interpolation
-  spac_x = (xmesh - ORIG_X(imat)) / SPACING_X(imat)
-  spac_y = (ymesh - ORIG_Y(imat)) / SPACING_Y(imat)
-  spac_z = (zmesh - ORIG_Z(imat)) / SPACING_Z(imat)
+  if (NX(imat)>1) then 
+    spac_x = (xmesh - ORIG_X(imat)) / SPACING_X(imat)
+    ix = int(spac_x)
+    gamma_interp_x = spac_x - dble(ix)
+  else
+    ix=0
+    gamma_interp_x = 0.d0
+  endif
+    
+  if (NY(imat)>1) then 
+    spac_y = (ymesh - ORIG_Y(imat)) / SPACING_Y(imat)
+    iy = int(spac_y)
+    gamma_interp_y = spac_y - dble(iy)
+  else
+    iy=0
+    gamma_interp_y = 0.d0
+  endif
 
-  ix = int(spac_x)
-  iy = int(spac_y)
-  iz = int(spac_z)
-
-  gamma_interp_x = spac_x - dble(ix)
-  gamma_interp_y = spac_y - dble(iy)
+  if (NZ(imat)>1) then 
+    spac_z = (zmesh - ORIG_Z(imat)) / SPACING_Z(imat)
+    iz = int(spac_z)
+  else
+    iz = 0
+  endif
 
   ! suppress edge effects for points outside of the model SPOSTARE DOPO
-  if (ix < 0) then
-     ix = 0
-     gamma_interp_x = 0.d0
-  endif
-  if (ix > NX(imat)-2) then
-     ix = NX(imat)-2
-     gamma_interp_x = 1.d0
-  endif
-
-  if (iy < 0) then
-     iy = 0
-     gamma_interp_y = 0.d0
-  endif
-  if (iy > NY(imat)-2) then
-     iy = NY(imat)-2
-     gamma_interp_y = 1.d0
+  if (NX(imat)>1) then
+    if (ix < 0) then
+       ix = 0
+       gamma_interp_x = 0.d0
+    endif
+    if (ix > NX(imat)-2) then
+       ix = NX(imat)-2
+       gamma_interp_x = 1.d0
+    endif
   endif
 
-  if (iz < 0) then
-     iz = 0
-     !   gamma_interp_z = 0.d0
+  if (NY(imat)>1) then
+    if (iy < 0) then
+       iy = 0
+       gamma_interp_y = 0.d0
+    endif
+    if (iy > NY(imat)-2) then
+       iy = NY(imat)-2
+       gamma_interp_y = 1.d0
+    endif
   endif
-  if (iz > NZ(imat)-2) then
-     iz = NZ(imat)-2
-     !  gamma_interp_z = 1.d0
-  endif
+
+  if (NZ(imat)>1) then 
+    if (iz < 0) then
+       iz = 0
+       !   gamma_interp_z = 0.d0
+    endif
+    if (iz > NZ(imat)-2) then
+       iz = NZ(imat)-2
+       !  gamma_interp_z = 1.d0
+    endif
+   endif
 
   ! define 8 corners of interpolation element
+  incx=0;incy=0;incz=0
+  if (NX(imat)>1) incx=1
+  if (NY(imat)>1) incy=1
+  if (NZ(imat)>1) incz=1
+
   p0 = ix+iy*NX(imat)+iz*(NX(imat)*NY(imat))
-  p1 = (ix+1)+iy*NX(imat)+iz*(NX(imat)*NY(imat))
-  p2 = (ix+1)+(iy+1)*NX(imat)+iz*(NX(imat)*NY(imat))
-  p3 = ix+(iy+1)*NX(imat)+iz*(NX(imat)*NY(imat))
-  p4 = ix+iy*NX(imat)+(iz+1)*(NX(imat)*NY(imat))
-  p5 = (ix+1)+iy*NX(imat)+(iz+1)*(NX(imat)*NY(imat))
-  p6 = (ix+1)+(iy+1)*NX(imat)+(iz+1)*(NX(imat)*NY(imat))
-  p7 = ix+(iy+1)*NX(imat)+(iz+1)*(NX(imat)*NY(imat))
+  p1 = (ix+incx)+iy*NX(imat)+iz*(NX(imat)*NY(imat))
+  p2 = (ix+incx)+(iy+incy)*NX(imat)+iz*(NX(imat)*NY(imat))
+  p3 = ix+(iy+incy)*NX(imat)+iz*(NX(imat)*NY(imat))
+  p4 = ix+iy*NX(imat)+(iz+incz)*(NX(imat)*NY(imat))
+  p5 = (ix+incx)+iy*NX(imat)+(iz+incz)*(NX(imat)*NY(imat))
+  p6 = (ix+incx)+(iy+incy)*NX(imat)+(iz+incz)*(NX(imat)*NY(imat))
+  p7 = ix+(iy+incy)*NX(imat)+(iz+incz)*(NX(imat)*NY(imat))
 
   if (p0 < 0 .or. p1 < 0 .or. p2 < 0 .or. p3 < 0 .or. p4 < 0 .or. p5 < 0 .or. p6 < 0 .or. p7 < 0) then
      print *,'model: ',imat
@@ -724,52 +752,68 @@ end subroutine init_tomography_files
   endif
 
   ! interpolation gamma factors
-  if (z_tomography(imat,p4+1) == z_tomography(imat,p0+1)) then
-     gamma_interp_z1 = 1.d0
+  if (NZ(imat)>1) then
+    if (z_tomography(imat,p4+1) == z_tomography(imat,p0+1)) then
+       gamma_interp_z1 = 1.d0
+    else
+       gamma_interp_z1 = (zmesh-z_tomography(imat,p0+1))/(z_tomography(imat,p4+1)-z_tomography(imat,p0+1))
+    endif
+    if (gamma_interp_z1 > 1.d0) then
+       gamma_interp_z1 = 1.d0
+    endif
+    if (gamma_interp_z1 < 0.d0) then
+       gamma_interp_z1 = 0.d0
+    endif
   else
-     gamma_interp_z1 = (zmesh-z_tomography(imat,p0+1))/(z_tomography(imat,p4+1)-z_tomography(imat,p0+1))
-  endif
-  if (gamma_interp_z1 > 1.d0) then
-     gamma_interp_z1 = 1.d0
-  endif
-  if (gamma_interp_z1 < 0.d0) then
-     gamma_interp_z1 = 0.d0
+    gamma_interp_z1=0.d0
   endif
 
-  if (z_tomography(imat,p5+1) == z_tomography(imat,p1+1)) then
-     gamma_interp_z2 = 1.d0
+  if (NZ(imat)>1) then 
+    if (z_tomography(imat,p5+1) == z_tomography(imat,p1+1)) then
+       gamma_interp_z2 = 1.d0
+    else
+       gamma_interp_z2 = (zmesh-z_tomography(imat,p1+1))/(z_tomography(imat,p5+1)-z_tomography(imat,p1+1))
+    endif
+    if (gamma_interp_z2 > 1.d0) then
+       gamma_interp_z2 = 1.d0
+    endif
+    if (gamma_interp_z2 < 0.d0) then
+       gamma_interp_z2 = 0.d0
+    endif
   else
-     gamma_interp_z2 = (zmesh-z_tomography(imat,p1+1))/(z_tomography(imat,p5+1)-z_tomography(imat,p1+1))
-  endif
-  if (gamma_interp_z2 > 1.d0) then
-     gamma_interp_z2 = 1.d0
-  endif
-  if (gamma_interp_z2 < 0.d0) then
-     gamma_interp_z2 = 0.d0
+    gamma_interp_z2=0.d0
   endif
 
-  if (z_tomography(imat,p6+1) == z_tomography(imat,p2+1)) then
-     gamma_interp_z3 = 1.d0
+  if(NZ(imat)>1) then 
+    if (z_tomography(imat,p6+1) == z_tomography(imat,p2+1)) then
+       gamma_interp_z3 = 1.d0
+    else
+       gamma_interp_z3 = (zmesh-z_tomography(imat,p2+1))/(z_tomography(imat,p6+1)-z_tomography(imat,p2+1))
+    endif
+    if (gamma_interp_z3 > 1.d0) then
+       gamma_interp_z3 = 1.d0
+    endif
+    if (gamma_interp_z3 < 0.d0) then
+       gamma_interp_z3 = 0.d0
+    endif
   else
-     gamma_interp_z3 = (zmesh-z_tomography(imat,p2+1))/(z_tomography(imat,p6+1)-z_tomography(imat,p2+1))
-  endif
-  if (gamma_interp_z3 > 1.d0) then
-     gamma_interp_z3 = 1.d0
-  endif
-  if (gamma_interp_z3 < 0.d0) then
-     gamma_interp_z3 = 0.d0
+   gamma_interp_z3=0.d0
   endif
 
-  if (z_tomography(imat,p7+1) == z_tomography(imat,p3+1)) then
-     gamma_interp_z4 = 1.d0
+  if (NZ(imat)>1) then 
+    if (z_tomography(imat,p7+1) == z_tomography(imat,p3+1)) then
+       gamma_interp_z4 = 1.d0
+    else
+       gamma_interp_z4 = (zmesh-z_tomography(imat,p3+1))/(z_tomography(imat,p7+1)-z_tomography(imat,p3+1))
+    endif
+    if (gamma_interp_z4 > 1.d0) then
+       gamma_interp_z4 = 1.d0
+    endif
+    if (gamma_interp_z4 < 0.d0) then
+       gamma_interp_z4 = 0.d0
+    endif
   else
-     gamma_interp_z4 = (zmesh-z_tomography(imat,p3+1))/(z_tomography(imat,p7+1)-z_tomography(imat,p3+1))
-  endif
-  if (gamma_interp_z4 > 1.d0) then
-     gamma_interp_z4 = 1.d0
-  endif
-  if (gamma_interp_z4 < 0.d0) then
-     gamma_interp_z4 = 0.d0
+   gamma_interp_z4=0.d0
   endif
 
   ! Vp

@@ -213,6 +213,7 @@ SAVE_SEISMOGRAMS_DISPLACEMENT   = .true.
 SAVE_SEISMOGRAMS_VELOCITY       = .true.
 SAVE_SEISMOGRAMS_ACCELERATION   = .true.
 SAVE_SEISMOGRAMS_PRESSURE       = .false.   # currently implemented in acoustic (i.e. fluid) elements only
+SAVE_SEISMOGRAMS_DERIVATIVE     = .false.
 
 # save seismograms also when running the adjoint runs for an inverse problem
 # (usually they are unused and not very meaningful, leave this off in almost all cases)

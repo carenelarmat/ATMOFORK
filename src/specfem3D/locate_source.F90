@@ -22,6 +22,7 @@
 ! with this program; if not, write to the Free Software Foundation, Inc.,
 ! 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 !
+! Modified Carene Larmat MODELING_ATMO; source depth in entered in km 
 !=====================================================================
 
 !----
@@ -193,8 +194,17 @@
       depth(isource) = depth(isource)*1000.0d0
     enddo
   endif
-  call get_elevation_and_z_coordinate_all(NSOURCES,long,lat,depth,utm_x_source,utm_y_source,elevation, &
+  if (.not.MODELING_ATMO) then 
+     call get_elevation_and_z_coordinate_all(NSOURCES,long,lat,depth,utm_x_source,utm_y_source,elevation, &
                                           x_target,y_target,z_target)
+  else
+     if (SUPPRESS_UTM_PROJECTION) then 
+      ! coordinates given in meters
+      z_target = -depth
+     else
+      z_target = -depth*1000.d0
+     endif
+  endif
 
   !
   ! r -> z, theta -> -y, phi -> x
@@ -456,11 +466,19 @@
           write(IMAIN,*) '           UTM x: ',utm_x_source(isource)
           write(IMAIN,*) '           UTM y: ',utm_y_source(isource)
         endif
-        if (USE_SOURCES_RECEIVERS_Z) then
-          write(IMAIN,*) '           z: ',depth(isource),' m'
+        if (.not.MODELING_ATMO) then 
+          if (USE_SOURCES_RECEIVERS_Z) then
+            write(IMAIN,*) '           z: ',depth(isource),' m'
+          else
+            write(IMAIN,*) '           depth: ',depth(isource)/1000.0,' km'
+            write(IMAIN,*) '  topo elevation: ',elevation(isource)
+          endif
         else
-          write(IMAIN,*) '           depth: ',depth(isource)/1000.0,' km'
-          write(IMAIN,*) '  topo elevation: ',elevation(isource)
+          if (SUPPRESS_UTM_PROJECTION) then 
+          write(IMAIN,*) '          depth: ',depth(isource),' m'
+          else
+          write(IMAIN,*) '          depth: ',depth(isource),' km'
+          endif
         endif
 
         write(IMAIN,*)

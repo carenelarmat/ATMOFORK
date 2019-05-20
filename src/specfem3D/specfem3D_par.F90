@@ -23,6 +23,7 @@
 ! with this program; if not, write to the Free Software Foundation, Inc.,
 ! 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 !
+! Modified Carene Larmat FLAG FOR DERIVATIVE SEISMOGRAMS
 !=====================================================================
 !
 ! United States and French Government Sponsorship Acknowledged.
@@ -150,6 +151,7 @@ module specfem_par
 
 ! seismograms
   real(kind=CUSTOM_REAL), dimension(:,:,:), allocatable :: seismograms_d,seismograms_v,seismograms_a,seismograms_p
+  real(kind=CUSTOM_REAL), dimension(:,:,:), allocatable :: seismograms_der
 
 !! DK DK added this temporarily here to make SPECFEM3D and SPECFEM3D_GLOBE much more similar
 !! DK DK in terms of the structure of their main time iteration loop; these are future features

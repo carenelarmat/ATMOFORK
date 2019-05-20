@@ -22,8 +22,11 @@
 ! You should have received a copy of the GNU General Public License along
 ! with this program; if not, write to the Free Software Foundation, Inc.,
 ! 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
+! Modified Carene Larmat MODELING_ATMO flag to change behavior of location receivers/sources
 !
 !=====================================================================
+
 
 ! @configure_input@
 
@@ -188,8 +191,10 @@
   logical, parameter :: RECEIVERS_CAN_BE_BURIED = .true.
   logical, parameter :: SOURCES_CAN_BE_BURIED = .true.
 
-! the seismograms are normal to the surface.
-! the Z record corresponds to the normal, while E and N are two tangent vectors
+! new flag for atmospheric modeling 0 is at the top of ocean or solid
+! MAKE SURE THAN SOURCE AND RECEIVERS CAN BE BURIED ARE SET AS TRUE
+  logical, parameter :: MODELING_ATMO = .true.
+
 ! that completes an orthonormal.
   logical, parameter :: EXTERNAL_MESH_RECEIVERS_NORMAL = .false.
 
@@ -281,7 +286,6 @@
   character(len=*), parameter :: MF_IN_DATA_FILES = './DATA/meshfem3D_files/'
   character(len=*), parameter :: OUTPUT_FILES_BASE = './OUTPUT_FILES/'
 
-
 !!-----------------------------------------------------------
 !!
 !! image output
@@ -295,6 +299,11 @@
   real(kind=CUSTOM_REAL),parameter :: CROSS_SECTION_X = 67000.0_CUSTOM_REAL
   real(kind=CUSTOM_REAL),parameter :: CROSS_SECTION_Y = 65500.0_CUSTOM_REAL
   real(kind=CUSTOM_REAL),parameter :: CROSS_SECTION_Z = -30000.0_CUSTOM_REAL
+!=== case KELUD
+!  logical, parameter :: PLOT_CROSS_SECTIONS = .true.
+!  real(kind=CUSTOM_REAL),parameter :: CROSS_SECTION_X = 371041.0_CUSTOM_REAL
+!  real(kind=CUSTOM_REAL),parameter :: CROSS_SECTION_Y = 999999.0_CUSTOM_REAL
+!  real(kind=CUSTOM_REAL),parameter :: CROSS_SECTION_Z = 200000.0_CUSTOM_REAL
 
 ! plots PNM cross-section image
 ! (EXPERIMENTAL feature)

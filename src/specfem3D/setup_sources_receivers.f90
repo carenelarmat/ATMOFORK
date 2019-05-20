@@ -1278,11 +1278,21 @@
     endif
     if (ier /= 0) stop 'error allocating array seismograms_p'
 
+   if (SAVE_SEISMOGRAMS_DERIVATIVE) then
+      allocate(seismograms_der(NDIM,nrec_local,NTSTEP_BETWEEN_OUTPUT_SEISMOS),stat=ier)
+      if (ier /= 0) call exit_MPI_without_rank('error allocating array 2095')
+   else
+      allocate(seismograms_der(1,1,1),stat=ier)
+      if (ier /= 0) call exit_MPI_without_rank('error allocating array 2096')
+  endif
+  if (ier /= 0) stop 'error allocating array seismograms_der'
+
     ! initialize seismograms
     seismograms_d(:,:,:) = 0._CUSTOM_REAL
     seismograms_v(:,:,:) = 0._CUSTOM_REAL
     seismograms_a(:,:,:) = 0._CUSTOM_REAL
     seismograms_p(:,:,:) = 0._CUSTOM_REAL
+    seismograms_der(:,:,:) = 0._CUSTOM_REAL
   endif
 
   ! seismograms

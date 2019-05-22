@@ -230,20 +230,11 @@
 
   ! determines target point locations (need to locate z coordinate of all receivers)
   ! note: we first locate all the target positions in the mesh to reduces the need of MPI communication
-  if (.not.MODELING_ATMO) then
-    call get_elevation_and_z_coordinate_all(nrec,stlon,stlat,stbur,stutm_x,stutm_y,elevation,x_target,y_target,z_target)
-  else
-   if (MODELING_ATMO) then
-      elevation=0
-      if (SUPPRESS_UTM_PROJECTION) then
-       !cartesian coordinate in m 
-        z_target = stbur
-      else
-        z_target = stbur*1000.0d0
-      endif
-    endif
-  endif
 
+  if (MODELING_ATMO.and.(.not.SUPPRESS_UTM_PROJECTION)) stbur = stbur*1000.0
+  if (MODELING_ATMO.and.(.not.USE_SOURCES_RECEIVERS_Z)) stbur = -1.0 * stbur
+
+  call get_elevation_and_z_coordinate_all(nrec,stlon,stlat,stbur,stutm_x,stutm_y,elevation,x_target,y_target,z_target)
 
   ! note: we loop over subsets of receivers to fill first MPI buffers, thus reducing the MPI communication for each receiver
   !
@@ -362,7 +353,7 @@
         else
           write(IMAIN,*) '     original depth: ',sngl(stbur(irec)),' m'
         endif
-        write(IMAIN,*) '     horizontal distance: ',sngl(dsqrt((stutm_y(irec)-utm_y_source)**2 &
+        write(IMAIN,*) '     horizontal distance km: ',sngl(dsqrt((stutm_y(irec)-utm_y_source)**2 &
                                                     + (stutm_x(irec)-utm_x_source)**2) / 1000.d0)
         write(IMAIN,*) '     target x, y, z: ',sngl(x_target(irec)),sngl(y_target(irec)),sngl(z_target(irec))
 

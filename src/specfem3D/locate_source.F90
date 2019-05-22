@@ -41,7 +41,7 @@
       UTM_PROJECTION_ZONE,SUPPRESS_UTM_PROJECTION,USE_SOURCES_RECEIVERS_Z, &
       NSTEP_STF,NSOURCES_STF,USE_EXTERNAL_SOURCE_FILE,USE_TRICK_FOR_BETTER_PRESSURE,COUPLE_WITH_INJECTION_TECHNIQUE, &
       myrank,NSPEC_AB,NGLOB_AB,ibool,xstore,ystore,zstore,DT, &
-      NSOURCES
+      NSOURCES, itopo_bathy
 
 
   implicit none
@@ -188,24 +188,28 @@
 
   ! determines target point locations (need to locate z coordinate of all sources)
   ! note: we first locate all the target positions in the mesh to reduces the need of MPI communication
-  if (.not. USE_SOURCES_RECEIVERS_Z) then
-    ! converts km to m
-    do isource = 1,NSOURCES
-      depth(isource) = depth(isource)*1000.0d0
-    enddo
-  endif
-  if (.not.MODELING_ATMO) then 
-     call get_elevation_and_z_coordinate_all(NSOURCES,long,lat,depth,utm_x_source,utm_y_source,elevation, &
-                                          x_target,y_target,z_target)
-  else
-     if (SUPPRESS_UTM_PROJECTION) then 
-      ! coordinates given in meters
-      z_target = -depth
-     else
-      z_target = -depth*1000.d0
-     endif
+
+  !read topography file if needed
+  if (MODELING_ATMO.and..not.USE_SOURCES_RECEIVERS_Z) then 
+    !read topography file
+    allocate(itopo_bathy(NX_TOPO_FILE,NY_TOPO_FILE))
+    call read_topo_bathy_file(itopo_bathy,NX_TOPO_FILE,NY_TOPO_FILE)
   endif
 
+  if (MODELING_ATMO) then 
+     if (SUPPRESS_UTM_PROJECTION) then 
+      ! coordinates given in meters
+      depth = depth
+     else
+      depth = depth*1000.d0
+     endif
+  else if (USE_SOURCES_RECEIVERS_Z) then
+      ! converts km to m
+      depth = depth*1000.0d0
+  endif
+
+  call get_elevation_and_z_coordinate_all(NSOURCES,long,lat,depth,utm_x_source,utm_y_source,elevation, &
+                                          x_target,y_target,z_target)
   !
   ! r -> z, theta -> -y, phi -> x
   !
@@ -477,7 +481,7 @@
           if (SUPPRESS_UTM_PROJECTION) then 
           write(IMAIN,*) '          depth: ',depth(isource),' m'
           else
-          write(IMAIN,*) '          depth: ',depth(isource),' km'
+          write(IMAIN,*) '          depth: ',depth(isource)/1000.0,' km'
           endif
         endif
 

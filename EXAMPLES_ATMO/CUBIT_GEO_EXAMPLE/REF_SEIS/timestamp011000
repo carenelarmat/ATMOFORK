@@ -1,0 +1,15 @@
+ Time step #        11000
+ Time:    93.9899979      seconds
+ Elapsed time in seconds =    193.38396716117859     
+ Elapsed time in hh:mm:ss =      0 h 03 m 13 s
+ Mean elapsed time per time step in seconds =    1.7580360651016234E-002
+ Max norm displacement vector U in all slices (m) =    6413.07666    
+ Max norm pressure P in all slices (Pa) =    274578.156    
+ Time steps done =        11000  out of        20000
+ Time steps remaining =         9000
+ Estimated remaining time in seconds =    158.22324585914609     
+ Estimated remaining time in hh:mm:ss =      0 h 02 m 38 s
+ Estimated total run time in seconds =    351.60721302032471     
+ Estimated total run time in hh:mm:ss =      0 h 05 m 51 s
+ We have done    55.0000000     % of that
+ The run will finish approximately on (in local time): Tue May 28, 2019 16:15

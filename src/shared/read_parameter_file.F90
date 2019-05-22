@@ -415,8 +415,8 @@
       write(*,'(a)') 'USE_SOURCES_RECEIVERS_Z         = .false.'
       write(*,*)
     endif
-
     call read_value_logical(USE_FORCE_POINT_SOURCE, 'USE_FORCE_POINT_SOURCE', ier)
+
     if (ier /= 0) then
       some_parameters_missing_from_Par_file = .true.
       write(*,'(a)') 'USE_FORCE_POINT_SOURCE          = .false.'

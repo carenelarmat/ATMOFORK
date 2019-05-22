@@ -36,7 +36,7 @@
 
   use constants
   use specfem_par, only: ibool,myrank,NSPEC_AB,NGLOB_AB,USE_SOURCES_RECEIVERS_Z, &
-                         xstore,ystore,zstore,NPROC,num_free_surface_faces,free_surface_ispec,free_surface_ijk
+                         xstore,ystore,zstore,NPROC,num_free_surface_faces,free_surface_ispec,free_surface_ijk,itopo_bathy
 
   integer, intent(in) :: npoints
   double precision, dimension(npoints), intent(inout)  :: plon,plat,pbur
@@ -103,9 +103,14 @@
     yloc = y_target(ipoin)
 
     ! get approximate topography elevation at point x/y coordinates
-    call get_topo_elevation_free(xloc,yloc,loc_ele,loc_distmin, &
+    if (MODELING_ATMO) then 
+      call get_topo_bathy_elevation(xloc,yloc,loc_ele, &
+               itopo_bathy,NX_TOPO_FILE,NY_TOPO_FILE) 
+    else
+      call get_topo_elevation_free(xloc,yloc,loc_ele,loc_distmin, &
                                  NSPEC_AB,NGLOB_AB,ibool,xstore,ystore,zstore, &
                                  num_free_surface_faces,free_surface_ispec,free_surface_ijk)
+    endif
 
     elevation(ipoin) = loc_ele
     elevation_distmin(ipoin) = loc_distmin

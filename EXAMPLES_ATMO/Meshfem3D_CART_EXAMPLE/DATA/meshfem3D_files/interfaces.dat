@@ -8,8 +8,8 @@
 #
 # interface number 1 (top of the mesh)
 # SUPPRESS_UTM_PROJECTION  NXI  NETA LONG_MIN   LAT_MIN    SPACING_XI SPACING_ETA
- .true.                    2  2  -1000.d0  -1000.d0 2000.d0    2000.d0
- flat_topo.dat
+ .true.                    2  2  -100000.d0  -100000.d0 200000.d0    200000.d0
+ top_atmo.dat
 # for each layer, we give the number of spectral elements in the vertical direction
 # layer number 1 (bottom to top)
- 15
+ 23

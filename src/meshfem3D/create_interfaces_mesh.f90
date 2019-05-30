@@ -245,6 +245,7 @@
       do ix = 1,npx_interface_top
         ! reading without trailing/triming...
         read(45,*,iostat=ier) elevation
+        if (.not.SUPPRESS_UTM_PROJECTION_TOP) elevation = elevation *1000.d0
         !in case data file would have comment lines...
         !call read_value_dble_precision_mesh(45,DONT_IGNORE_JUNK,elevation,'Z_INTERFACE_TOP',ier)
         if (ier /= 0) stop 'Error reading interface value'

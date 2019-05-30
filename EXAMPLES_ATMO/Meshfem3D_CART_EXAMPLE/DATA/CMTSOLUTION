@@ -1,13 +1,13 @@
-PDE  1999 01 01 00 00 00.00  67000 67000 -25000 4.2 4.2 hom_explosion
-event name:       hom_explosion
-time shift:       0.0000
-half duration:    0.0
-latorUTM:       50000.0
-longorUTM:      50000.0
-depth:           10.0
-Mrr:       1.000000e+23
-Mtt:       1.000000e+23
-Mpp:       1.000000e+23
-Mrt:       0.000000
-Mrp:       0.000000
-Mtp:       0.000000
+PDEW2009  9 29 17 48 11.00 0.0000 1.0 18.0 7.1 8.1 SAMOA ISLANDS REGION                    
+event name:     200909291748A  
+time shift:     00.0000
+half duration:   8.0000
+y UTM :          0.0000
+x UTM :          0.0000
+depth:       12000.0000
+Mrr:      -1.300000e+28
+Mtt:       5.220000e+27
+Mpp:       7.730000e+27
+Mrt:      -2.950000e+27
+Mrp:      -9.720000e+27
+Mtp:      -7.250000e+27

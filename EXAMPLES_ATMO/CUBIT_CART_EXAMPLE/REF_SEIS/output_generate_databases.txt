@@ -3,8 +3,8 @@
  *** Specfem3D MPI database generation ***
  *****************************************
 
- Running Git package version of the code: v2.0.2-2895-g6e92d36
- which is Git commit 6e92d36dbf17f920926d9271fe9d38256c686cf1
+ Running Git package version of the code: v2.0.2-2895-g5565ec6
+ which is Git commit 5565ec68359159903b8eb524d3d40d6a24a945b6
  dating From Date:   Wed May 22 13:39:03 2019 -0600
 
  This is process            0
@@ -78,15 +78,15 @@
       absorbing boundary includes free surface (i.e., top surface converted from free to absorbing)
    ...setting up mesh surface
    ...determining velocity model
-               10  % time remaining:   4.3138767842898496E-006 s
-               20  % time remaining:   3.8432956045442168E-006 s
-               30  % time remaining:   3.3499084596821938E-006 s
-               40  % time remaining:   2.8613208005734414E-006 s
-               50  % time remaining:   2.3914346848966095E-006 s
-               60  % time remaining:   1.9141670910827191E-006 s
-               70  % time remaining:   1.4334904416823946E-006 s
-               80  % time remaining:   9.5677743834447770E-007 s
-               90  % time remaining:   4.7822736133629196E-007 s
+               10  % time remaining:   2.3245066326782471E-006 s
+               20  % time remaining:   2.0443822319748950E-006 s
+               30  % time remaining:   1.7657803549064877E-006 s
+               40  % time remaining:   1.5043904261213825E-006 s
+               50  % time remaining:   1.2494881302185790E-006 s
+               60  % time remaining:   9.9683652282633872E-007 s
+               70  % time remaining:   7.4845019587543860E-007 s
+               80  % time remaining:   4.9803764739023149E-007 s
+               90  % time remaining:   2.4878988489230452E-007 s
               100  % time remaining:   0.0000000000000000      s
    ...detecting acoustic-elastic-poroelastic surfaces 
       total acoustic elements   :       10000
@@ -154,7 +154,7 @@
  *** Minimum period resolved =    7.57575703    
  *** Maximum suggested time step =    2.15841141E-02
 
- Elapsed time for checking mesh resolution in seconds =    2.7179718017578125E-003
+ Elapsed time for checking mesh resolution in seconds =    4.8499107360839844E-003
  saving VTK files for Courant number and minimum period
 
 
@@ -179,7 +179,7 @@
  smallest and largest possible floating-point numbers are:    1.17549435E-38   3.40282347E+38
 
 
- Elapsed time for mesh generation and buffer creation in seconds =    10.113997936248779     
+ Elapsed time for mesh generation and buffer creation in seconds =    9.7718930244445801     
  End of mesh generation
 
  done

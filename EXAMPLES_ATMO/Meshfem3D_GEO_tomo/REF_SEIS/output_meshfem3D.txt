@@ -160,10 +160,10 @@
  max diagonal aspect ratio =    1.0000000000000047     
 
  ***
- *** Maximum suggested time step for simulation =    0.02166012
+ *** Maximum suggested time step for simulation =    0.10976413
  ***
  *** Max CFL stability condition of the time scheme (must be below about 0.55 or so) =   0.47039999999999998     
- *** computed using the maximum P wave velocity =    7500.0000000000000     
+ *** computed using the maximum P wave velocity =    1480.0000000000000     
  ***
  that value is below the upper CFL limit of   0.55000000000000004     
  therefore the run should be stable
@@ -209,7 +209,7 @@
  smallest and largest possible floating-point numbers are:    1.17549435E-38   3.40282347E+38
 
 
- Elapsed time for mesh generation and buffer creation in seconds =   0.20997405052185059     
+ Elapsed time for mesh generation and buffer creation in seconds =   0.84093809127807617     
  End of mesh generation
 
  done

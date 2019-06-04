@@ -3,9 +3,9 @@
  *** Specfem3D MPI database generation ***
  *****************************************
 
- Running Git package version of the code: v2.0.2-2897-gc5377b5
- which is Git commit c5377b5f03d772960ed7cb8bd5352ca1175cedf8
- dating From Date:   Wed May 29 19:15:25 2019 -0600
+ Running Git package version of the code: v2.0.2-2900-g4603960
+ which is Git commit 460396065c39efc958166098ef7eb3fd5d2267f3
+ dating From Date:   Mon Jun 3 10:22:48 2019 -0600
 
  This is process            0
  There are           16  MPI processes
@@ -21,7 +21,7 @@
  Surface shape functions defined by NGNOD2D =            4  control nodes
  Beware! Curvature (i.e. HEX27 elements) is not handled by our internal mesher
 
- velocity model:   tomo
+ velocity model:   default 
 
 
  using UTM projection in region           -2
@@ -43,8 +43,8 @@
  ************************************
 
  external mesh points :        18816
- defined materials    :            3
- undefined materials  :            0
+ defined materials    :            1
+ undefined materials  :            2
  total number of spectral elements:        13248
  absorbing boundaries: 
    xmin,xmax :          552         552
@@ -53,8 +53,8 @@
  total number of C-PML elements in the global mesh:            0
  number of MPI partition interfaces:           84
 
-   minimum memory used so far     :    2.87796879     MB per process
-   minimum total memory requested :    13.4195986     MB per process
+   minimum memory used so far     :    2.87789249     MB per process
+   minimum total memory requested :    13.4195223     MB per process
 
  create regions:
 
@@ -79,30 +79,35 @@
    ...setting up mesh surface
    ...determining velocity model
 
-      number of tomographic models       =            1
-      maximum number of data records     =          465
-      size of required tomography arrays =    7.09533691E-03 MB per process
+      number of tomographic models       =            2
+      maximum number of data records     =          301
+      size of required tomography arrays =    9.18579102E-03 MB per process
 
       material id:           -1
-      file       : ./DATA/tomo_files/tomography_model.xyz
+      file       : ./DATA/tomo_files/solid_model.xyz
       data format: #x #y #z #vp #vs #density #Q_p #Q_s
-      number of grid points = NX*NY*NZ:         465
- DEBUG    330.000000       7500.00000    
+      number of grid points = NX*NY*NZ:         146
 
-               10  % time remaining:   2.6591454856117469E-006 s
-               20  % time remaining:   2.3651637056643082E-006 s
-               30  % time remaining:   2.0711880378415648E-006 s
-               40  % time remaining:   1.7843366650963088E-006 s
-               50  % time remaining:   1.4907924394957917E-006 s
-               60  % time remaining:   1.1986347578027412E-006 s
-               70  % time remaining:   9.0574671815502050E-007 s
-               80  % time remaining:   6.1354738901779615E-007 s
-               90  % time remaining:   3.2092731574616049E-007 s
-              100  % time remaining:   2.8527587575901975E-008 s
+      material id:           -2
+      file       : ./DATA/tomo_files/atmo_model.xyz
+      data format: #x #y #z #vp #vs #density #Q_p #Q_s
+      number of grid points = NX*NY*NZ:         301
+
+               10  % time remaining:   1.7649069710273801E-005 s
+               20  % time remaining:   1.5708387237911570E-005 s
+               30  % time remaining:   1.3759652317812954E-005 s
+               40  % time remaining:   1.0632068011974527E-005 s
+               50  % time remaining:   9.0888418818879657E-006 s
+               60  % time remaining:   7.4136521622837626E-006 s
+               70  % time remaining:   5.6626482145688550E-006 s
+               80  % time remaining:   3.8640291626923506E-006 s
+               90  % time remaining:   2.0339462564978802E-006 s
+              100  % time remaining:   1.8163126162031853E-007 s
    ...detecting acoustic-elastic-poroelastic surfaces 
-      total acoustic elements   :           0
-      total elastic elements    :       13248
+      total acoustic elements   :        9216
+      total elastic elements    :        4032
       total poroelastic elements:           0
+      acoustic-elastic coupling    : total number of faces =          576
    ...element inner/outer separation 
       for overlapping of communications with calculations:
       percentage of   edge elements    30.5555573     %
@@ -164,7 +169,7 @@
  *** Minimum period resolved =    7.93631554    
  *** Maximum suggested time step =    2.30230801E-02
 
- Elapsed time for checking mesh resolution in seconds =    2.5670528411865234E-003
+ Elapsed time for checking mesh resolution in seconds =    2.6497840881347656E-003
  saving VTK files for Courant number and minimum period
 
 
@@ -189,7 +194,7 @@
  smallest and largest possible floating-point numbers are:    1.17549435E-38   3.40282347E+38
 
 
- Elapsed time for mesh generation and buffer creation in seconds =    8.6917238235473633     
+ Elapsed time for mesh generation and buffer creation in seconds =    12.418246030807495     
  End of mesh generation
 
  done

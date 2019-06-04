@@ -41,7 +41,7 @@ subroutine save_databases_adios(LOCAL_PATH, myrank, sizeprocs, &
                                 nspec2D_xmin,nspec2D_xmax,nspec2D_ymin,nspec2D_ymax, &
                                 NSPEC2D_BOTTOM,NSPEC2D_TOP, NSPEC2DMAX_XMIN_XMAX,NSPEC2DMAX_YMIN_YMAX, &
                                 ibelm_xmin,ibelm_xmax,ibelm_ymin,ibelm_ymax,ibelm_bottom,ibelm_top, &
-                                NMATERIALS,material_properties, &
+                                NMATERIALS,material_properties, material_files, &
                                 nspec_CPML,CPML_to_spec,CPML_regions,is_CPML)
 
   use constants, only: MAX_STRING_LEN,IDOMAIN_ACOUSTIC,IDOMAIN_ELASTIC,ADIOS_TRANSPORT_METHOD, &
@@ -94,6 +94,7 @@ subroutine save_databases_adios(LOCAL_PATH, myrank, sizeprocs, &
   ! first dimension  : material_id
   ! second dimension : #rho  #vp  #vs  #Q_Kappa  #Q_mu  #anisotropy_flag  #domain_id  #material_id
   double precision , dimension(NMATERIALS,NUMBER_OF_MATERIAL_PROPERTIES) :: material_properties
+  charater(len=MAX_STRING_LEN) , dimension(NMATERIALS) :: material_files
 
   ! CPML
   integer, intent(in) :: nspec_CPML
@@ -224,10 +225,11 @@ subroutine save_databases_adios(LOCAL_PATH, myrank, sizeprocs, &
       case (IDOMAIN_ELASTIC)
         undef_matpropl(is:ie) = 'elastic'
       end select
-      ! default name
+      ! tomography file name
       is = (icount-1)*6*MAX_STRING_LEN + (3*MAX_STRING_LEN + 1)
       ie = is + MAX_STRING_LEN
-      undef_matpropl(is:ie) = 'tomography_model.xyz'
+      !undef_matpropl(is:ie) = 'tomography_model.xyz'
+      undef_matpropl(is:ie) = material_files(i)
       ! default tomo-id (unused)
       is = (icount-1)*6*MAX_STRING_LEN + (4*MAX_STRING_LEN + 1)
       ie = is + MAX_STRING_LEN

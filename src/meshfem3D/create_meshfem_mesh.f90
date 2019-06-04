@@ -66,7 +66,7 @@ end module create_meshfem_par
     NEX_PER_PROC_XI,NEX_PER_PROC_ETA,NER, &
     NSPEC2DMAX_XMIN_XMAX,NSPEC2DMAX_YMIN_YMAX,NSPEC2D_BOTTOM,NSPEC2D_TOP, &
     NPROC_XI,NPROC_ETA, &
-    nsubregions,subregions,NMATERIALS,material_properties, &
+    nsubregions,subregions,NMATERIALS,material_properties, material_files, &
     myrank, sizeprocs, &
     LOCAL_PATH,UTM_X_MIN,UTM_X_MAX,UTM_Y_MIN,UTM_Y_MAX,Z_DEPTH_BLOCK,NEX_XI,NEX_ETA, &
     CREATE_ABAQUS_FILES,CREATE_DX_FILES,CREATE_VTK_FILES, &
@@ -188,7 +188,7 @@ end module create_meshfem_par
                               nspec2D_xmin,nspec2D_xmax,nspec2D_ymin,nspec2D_ymax, &
                               NSPEC2D_BOTTOM,NSPEC2D_TOP, NSPEC2DMAX_XMIN_XMAX,NSPEC2DMAX_YMIN_YMAX, &
                               ibelm_xmin,ibelm_xmax,ibelm_ymin,ibelm_ymax,ibelm_bottom,ibelm_top, &
-                              NMATERIALS,material_properties, &
+                              NMATERIALS,material_properties, material_files, &
                               nspec_CPML,CPML_to_spec,CPML_regions,is_CPML)
   else
     ! saves mesh as databases file  !! VM VM added xstore, ystore, zstore used for Axisem Coupling
@@ -198,7 +198,7 @@ end module create_meshfem_par
                         nspec2D_xmin,nspec2D_xmax,nspec2D_ymin,nspec2D_ymax,NSPEC2D_BOTTOM,NSPEC2D_TOP, &
                         NSPEC2DMAX_XMIN_XMAX,NSPEC2DMAX_YMIN_YMAX, &
                         ibelm_xmin,ibelm_xmax,ibelm_ymin,ibelm_ymax,ibelm_bottom,ibelm_top, &
-                        NMATERIALS,material_properties, &
+                        NMATERIALS,material_properties, material_files, &
                         nspec_cpml,CPML_to_spec,CPML_regions,is_CPML, &
                         xstore, ystore, zstore)
   endif

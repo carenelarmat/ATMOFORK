@@ -31,7 +31,7 @@
     UTM_X_MIN,UTM_X_MAX,UTM_Y_MIN,UTM_Y_MAX,Z_DEPTH_BLOCK, &
     NEX_XI,NEX_ETA,NPROC_XI,NPROC_ETA,UTM_PROJECTION_ZONE, &
     LOCAL_PATH,SUPPRESS_UTM_PROJECTION, &
-    INTERFACES_FILE,CAVITY_FILE,NSUBREGIONS,subregions,NMATERIALS,material_properties, &
+    INTERFACES_FILE,CAVITY_FILE,NSUBREGIONS,subregions,NMATERIALS,material_properties, material_files, &
     CREATE_ABAQUS_FILES,CREATE_DX_FILES,CREATE_VTK_FILES, &
     USE_REGULAR_MESH,NDOUBLINGS,ner_doublings, &
     THICKNESS_OF_X_PML,THICKNESS_OF_Y_PML,THICKNESS_OF_Z_PML, &
@@ -168,11 +168,12 @@
 
   ! read materials properties
   allocate(material_properties(NMATERIALS,NUMBER_OF_MATERIAL_PROPERTIES),stat=ier)
+  allocate(material_files(NMATERIALS),stat=ier)
   if (ier /= 0) call exit_MPI_without_rank('error allocating array 1319')
   if (ier /= 0) stop 'Error allocation of material_properties'
   material_properties(:,:) = 0.d0
   do imat = 1,NMATERIALS
-    call read_material_parameters(IIN,mat_id,rho,vp,vs,Q_Kappa,Q_mu,anisotropy_flag,domain_id,ier)
+    call read_material_parameters(IIN,mat_id,rho,vp,vs,Q_Kappa,Q_mu,anisotropy_flag,domain_id,filename,ier)
     if (ier /= 0) stop 'Error reading materials in Mesh_Par_file'
     ! stores material
     material_properties(imat,1) = rho
@@ -183,6 +184,7 @@
     material_properties(imat,6) = anisotropy_flag
     material_properties(imat,7) = domain_id
     material_properties(imat,8) = mat_id
+    if (mat_id<0) material_files(imat) = filename
   enddo
 
   ! read number of subregions
@@ -244,20 +246,22 @@
 
   ! checks given material properties
   do imat = 1,NMATERIALS
-    ! material properties
-    rho = material_properties(imat,1)
-    vp = material_properties(imat,2)
-    vs = material_properties(imat,3)
-    Q_Kappa = material_properties(imat,4)
-    Q_mu = material_properties(imat,5)
-    anisotropy_flag = material_properties(imat,6)
-    domain_id = material_properties(imat,7)
+    domain_id = material_properties(imat,7) 
     mat_id = material_properties(imat,8)
+    if (mat_id>0) then 
+      ! material properties
+      rho = material_properties(imat,1)
+      vp = material_properties(imat,2)
+      vs = material_properties(imat,3)
+      Q_Kappa = material_properties(imat,4)
+      Q_mu = material_properties(imat,5)
+      anisotropy_flag = material_properties(imat,6)
 
-    ! checks material parameters
-    if (rho <= 0.d0 .or. vp <= 0.d0 .or. vs < 0.d0) stop 'Error material with negative value of velocity or density found'
-    if (Q_Kappa < 0.d0) stop 'Error material with negative Q_Kappa value found'
-    if (Q_mu < 0.d0) stop 'Error material with negative Q_mu value found'
+      ! checks material parameters
+      if (rho <= 0.d0 .or. vp <= 0.d0 .or. vs < 0.d0) stop 'Error material with negative value of velocity or density found'
+      if (Q_Kappa < 0.d0) stop 'Error material with negative Q_Kappa value found'
+      if (Q_mu < 0.d0) stop 'Error material with negative Q_mu value found'
+    endif
 
     ! checks domain id (1 = acoustic / 2 = elastic / 3 = poroelastic)
     select case (domain_id)

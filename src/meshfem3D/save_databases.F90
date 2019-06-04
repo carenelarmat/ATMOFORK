@@ -31,7 +31,7 @@
                             nspec2D_xmin,nspec2D_xmax,nspec2D_ymin,nspec2D_ymax,NSPEC2D_BOTTOM,NSPEC2D_TOP, &
                             NSPEC2DMAX_XMIN_XMAX,NSPEC2DMAX_YMIN_YMAX, &
                             ibelm_xmin,ibelm_xmax,ibelm_ymin,ibelm_ymax,ibelm_bottom,ibelm_top, &
-                            NMATERIALS,material_properties, &
+                            NMATERIALS,material_properties, material_files, &
                             nspec_CPML,CPML_to_spec,CPML_regions,is_CPML, &
                             xstore, ystore, zstore)
 
@@ -78,6 +78,7 @@
   ! first dimension  : material_id
   ! second dimension : #rho  #vp  #vs  #Q_Kappa  #Q_mu  #anisotropy_flag  #domain_id  #material_id
   double precision , dimension(NMATERIALS,NUMBER_OF_MATERIAL_PROPERTIES) :: material_properties
+  character(len=MAX_STRING_LEN), dimension(NMATERIALS) :: material_files
 
   ! CPML
   integer, intent(in) :: nspec_CPML
@@ -136,8 +137,6 @@
     if (mat_id > 0) ndef = ndef + 1
     if (mat_id < 0) nundef = nundef + 1
   enddo
-  !debug
-  !print *,'materials def/undef: ',ndef,nundef
 
   ! opens database file
   open(unit=IIN_database,file=prname(1:len_trim(prname))//'Database', &
@@ -189,14 +188,13 @@
       case (IDOMAIN_ELASTIC)
         undef_mat_prop(3,1) = 'elastic'
       end select
-      ! default name
-      undef_mat_prop(4,1) = 'tomography_model.xyz'
+      ! tomography file name
+      undef_mat_prop(4,1) = material_files(i)
+      !undef_mat_prop(4,1) = 'tomography_model.xyz'
       ! default tomo-id (unused)
       write(undef_mat_prop(5,1),*) 0
       ! domain-id
       write(undef_mat_prop(6,1),*) domain_id
-      ! debug
-      !print *,'undef mat: ',undef_mat_prop
       ! writes out properties
       write(IIN_database) undef_mat_prop
     endif

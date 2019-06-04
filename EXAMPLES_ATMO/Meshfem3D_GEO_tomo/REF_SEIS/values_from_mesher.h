@@ -44,8 +44,8 @@
  ! approximate least memory needed by the solver:
  ! ----------------------------------------------
  !
- ! size of arrays for the largest slice =    10.165679931640625       MB
- !                                      =    9.9274218082427979E-003  GB
+ ! size of arrays for the largest slice =    11.589385986328125       MB
+ !                                      =    1.1317759752273560E-002  GB
  !
  !   (should be below 90% or so of the amount of memory available per processor core
  !   (if significantly more, the job will not run by lack of memory)

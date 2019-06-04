@@ -244,7 +244,7 @@
 
 ! material parameter list
 
-  subroutine read_material_parameters(iunit,mat_id,rho,vp,vs,Q_Kappa,Q_mu,anisotropy_flag,domain_id, ier)
+  subroutine read_material_parameters(iunit,mat_id,rho,vp,vs,Q_Kappa,Q_mu,anisotropy_flag,domain_id, tomo_file, ier)
 
   use constants, only: MAX_STRING_LEN,DONT_IGNORE_JUNK
 
@@ -256,12 +256,18 @@
   integer :: domain_id
   integer :: ier
   character(len=MAX_STRING_LEN) :: string_read
+  character(len=MAX_STRING_LEN) :: tomo_file
 
   ier = 0
   call read_next_line(iunit,DONT_IGNORE_JUNK,string_read,ier)
   if (ier /= 0) return
 
-  read(string_read,*,iostat=ier) mat_id,rho,vp,vs,Q_Kappa,Q_mu,anisotropy_flag,domain_id
+  read(string_read,*,iostat=ier) mat_id 
+  if (mat_id>0) then 
+    read(string_read,*,iostat=ier) mat_id,rho,vp,vs,Q_Kappa,Q_mu,anisotropy_flag,domain_id
+  else
+    read(string_read,*,iostat=ier) mat_id,anisotropy_flag,domain_id,tomo_file
+  endif
   if (ier /= 0) then
     print *,'error while reading your input Mesh_Par_file in routine read_material_parameters()'
     print *,'We recently changed the input format from mat_id,rho,vp,vs,Q_mu,anisotropy_flag,domain_id'

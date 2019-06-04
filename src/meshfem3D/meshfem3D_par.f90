@@ -134,6 +134,7 @@ module meshfem3D_par
 ! first dimension  : material_id
 ! second dimension : #rho  #vp  #vs  #Q_Kappa  #Q_mu  #anisotropy_flag  #domain_id
   double precision , dimension(:,:), pointer :: material_properties
+  character(len=MAX_STRING_LEN),dimension(:), pointer :: material_files
 
   logical :: BROADCAST_AFTER_READ
 

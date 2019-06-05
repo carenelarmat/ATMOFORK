@@ -1,0 +1,2798 @@
+
+ **********************************************
+ **** Specfem 3-D Solver - MPI version f90 ****
+ **********************************************
+
+ Running Git package version of the code: v2.0.2-2900-g4603960
+ which is Git commit 460396065c39efc958166098ef7eb3fd5d2267f3
+ dating From Date:   Mon Jun 3 10:22:48 2019 -0600
+
+
+ There are           32  MPI processes
+ Processes are numbered from 0 to           31
+
+ There is a total of           32  slices
+
+  NDIM =            3
+
+  NGLLX =            5
+  NGLLY =            5
+  NGLLZ =            5
+
+ using single precision for the calculations
+
+ smallest and largest possible floating-point numbers are:    1.17549435E-38   3.40282347E+38
+
+ velocity model:   default 
+
+ total acoustic elements    :       76032
+ total elastic elements     :       23040
+ total poroelastic elements :           0
+
+ ********
+ minimum and maximum number of elements
+ and points in the CUBIT + SCOTCH mesh:
+
+ NSPEC_global_min =         3096
+ NSPEC_global_max =         3096
+ NSPEC_global_max / NSPEC_global_min imbalance =    1.00000000      =    0.00000000      %
+ NSPEC_global_sum =        99072
+
+ NGLOB_global_min =       211925
+ NGLOB_global_max =       211925
+ NGLOB_global_max / NGLOB_global_min imbalance =    1.00000000      =    0.00000000      %
+ NGLOB_global_sum =      6781600
+
+ If you have elements of a single type (all acoustic, all elastic, all poroelastic, and without CPML)
+ in the whole mesh, then there should be no significant imbalance in the above numbers.
+ Otherwise, it is normal to have imbalance in elements and points because the domain decomposer
+ compensates for the different cost of different elements by partitioning them unevenly among processes.
+ ********
+
+
+ ********
+ Model: P velocity min,max =    283.611694       7500.00000    
+ Model: S velocity min,max =    0.00000000       4300.00000    
+
+ Model: Poisson's ratio min,max =   0.255164206      0.500000000    
+ ********
+
+ *********************************************
+ *** Verification of simulation parameters ***
+ *********************************************
+
+ *** Xmin and Xmax of the model =    370768.812       421052.906    
+ *** Ymin and Ymax of the model =    8302064.00       8352066.00    
+ *** Zmin and Zmax of the model =   -16000.0000       30000.0000    
+
+ *** Max GLL point distance =    572.100586    
+ *** Min GLL point distance =    44.5862427    
+ *** Max/min ratio =    12.8313255    
+
+ *** Max element size =    1747.79541    
+ *** Min element size =    258.211853    
+ *** Max/min ratio =    6.76884270    
+
+ *** Minimum period resolved =    4.61720085    
+ *** Maximum suggested time step =    1.19666662E-02
+
+ *** for DT :    5.0000000000000001E-003
+ *** Max stability for wave velocities =   0.208913654    
+
+ Elapsed time for checking mesh resolution in seconds =    6.7310333251953125E-003
+ saving VTK files for Courant number and minimum period
+
+ ******************************************
+ There is a total of           32  slices
+ ******************************************
+
+ mesh surfaces:
+   high-resolution  =  F
+   nfaces per slice =           72          72          72         612          72          72          72          72         342         342         342         965         342         342         342         342          76          72          72         612          72          72          72          72          78          72          72         612          72          72          72          72
+
+   total number of surface faces is         6717
+
+   used on cross-sections
+
+ surface movies:
+   saving: particle velocities
+   number of steps between frames =          200
+
+
+ kd-tree:
+   total data points:         3096
+   theoretical   number of nodes:         6188
+                tree memory size:   0.188842773     MB
+   actual        number of nodes:         6191
+                tree memory size:   0.188934326     MB
+   maximum depth   :           13
+   creation timing :    0.00000000     (s)
+
+
+ sources:           1
+
+ ********************
+  locating sources
+ ********************
+
+ reading source information from ./DATA/CMTSOLUTION file
+
+ UTM projection:
+   UTM zone:           -2
+
+ source #            1
+   source located in slice           19
+                  in element          222
+                  in elastic domain
+
+   using moment tensor source: 
+     xi coordinate of source in that element:   0.74389375809762326     
+     eta coordinate of source in that element:  -0.97175881200779557     
+     gamma coordinate of source in that element:    2.0871899049514284E-002
+
+   source time function:
+     using Gaussian source time function
+     half duration:    8.0000000000000000       seconds
+     time shift:    0.0000000000000000       seconds
+
+   magnitude of the source:
+        scalar moment M0 =    1.6844703915474442E+028  dyne-cm
+     moment magnitude Mw =    8.1176424451728337     
+
+   original (requested) position of the source:
+
+             latitude:   -15.130000000000001     
+            longitude:   -171.97000000000000     
+
+            UTM x:    395776.69610082352     
+            UTM y:    8327079.7065986479     
+           depth:    12.000000000000000       km
+
+   position of the source that will be used:
+
+            UTM x:    395776.69610082352     
+            UTM y:    8327079.7065986479     
+            depth:    12.000000000000002       km
+                z:   -12000.000000000002     
+
+   error in location of the source:    9.33141564E-10  m
+
+
+
+ maximum error in location of the sources:    9.33141564E-10  m
+
+
+ Elapsed time for detection of sources in seconds =    2.5835037231445312E-002
+
+ End of source detection - done
+
+
+ Each source is being convolved with HDUR_MOVIE =    0.0000000000000000     
+
+
+ printing the source-time function
+
+ receivers:
+
+ there are           66  stations in file ./DATA/STATIONS
+ saving           55  stations inside the model in file ./DATA/STATIONS_FILTERED
+ excluding           11  stations located outside the model
+
+
+ Total number of receivers =           55
+
+
+ ********************
+  locating receivers
+ ********************
+
+ reading receiver information from ./DATA/STATIONS_FILTERED file
+
+
+ station #            1     DB    S01
+      original latitude:   -15.1300001    
+      original longitude:   -171.970001    
+      original UTM x:    395776.688    
+      original UTM y:    8327079.50    
+      original depth:   -0.00000000      m
+      horizontal distance km:    9.33139742E-13
+      target x, y, z:    395776.688       8327079.50       0.00000000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice           19
+                       in element          870
+                       in acoustic domain
+      at coordinates: 
+      xi    =   0.74389375809770020     
+      eta   =  -0.97175881200780212     
+      gamma =    1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    395776.69610082358     
+      UTM y:    8327079.7065986469     
+      depth:    0.0000000000000000       m
+      z:    0.0000000000000000     
+
+
+
+ station #            2     DB    S02
+      original latitude:   -15.1225004    
+      original longitude:   -171.988998    
+      original UTM x:    393731.281    
+      original UTM y:    8327900.00    
+      original depth:   -0.00000000      m
+      horizontal distance km:    2.20384574    
+      target x, y, z:    393731.281       8327900.00       0.00000000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice           19
+                       in element          940
+                       in acoustic domain
+      at coordinates: 
+      xi    =   0.83888642805153490     
+      eta   =   0.60391981191786615     
+      gamma =   -1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    393731.29671449331     
+      UTM y:    8327900.2412420558     
+      depth:    0.0000000000000000       m
+      z:    0.0000000000000000     
+
+
+
+ station #            3     DB    S03
+      original latitude:   -15.1148996    
+      original longitude:   -172.007996    
+      original UTM x:    391685.688    
+      original UTM y:    8328731.50    
+      original depth:   -0.00000000      m
+      horizontal distance km:    4.41194677    
+      target x, y, z:    391685.688       8328731.50       0.00000000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice           19
+                       in element          944
+                       in acoustic domain
+      at coordinates: 
+      xi    =   0.93355170859421932     
+      eta   =   0.19994023277097150     
+      gamma =   -1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    391685.69459261256     
+      UTM y:    8328731.6688612737     
+      depth:    0.0000000000000000       m
+      z:    0.0000000000000000     
+
+
+
+ station #            4     DB    S04
+      original latitude:   -15.1073999    
+      original longitude:   -172.028000    
+      original UTM x:    389532.531    
+      original UTM y:    8329551.50    
+      original depth:   -0.00000000      m
+      horizontal distance km:    6.71556425    
+      target x, y, z:    389532.531       8329551.50       0.00000000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice           18
+                       in element          954
+                       in acoustic domain
+      at coordinates: 
+      xi    =   0.82278971438769155     
+      eta   =  -0.22637846915513954     
+      gamma =   -1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    389532.52155617840     
+      UTM y:    8329551.3634121865     
+      depth:    0.0000000000000000       m
+      z:    0.0000000000000000     
+
+
+
+ station #            5     DB    S05
+      original latitude:   -15.0998001    
+      original longitude:   -172.046997    
+      original UTM x:    387486.594    
+      original UTM y:    8330382.50    
+      original depth:   -0.00000000      m
+      horizontal distance km:    8.92376804    
+      target x, y, z:    387486.594       8330382.50       0.00000000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice           18
+                       in element          886
+                       in acoustic domain
+      at coordinates: 
+      xi    =   0.91685793740254451     
+      eta   =  -0.63044684368488957     
+      gamma =    1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    387486.60799652513     
+      UTM y:    8330382.4448061511     
+      depth:    0.0000000000000000       m
+      z:    0.0000000000000000     
+
+
+
+ station #            6     DB    S06
+      original latitude:   -15.0923004    
+      original longitude:   -172.065994    
+      original UTM x:    385440.594    
+      original UTM y:    8331202.50    
+      original depth:   -0.00000000      m
+      horizontal distance km:    11.1279268    
+      target x, y, z:    385440.594       8331202.50       0.00000000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice           18
+                       in element          885
+                       in acoustic domain
+      at coordinates: 
+      xi    =  -0.98932049678224532     
+      eta   =   0.94391909184983236     
+      gamma =    1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    385440.59389041201     
+      UTM y:    8331202.2958670808     
+      depth:    0.0000000000000000       m
+      z:    0.0000000000000000     
+
+
+
+ station #            7     DB    S07
+      original latitude:   -15.0846996    
+      original longitude:   -172.085007    
+      original UTM x:    383394.375    
+      original UTM y:    8332033.00    
+      original depth:   -0.00000000      m
+      horizontal distance km:    13.3363209    
+      target x, y, z:    383394.375       8332033.00       0.00000000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice           18
+                       in element          889
+                       in acoustic domain
+      at coordinates: 
+      xi    =  -0.89583675469889223     
+      eta   =   0.53846653342075401     
+      gamma =    1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    383394.37288237864     
+      UTM y:    8332033.0410639131     
+      depth:    0.0000000000000000       m
+      z:    0.0000000000000000     
+
+
+
+ station #            8     DB    S08
+      original latitude:   -15.0771999    
+      original longitude:   -172.104004    
+      original UTM x:    381348.062    
+      original UTM y:    8332852.50    
+      original depth:   -0.00000000      m
+      horizontal distance km:    15.5406418    
+      target x, y, z:    381348.062       8332852.50       0.00000000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice           17
+                       in element          899
+                       in acoustic domain
+      at coordinates: 
+      xi    =  -0.80260144645208209     
+      eta   =   0.11196600581398071     
+      gamma =    1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    381348.05299547792     
+      UTM y:    8332852.5562975276     
+      depth:    0.0000000000000000       m
+      z:    0.0000000000000000     
+
+
+
+ station #            9     DB    S09
+      original latitude:   -15.0696001    
+      original longitude:   -172.123001    
+      original UTM x:    379301.531    
+      original UTM y:    8333683.00    
+      original depth:   -0.00000000      m
+      horizontal distance km:    17.7492065    
+      target x, y, z:    379301.531       8333683.00       0.00000000    
+      closest estimate found:    9.33139788E-10  m away
+
+      receiver located in slice           17
+                       in element          903
+                       in acoustic domain
+      at coordinates: 
+      xi    =  -0.70970539374472741     
+      eta   =  -0.29373081005759349     
+      gamma =    1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    379301.52415758587     
+      UTM y:    8333682.9662479600     
+      depth:    0.0000000000000000       m
+      z:    0.0000000000000000     
+
+
+
+ station #           10     DB    S10
+      original latitude:   -15.0621004    
+      original longitude:   -172.143005    
+      original UTM x:    377147.406    
+      original UTM y:    8334501.50    
+      original depth:   -0.00000000      m
+      horizontal distance km:    20.0533009    
+      target x, y, z:    377147.406       8334501.50       0.00000000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice           17
+                       in element          979
+                       in acoustic domain
+      at coordinates: 
+      xi    =  -0.82227725890771697     
+      eta   =  -0.72234372484064602     
+      gamma =   -1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    377147.40311640059     
+      UTM y:    8334501.5895052897     
+      depth:    0.0000000000000000       m
+      z:    0.0000000000000000     
+
+
+
+ station #           11     DB    S11
+      original latitude:   -15.0544996    
+      original longitude:   -172.162003    
+      original UTM x:    375100.562    
+      original UTM y:    8335331.50    
+      original depth:   -0.00000000      m
+      horizontal distance km:    22.2620125    
+      target x, y, z:    375100.562       8335331.50       0.00000000    
+      closest estimate found:    9.33139788E-10  m away
+
+      receiver located in slice           16
+                       in element          983
+                       in acoustic domain
+      at coordinates: 
+      xi    =  -0.72997810151776366     
+      eta   =   0.87163926756874155     
+      gamma =   -1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    375100.56162660650     
+      UTM y:    8335331.6561485855     
+      depth:    0.0000000000000000       m
+      z:    0.0000000000000000     
+
+
+
+ station #           12     DB    S12
+      original latitude:   -15.0469999    
+      original longitude:   -172.181000    
+      original UTM x:    373053.625    
+      original UTM y:    8336150.50    
+      original depth:   -0.00000000      m
+      horizontal distance km:    24.4666538    
+      target x, y, z:    373053.625       8336150.50       0.00000000    
+      closest estimate found:    5.82076609E-11  m away
+
+      receiver located in slice           16
+                       in element          915
+                       in acoustic domain
+      at coordinates: 
+      xi    =  -0.63792095545748251     
+      eta   =   0.44336575808687262     
+      gamma =    1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    373053.62462203437     
+      UTM y:    8336150.4935599631     
+      depth:    0.0000000000000000       m
+      z:    0.0000000000000000     
+
+
+
+ station #           13     DB    S13
+      original latitude:   -15.0394001    
+      original longitude:   -172.199997    
+      original UTM x:    371006.469    
+      original UTM y:    8336980.00    
+      original depth:   -0.00000000      m
+      horizontal distance km:    26.6755352    
+      target x, y, z:    371006.469       8336980.00       0.00000000    
+      closest estimate found:    9.33139788E-10  m away
+
+      receiver located in slice           16
+                       in element          919
+                       in acoustic domain
+      at coordinates: 
+      xi    =  -0.54625710894642943     
+      eta   =    3.6441429623233206E-002
+      gamma =    1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    371006.47451865464     
+      UTM y:    8336980.2268744763     
+      depth:    0.0000000000000000       m
+      z:    0.0000000000000000     
+
+
+
+ station #           14     DB    L01
+      original latitude:   -15.1300001    
+      original longitude:   -171.970001    
+      original UTM x:    395776.688    
+      original UTM y:    8327079.50    
+      original depth:   -10000.0000      m
+      horizontal distance km:    9.33139742E-13
+      target x, y, z:    395776.688       8327079.50       10000.0000    
+      closest estimate found:    9.33141564E-10  m away
+
+      receiver located in slice           19
+                       in element         1590
+                       in acoustic domain
+      at coordinates: 
+      xi    =   0.74389375809781111     
+      eta   =  -0.97175881200958714     
+      gamma =    1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    395776.69610082364     
+      UTM y:    8327079.7065986460     
+      depth:    10000.000000000002       m
+      z:    10000.000000000002     
+
+
+
+ station #           15     DB    L02
+      original latitude:   -15.1225004    
+      original longitude:   -171.988998    
+      original UTM x:    393731.281    
+      original UTM y:    8327900.00    
+      original depth:   -10000.0000      m
+      horizontal distance km:    2.20384574    
+      target x, y, z:    393731.281       8327900.00       10000.0000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice           19
+                       in element         1660
+                       in acoustic domain
+      at coordinates: 
+      xi    =   0.83888642805153490     
+      eta   =   0.60391981191786615     
+      gamma =   -1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    393731.29671449331     
+      UTM y:    8327900.2412420558     
+      depth:    10000.000000000000       m
+      z:    10000.000000000000     
+
+
+
+ station #           16     DB    L03
+      original latitude:   -15.1148996    
+      original longitude:   -172.007996    
+      original UTM x:    391685.688    
+      original UTM y:    8328731.50    
+      original depth:   -10000.0000      m
+      horizontal distance km:    4.41194677    
+      target x, y, z:    391685.688       8328731.50       10000.0000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice           19
+                       in element         1664
+                       in acoustic domain
+      at coordinates: 
+      xi    =   0.93355170859421932     
+      eta   =   0.19994023277097150     
+      gamma =   -1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    391685.69459261256     
+      UTM y:    8328731.6688612737     
+      depth:    10000.000000000000       m
+      z:    10000.000000000000     
+
+
+
+ station #           17     DB    L04
+      original latitude:   -15.1073999    
+      original longitude:   -172.028000    
+      original UTM x:    389532.531    
+      original UTM y:    8329551.50    
+      original depth:   -10000.0000      m
+      horizontal distance km:    6.71556425    
+      target x, y, z:    389532.531       8329551.50       10000.0000    
+      closest estimate found:    9.38577327E-10  m away
+
+      receiver located in slice           18
+                       in element         1674
+                       in acoustic domain
+      at coordinates: 
+      xi    =   0.82278971438791382     
+      eta   =  -0.22637846915513957     
+      gamma =  -0.99999999999999656     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    389532.52155617852     
+      UTM y:    8329551.3634121874     
+      depth:    10000.000000000004       m
+      z:    10000.000000000004     
+
+
+
+ station #           18     DB    L05
+      original latitude:   -15.0998001    
+      original longitude:   -172.046997    
+      original UTM x:    387486.594    
+      original UTM y:    8330382.50    
+      original depth:   -10000.0000      m
+      horizontal distance km:    8.92376804    
+      target x, y, z:    387486.594       8330382.50       10000.0000    
+      closest estimate found:    9.33139788E-10  m away
+
+      receiver located in slice           18
+                       in element         1606
+                       in acoustic domain
+      at coordinates: 
+      xi    =   0.91685793740254440     
+      eta   =  -0.63044684368489279     
+      gamma =    1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    387486.60799652507     
+      UTM y:    8330382.4448061502     
+      depth:    10000.000000000000       m
+      z:    10000.000000000000     
+
+
+
+ station #           19     DB    L06
+      original latitude:   -15.0923004    
+      original longitude:   -172.065994    
+      original UTM x:    385440.594    
+      original UTM y:    8331202.50    
+      original depth:   -10000.0000      m
+      horizontal distance km:    11.1279268    
+      target x, y, z:    385440.594       8331202.50       10000.0000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice           18
+                       in element         1605
+                       in acoustic domain
+      at coordinates: 
+      xi    =  -0.98932049678224576     
+      eta   =   0.94391909184983236     
+      gamma =    1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    385440.59389041201     
+      UTM y:    8331202.2958670808     
+      depth:    10000.000000000000       m
+      z:    10000.000000000000     
+
+
+
+ station #           20     DB    L07
+      original latitude:   -15.0846996    
+      original longitude:   -172.085007    
+      original UTM x:    383394.375    
+      original UTM y:    8332033.00    
+      original depth:   -10000.0000      m
+      horizontal distance km:    13.3363209    
+      target x, y, z:    383394.375       8332033.00       10000.0000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice           18
+                       in element         1609
+                       in acoustic domain
+      at coordinates: 
+      xi    =  -0.89583675469878110     
+      eta   =   0.53846653342254158     
+      gamma =    1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    383394.37288237864     
+      UTM y:    8332033.0410639131     
+      depth:    10000.000000000000       m
+      z:    10000.000000000000     
+
+
+
+ station #           21     DB    L08
+      original latitude:   -15.0771999    
+      original longitude:   -172.104004    
+      original UTM x:    381348.062    
+      original UTM y:    8332852.50    
+      original depth:   -10000.0000      m
+      horizontal distance km:    15.5406418    
+      target x, y, z:    381348.062       8332852.50       10000.0000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice           17
+                       in element         1619
+                       in acoustic domain
+      at coordinates: 
+      xi    =  -0.80260144645208231     
+      eta   =   0.11196600581397245     
+      gamma =    1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    381348.05299547792     
+      UTM y:    8332852.5562975276     
+      depth:    10000.000000000000       m
+      z:    10000.000000000000     
+
+
+
+ station #           22     DB    L09
+      original latitude:   -15.0696001    
+      original longitude:   -172.123001    
+      original UTM x:    379301.531    
+      original UTM y:    8333683.00    
+      original depth:   -10000.0000      m
+      horizontal distance km:    17.7492065    
+      target x, y, z:    379301.531       8333683.00       10000.0000    
+      closest estimate found:    9.33139788E-10  m away
+
+      receiver located in slice           17
+                       in element         1623
+                       in acoustic domain
+      at coordinates: 
+      xi    =  -0.70970539374483854     
+      eta   =  -0.29373081005938106     
+      gamma =    1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    379301.52415758575     
+      UTM y:    8333682.9662479581     
+      depth:    10000.000000000000       m
+      z:    10000.000000000000     
+
+
+
+ station #           23     DB    L10
+      original latitude:   -15.0621004    
+      original longitude:   -172.143005    
+      original UTM x:    377147.406    
+      original UTM y:    8334501.50    
+      original depth:   -10000.0000      m
+      horizontal distance km:    20.0533009    
+      target x, y, z:    377147.406       8334501.50       10000.0000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice           17
+                       in element         1699
+                       in acoustic domain
+      at coordinates: 
+      xi    =  -0.82227725890771697     
+      eta   =  -0.72234372484243448     
+      gamma =   -1.0000000000000036     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    377147.40311640059     
+      UTM y:    8334501.5895052897     
+      depth:    10000.000000000000       m
+      z:    10000.000000000000     
+
+
+
+ station #           24     DB    L11
+      original latitude:   -15.0544996    
+      original longitude:   -172.162003    
+      original UTM x:    375100.562    
+      original UTM y:    8335331.50    
+      original depth:   -10000.0000      m
+      horizontal distance km:    22.2620125    
+      target x, y, z:    375100.562       8335331.50       10000.0000    
+      closest estimate found:    9.33139788E-10  m away
+
+      receiver located in slice           16
+                       in element         1631
+                       in acoustic domain
+      at coordinates: 
+      xi    =  -0.72997810151776366     
+      eta   =   0.87163926756874155     
+      gamma =    1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    375100.56162660650     
+      UTM y:    8335331.6561485855     
+      depth:    10000.000000000000       m
+      z:    10000.000000000000     
+
+
+
+ station #           25     DB    L12
+      original latitude:   -15.0469999    
+      original longitude:   -172.181000    
+      original UTM x:    373053.625    
+      original UTM y:    8336150.50    
+      original depth:   -10000.0000      m
+      horizontal distance km:    24.4666538    
+      target x, y, z:    373053.625       8336150.50       10000.0000    
+      closest estimate found:    5.82076609E-11  m away
+
+      receiver located in slice           16
+                       in element         1707
+                       in acoustic domain
+      at coordinates: 
+      xi    =  -0.63792095545748251     
+      eta   =   0.44336575808687262     
+      gamma =   -1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    373053.62462203437     
+      UTM y:    8336150.4935599631     
+      depth:    10000.000000000000       m
+      z:    10000.000000000000     
+
+
+
+ station #           26     DB    L13
+      original latitude:   -15.0394001    
+      original longitude:   -172.199997    
+      original UTM x:    371006.469    
+      original UTM y:    8336980.00    
+      original depth:   -10000.0000      m
+      horizontal distance km:    26.6755352    
+      target x, y, z:    371006.469       8336980.00       10000.0000    
+      closest estimate found:    9.31322575E-10  m away
+
+      receiver located in slice           16
+                       in element         1711
+                       in acoustic domain
+      at coordinates: 
+      xi    =  -0.54625710894642943     
+      eta   =    3.6441429623233199E-002
+      gamma =   -1.0000000000000036     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    371006.47451865469     
+      UTM y:    8336980.2268744763     
+      depth:    10000.000000000000       m
+      z:    10000.000000000000     
+
+
+
+ station #           27     DB    M01
+      original latitude:   -15.1300001    
+      original longitude:   -171.970001    
+      original UTM x:    395776.688    
+      original UTM y:    8327079.50    
+      original depth:   -20000.0000      m
+      horizontal distance km:    9.33139742E-13
+      target x, y, z:    395776.688       8327079.50       20000.0000    
+      closest estimate found:    9.38570333E-10  m away
+
+      receiver located in slice           19
+                       in element         2310
+                       in acoustic domain
+      at coordinates: 
+      xi    =   0.74389375809784530     
+      eta   =  -0.97175881200600411     
+      gamma =    1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    395776.69610082370     
+      UTM y:    8327079.7065986479     
+      depth:    20000.000000000000       m
+      z:    20000.000000000000     
+
+
+
+ station #           28     DB    M02
+      original latitude:   -15.1225004    
+      original longitude:   -171.988998    
+      original UTM x:    393731.281    
+      original UTM y:    8327900.00    
+      original depth:   -20000.0000      m
+      horizontal distance km:    2.20384574    
+      target x, y, z:    393731.281       8327900.00       20000.0000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice           19
+                       in element         2308
+                       in acoustic domain
+      at coordinates: 
+      xi    =   0.83888642805153490     
+      eta   =   0.60391981191786615     
+      gamma =    1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    393731.29671449331     
+      UTM y:    8327900.2412420558     
+      depth:    20000.000000000000       m
+      z:    20000.000000000000     
+
+
+
+ station #           29     DB    M03
+      original latitude:   -15.1148996    
+      original longitude:   -172.007996    
+      original UTM x:    391685.688    
+      original UTM y:    8328731.50    
+      original depth:   -20000.0000      m
+      horizontal distance km:    4.41194677    
+      target x, y, z:    391685.688       8328731.50       20000.0000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice           19
+                       in element         2312
+                       in acoustic domain
+      at coordinates: 
+      xi    =   0.93355170859421932     
+      eta   =   0.19994023277097150     
+      gamma =    1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    391685.69459261256     
+      UTM y:    8328731.6688612737     
+      depth:    20000.000000000000       m
+      z:    20000.000000000000     
+
+
+
+ station #           30     DB    M04
+      original latitude:   -15.1073999    
+      original longitude:   -172.028000    
+      original UTM x:    389532.531    
+      original UTM y:    8329551.50    
+      original depth:   -20000.0000      m
+      horizontal distance km:    6.71556425    
+      target x, y, z:    389532.531       8329551.50       20000.0000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice           18
+                       in element         2322
+                       in acoustic domain
+      at coordinates: 
+      xi    =   0.82278971438758042     
+      eta   =  -0.22637846915871634     
+      gamma =   0.99999999999999234     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    389532.52155617840     
+      UTM y:    8329551.3634121865     
+      depth:    20000.000000000000       m
+      z:    20000.000000000000     
+
+
+
+ station #           31     DB    M05
+      original latitude:   -15.0998001    
+      original longitude:   -172.046997    
+      original UTM x:    387486.594    
+      original UTM y:    8330382.50    
+      original depth:   -20000.0000      m
+      horizontal distance km:    8.92376804    
+      target x, y, z:    387486.594       8330382.50       20000.0000    
+      closest estimate found:    9.33139788E-10  m away
+
+      receiver located in slice           18
+                       in element         2398
+                       in acoustic domain
+      at coordinates: 
+      xi    =   0.91685793740254440     
+      eta   =  -0.63044684368489279     
+      gamma =   -1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    387486.60799652507     
+      UTM y:    8330382.4448061502     
+      depth:    20000.000000000000       m
+      z:    20000.000000000000     
+
+
+
+ station #           32     DB    M06
+      original latitude:   -15.0923004    
+      original longitude:   -172.065994    
+      original UTM x:    385440.594    
+      original UTM y:    8331202.50    
+      original depth:   -20000.0000      m
+      horizontal distance km:    11.1279268    
+      target x, y, z:    385440.594       8331202.50       20000.0000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice           18
+                       in element         2325
+                       in acoustic domain
+      at coordinates: 
+      xi    =  -0.98932049678224576     
+      eta   =   0.94391909185162093     
+      gamma =    1.0000000000000073     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    385440.59389041201     
+      UTM y:    8331202.2958670808     
+      depth:    20000.000000000000       m
+      z:    20000.000000000000     
+
+
+
+ station #           33     DB    M07
+      original latitude:   -15.0846996    
+      original longitude:   -172.085007    
+      original UTM x:    383394.375    
+      original UTM y:    8332033.00    
+      original depth:   -20000.0000      m
+      horizontal distance km:    13.3363209    
+      target x, y, z:    383394.375       8332033.00       20000.0000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice           18
+                       in element         2401
+                       in acoustic domain
+      at coordinates: 
+      xi    =  -0.89583675469878110     
+      eta   =   0.53846653342254158     
+      gamma =   -1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    383394.37288237864     
+      UTM y:    8332033.0410639131     
+      depth:    20000.000000000000       m
+      z:    20000.000000000000     
+
+
+
+ station #           34     DB    M08
+      original latitude:   -15.0771999    
+      original longitude:   -172.104004    
+      original UTM x:    381348.062    
+      original UTM y:    8332852.50    
+      original depth:   -20000.0000      m
+      horizontal distance km:    15.5406418    
+      target x, y, z:    381348.062       8332852.50       20000.0000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice           17
+                       in element         2411
+                       in acoustic domain
+      at coordinates: 
+      xi    =  -0.80260144645208231     
+      eta   =   0.11196600581397245     
+      gamma =   -1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    381348.05299547792     
+      UTM y:    8332852.5562975276     
+      depth:    20000.000000000000       m
+      z:    20000.000000000000     
+
+
+
+ station #           35     DB    M09
+      original latitude:   -15.0696001    
+      original longitude:   -172.123001    
+      original UTM x:    379301.531    
+      original UTM y:    8333683.00    
+      original depth:   -20000.0000      m
+      horizontal distance km:    17.7492065    
+      target x, y, z:    379301.531       8333683.00       20000.0000    
+      closest estimate found:    9.33139788E-10  m away
+
+      receiver located in slice           17
+                       in element         2415
+                       in acoustic domain
+      at coordinates: 
+      xi    =  -0.70970539374483854     
+      eta   =  -0.29373081005938106     
+      gamma =   -1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    379301.52415758575     
+      UTM y:    8333682.9662479581     
+      depth:    20000.000000000000       m
+      z:    20000.000000000000     
+
+
+
+ station #           36     DB    M10
+      original latitude:   -15.0621004    
+      original longitude:   -172.143005    
+      original UTM x:    377147.406    
+      original UTM y:    8334501.50    
+      original depth:   -20000.0000      m
+      horizontal distance km:    20.0533009    
+      target x, y, z:    377147.406       8334501.50       20000.0000    
+      closest estimate found:    3.63797881E-12  m away
+
+      receiver located in slice           17
+                       in element         2347
+                       in acoustic domain
+      at coordinates: 
+      xi    =  -0.82227725890771697     
+      eta   =  -0.72234372484064602     
+      gamma =   0.99999999999999267     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    377147.40311640059     
+      UTM y:    8334501.5895052897     
+      depth:    19999.999999999996       m
+      z:    19999.999999999996     
+
+
+
+ station #           37     DB    M11
+      original latitude:   -15.0544996    
+      original longitude:   -172.162003    
+      original UTM x:    375100.562    
+      original UTM y:    8335331.50    
+      original depth:   -20000.0000      m
+      horizontal distance km:    22.2620125    
+      target x, y, z:    375100.562       8335331.50       20000.0000    
+      closest estimate found:    9.33139788E-10  m away
+
+      receiver located in slice           16
+                       in element         2351
+                       in acoustic domain
+      at coordinates: 
+      xi    =  -0.72997810151779829     
+      eta   =   0.87163926756874166     
+      gamma =    1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    375100.56162660650     
+      UTM y:    8335331.6561485855     
+      depth:    20000.000000000000       m
+      z:    20000.000000000000     
+
+
+
+ station #           38     DB    M12
+      original latitude:   -15.0469999    
+      original longitude:   -172.181000    
+      original UTM x:    373053.625    
+      original UTM y:    8336150.50    
+      original depth:   -20000.0000      m
+      horizontal distance km:    24.4666538    
+      target x, y, z:    373053.625       8336150.50       20000.0000    
+      closest estimate found:    5.82076609E-11  m away
+
+      receiver located in slice           16
+                       in element         2355
+                       in acoustic domain
+      at coordinates: 
+      xi    =  -0.63792095545748251     
+      eta   =   0.44336575808687262     
+      gamma =    1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    373053.62462203437     
+      UTM y:    8336150.4935599631     
+      depth:    20000.000000000000       m
+      z:    20000.000000000000     
+
+
+
+ station #           39     DB    M13
+      original latitude:   -15.0394001    
+      original longitude:   -172.199997    
+      original UTM x:    371006.469    
+      original UTM y:    8336980.00    
+      original depth:   -20000.0000      m
+      horizontal distance km:    26.6755352    
+      target x, y, z:    371006.469       8336980.00       20000.0000    
+      closest estimate found:    9.33139788E-10  m away
+
+      receiver located in slice           16
+                       in element         2431
+                       in acoustic domain
+      at coordinates: 
+      xi    =  -0.54625710894635227     
+      eta   =    3.6441429625021622E-002
+      gamma =   -1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    371006.47451865464     
+      UTM y:    8336980.2268744763     
+      depth:    20000.000000000000       m
+      z:    20000.000000000000     
+
+
+
+ station #           40     CC    S19
+      original latitude:   -15.0580997    
+      original longitude:   -171.744003    
+      original UTM x:    420034.125    
+      original UTM y:    8335127.50    
+      original depth:   -0.00000000      m
+      horizontal distance km:    25.5576057    
+      target x, y, z:    420034.125       8335127.50       0.00000000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice           23
+                       in element          984
+                       in acoustic domain
+      at coordinates: 
+      xi    =  -0.94499425348616195     
+      eta   =   0.47976521302173869     
+      gamma =   -1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    420034.12433813099     
+      UTM y:    8335127.5877346806     
+      depth:    0.0000000000000000       m
+      z:    0.0000000000000000     
+
+
+
+ station #           41     CC    S37
+      original latitude:   -14.9940996    
+      original longitude:   -171.778000    
+      original UTM x:    416354.656    
+      original UTM y:    8342194.00    
+      original depth:   -0.00000000      m
+      horizontal distance km:    25.5323429    
+      target x, y, z:    416354.656       8342194.00       0.00000000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice           31
+                       in element          950
+                       in acoustic domain
+      at coordinates: 
+      xi    =    3.0335237062304898E-002
+      eta   =    4.6966689005243735E-002
+      gamma =   -1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    416354.65512737562     
+      UTM y:    8342194.2079032995     
+      depth:    0.0000000000000000       m
+      z:    0.0000000000000000     
+
+
+
+ station #           42     CC    S55
+      original latitude:   -14.9434004    
+      original longitude:   -171.830994    
+      original UTM x:    410635.094    
+      original UTM y:    8347781.50    
+      original depth:   -0.00000000      m
+      horizontal distance km:    25.4821796    
+      target x, y, z:    410635.094       8347781.50       0.00000000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice           30
+                       in element          981
+                       in acoustic domain
+      at coordinates: 
+      xi    =  -0.88913417751076707     
+      eta   =   0.77459352328185960     
+      gamma =   -1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    410635.10242136416     
+      UTM y:    8347781.6195772486     
+      depth:    0.0000000000000000       m
+      z:    0.0000000000000000     
+
+
+
+ station #           43     CC    S73
+      original latitude:   -14.9110003    
+      original longitude:   -171.897003    
+      original UTM x:    403522.594    
+      original UTM y:    8351338.00    
+      original depth:   -0.00000000      m
+      horizontal distance km:    25.4648933    
+      target x, y, z:    403522.594       8351338.00       0.00000000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice           29
+                       in element         1004
+                       in acoustic domain
+      at coordinates: 
+      xi    =  -0.46801914531553307     
+      eta   =  -0.39742457326662356     
+      gamma =   -1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    403522.58740924357     
+      UTM y:    8351337.9417973282     
+      depth:    0.0000000000000000       m
+      z:    0.0000000000000000     
+
+
+
+ station #           44     CC    S109
+      original latitude:   -14.9115000    
+      original longitude:   -172.044006    
+      original UTM x:    387710.750    
+      original UTM y:    8351213.50    
+      original depth:   -0.00000000      m
+      horizontal distance km:    25.4462090    
+      target x, y, z:    387710.750       8351213.50       0.00000000    
+      closest estimate found:    9.31322575E-10  m away
+
+      receiver located in slice           26
+                       in element         1007
+                       in acoustic domain
+      at coordinates: 
+      xi    =  -0.65522893122258452     
+      eta   =  -0.63587826534215364     
+      gamma =   -1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    387710.74625841598     
+      UTM y:    8351213.7074237568     
+      depth:    0.0000000000000000       m
+      z:    0.0000000000000000     
+
+
+
+ station #           45     CC    S127
+      original latitude:   -14.9443998    
+      original longitude:   -172.110992    
+      original UTM x:    380521.875    
+      original UTM y:    8347539.50    
+      original depth:   -0.00000000      m
+      horizontal distance km:    25.5207462    
+      target x, y, z:    380521.875       8347539.50       0.00000000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice           25
+                       in element          982
+                       in acoustic domain
+      at coordinates: 
+      xi    =  -0.37991666013487740     
+      eta   =   0.30942941705473126     
+      gamma =   -1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    380521.86021566094     
+      UTM y:    8347539.3853689320     
+      depth:    0.0000000000000000       m
+      z:    0.0000000000000000     
+
+
+
+ station #           46     CC    S145
+      original latitude:   -14.9954004    
+      original longitude:   -172.162994    
+      original UTM x:    374958.656    
+      original UTM y:    8341869.00    
+      original depth:   -0.00000000      m
+      horizontal distance km:    25.5365047    
+      target x, y, z:    374958.656       8341869.00       0.00000000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice           24
+                       in element          880
+                       in acoustic domain
+      at coordinates: 
+      xi    =   0.99910128315440949     
+      eta   =  -0.57759934851643224     
+      gamma =    1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    374958.65426896722     
+      UTM y:    8341868.9651392605     
+      depth:    0.0000000000000000       m
+      z:    0.0000000000000000     
+
+
+
+ station #           47     CC    S163
+      original latitude:   -15.0595999    
+      original longitude:   -172.197006    
+      original UTM x:    371341.125    
+      original UTM y:    8334747.50    
+      original depth:   -0.00000000      m
+      horizontal distance km:    25.6103477    
+      target x, y, z:    371341.125       8334747.50       0.00000000    
+      closest estimate found:    1.86355442E-09  m away
+
+      receiver located in slice           16
+                       in element          907
+                       in acoustic domain
+      at coordinates: 
+      xi    =    9.2651843009710508E-002
+      eta   =  -0.25041679311159187     
+      gamma =    1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    371341.12304814643     
+      UTM y:    8334747.3454549871     
+      depth:    0.0000000000000000       m
+      z:    0.0000000000000000     
+
+
+
+ station #           48     CC    S199
+      original latitude:   -15.2017002    
+      original longitude:   -172.195999    
+      original UTM x:    371534.281    
+      original UTM y:    8319028.00    
+      original depth:   -0.00000000      m
+      horizontal distance km:    25.5445690    
+      target x, y, z:    371534.281       8319028.00       0.00000000    
+      closest estimate found:    5.82076609E-11  m away
+
+      receiver located in slice            8
+                       in element          961
+                       in acoustic domain
+      at coordinates: 
+      xi    =   0.46143698738803252     
+      eta   =  -0.43070255018655640     
+      gamma =   -1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    371534.28579205042     
+      UTM y:    8319027.9616469909     
+      depth:    0.0000000000000000       m
+      z:    0.0000000000000000     
+
+
+
+ station #           49     CC    S217
+      original latitude:   -15.2658005    
+      original longitude:   -172.162003    
+      original UTM x:    375224.562    
+      original UTM y:    8311956.50    
+      original depth:   -0.00000000      m
+      horizontal distance km:    25.5166664    
+      target x, y, z:    375224.562       8311956.50       0.00000000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice            0
+                       in element          995
+                       in acoustic domain
+      at coordinates: 
+      xi    =  -0.49325631594436803     
+      eta   =   -7.0996502368804370E-003
+      gamma =   -1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    375224.55575813435     
+      UTM y:    8311956.5528571401     
+      depth:    0.0000000000000000       m
+      z:    0.0000000000000000     
+
+
+
+ station #           50     CC    S235
+      original latitude:   -15.3164997    
+      original longitude:   -172.108994    
+      original UTM x:    380944.969    
+      original UTM y:    8306377.50    
+      original depth:   -0.00000000      m
+      horizontal distance km:    25.4668083    
+      target x, y, z:    380944.969       8306377.50       0.00000000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice            1
+                       in element          964
+                       in acoustic domain
+      at coordinates: 
+      xi    =   0.42782961259069763     
+      eta   =  -0.71851036794643319     
+      gamma =   -1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    380944.95518910745     
+      UTM y:    8306377.5857258923     
+      depth:    0.0000000000000000       m
+      z:    0.0000000000000000     
+
+
+
+ station #           51     CC    S253
+      original latitude:   -15.3490000    
+      original longitude:   -172.042999    
+      original UTM x:    388048.281    
+      original UTM y:    8302817.50    
+      original depth:   -0.00000000      m
+      horizontal distance km:    25.4633694    
+      target x, y, z:    388048.281       8302817.50       0.00000000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice            2
+                       in element          869
+                       in acoustic domain
+      at coordinates: 
+      xi    =   -1.0803442976561384E-002
+      eta   =   0.44693972645537589     
+      gamma =    1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    388048.29431532964     
+      UTM y:    8302817.4938625516     
+      depth:    0.0000000000000000       m
+      z:    0.0000000000000000     
+
+
+
+ station #           52     CC    S289
+      original latitude:   -15.3485003    
+      original longitude:   -171.895996    
+      original UTM x:    403827.688    
+      original UTM y:    8302943.50    
+      original depth:   -0.00000000      m
+      horizontal distance km:    25.4435806    
+      target x, y, z:    403827.688       8302943.50       0.00000000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice            5
+                       in element          866
+                       in acoustic domain
+      at coordinates: 
+      xi    =   0.11447983210083995     
+      eta   =   0.68888408811409652     
+      gamma =    1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    403827.69855330494     
+      UTM y:    8302943.4863888854     
+      depth:    0.0000000000000000       m
+      z:    0.0000000000000000     
+
+
+
+ station #           53     CC    S307
+      original latitude:   -15.3156004    
+      original longitude:   -171.828995    
+      original UTM x:    411005.688    
+      original UTM y:    8306611.50    
+      original depth:   -0.00000000      m
+      horizontal distance km:    25.5121841    
+      target x, y, z:    411005.688       8306611.50       0.00000000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice            6
+                       in element          963
+                       in acoustic domain
+      at coordinates: 
+      xi    =  -0.18164678945965404     
+      eta   =  -0.26942101249715428     
+      gamma =   -1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    411005.68210432725     
+      UTM y:    8306611.4490077421     
+      depth:    0.0000000000000000       m
+      z:    0.0000000000000000     
+
+
+
+ station #           54     CC    S325
+      original latitude:   -15.2644997    
+      original longitude:   -171.776993    
+      original UTM x:    416568.031    
+      original UTM y:    8312284.50    
+      original depth:   -0.00000000      m
+      horizontal distance km:    25.5181561    
+      target x, y, z:    416568.031       8312284.50       0.00000000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice            7
+                       in element          920
+                       in acoustic domain
+      at coordinates: 
+      xi    =   0.43772816976141571     
+      eta   =   0.62279319022417712     
+      gamma =    1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    416568.04627242050     
+      UTM y:    8312284.5695538083     
+      depth:    0.0000000000000000       m
+      z:    0.0000000000000000     
+
+
+
+ station #           55     CC    S343
+      original latitude:   -15.2002001    
+      original longitude:   -171.742996    
+      original UTM x:    420194.812    
+      original UTM y:    8319410.00    
+      original depth:   -0.00000000      m
+      horizontal distance km:    25.5943680    
+      target x, y, z:    420194.812       8319410.00       0.00000000    
+      closest estimate found:    0.00000000      m away
+
+      receiver located in slice           15
+                       in element          966
+                       in acoustic domain
+      at coordinates: 
+      xi    =  -0.63821845055536730     
+      eta   =   0.30257095915850418     
+      gamma =   -1.0000000000000000     
+      rotation matrix: 
+      nu1 =    1.00000000       0.00000000       0.00000000    
+      nu2 =    0.00000000       1.00000000       0.00000000    
+      nu3 =    0.00000000       0.00000000       1.00000000    
+      UTM x:    420194.81254503177     
+      UTM y:    8319409.8138269819     
+      depth:    0.0000000000000000       m
+      z:    0.0000000000000000     
+
+
+ maximum error in location of all the receivers:    1.86355442E-09  m
+
+ Elapsed time for receiver detection in seconds =    4.5247077941894531E-002
+
+ End of receiver detection - done
+
+ source arrays:
+   number of sources is            1
+   size of source array                 =    1.43051147E-03 MB
+                                        =    1.39698386E-06 GB
+
+ seismograms:
+   seismograms written by all processes
+   writing out seismograms at every NTSTEP_BETWEEN_OUTPUT_SEISMOS =         5000
+   maximum number of local receivers is           12  in slice           18
+   size of maximum seismogram array       =   0.686645508     MB
+                                          =    6.70552254E-04 GB
+
+
+ Total number of samples for seismograms =        30000
+
+ found a total of           55  receivers in all the slices
+
+
+ Simulation setup:
+
+ incorporating acoustic simulation
+ incorporating elastic simulation
+   no poroelastic simulation
+
+   no attenuation
+   no anisotropy
+   no oceans
+   no gravity
+ incorporating movie simulation
+
+
+   no dynamic faults
+   no kinematic faults
+
+   no gravity simulation
+
+
+ Elapsed time for preparing timerun in seconds =    3.3870935440063477E-002
+
+ ************
+  time loop
+ ************
+               scheme:         Newmark
+
+            time step:    4.99999989E-03  s
+ number of time steps:        30000
+ total simulated time:    150.000000      seconds
+ start time:  -16.0000000      seconds
+
+ All processes are synchronized before time loop
+
+ Starting time iteration loop...
+
+ Time step #            5
+ Time:   -15.9799995      seconds
+ Elapsed time in seconds =   0.24166798591613770     
+ Elapsed time in hh:mm:ss =      0 h 00 m 00 s
+ Mean elapsed time per time step in seconds =    4.83335964E-02
+ Max norm displacement vector U in all slices (m) =    7.67352656E-02
+ Max norm pressure P in all slices (Pa) =    0.00000000    
+ Time steps done =            5  out of        30000
+ Time steps remaining =        29995
+ Estimated remaining time in seconds =    1449.76624    
+ Estimated remaining time in hh:mm:ss =      0 h 24 m 09 s
+ Estimated total run time in seconds =    1450.00793    
+ Estimated total run time in hh:mm:ss =      0 h 24 m 10 s
+ We have done    1.66666675E-02 % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:37
+ ************************************************************
+ **** BEWARE: the above time estimates are not very reliable
+ **** because fewer than 100 iterations have been performed
+ ************************************************************
+
+ Time step #          500
+ Time:   -13.5050001      seconds
+ Elapsed time in seconds =    68.703544139862061     
+ Elapsed time in hh:mm:ss =      0 h 01 m 08 s
+ Mean elapsed time per time step in seconds =   0.137407094    
+ Max norm displacement vector U in all slices (m) =    2.60760713    
+ Max norm pressure P in all slices (Pa) =    101822.633    
+ Time steps done =          500  out of        30000
+ Time steps remaining =        29500
+ Estimated remaining time in seconds =    4053.50903    
+ Estimated remaining time in hh:mm:ss =      1 h 07 m 33 s
+ Estimated total run time in seconds =    4122.21289    
+ Estimated total run time in hh:mm:ss =      1 h 08 m 42 s
+ We have done    1.66666663     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 18:22
+
+ Time step #         1000
+ Time:   -11.0050001      seconds
+ Elapsed time in seconds =    113.46851396560669     
+ Elapsed time in hh:mm:ss =      0 h 01 m 53 s
+ Mean elapsed time per time step in seconds =   0.113468513    
+ Max norm displacement vector U in all slices (m) =    39.5393486    
+ Max norm pressure P in all slices (Pa) =    96860.7500    
+ Time steps done =         1000  out of        30000
+ Time steps remaining =        29000
+ Estimated remaining time in seconds =    3290.58691    
+ Estimated remaining time in hh:mm:ss =      0 h 54 m 50 s
+ Estimated total run time in seconds =    3404.05542    
+ Estimated total run time in hh:mm:ss =      0 h 56 m 44 s
+ We have done    3.33333325     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 18:10
+
+ Time step #         1500
+ Time:   -8.50500011      seconds
+ Elapsed time in seconds =    160.42524409294128     
+ Elapsed time in hh:mm:ss =      0 h 02 m 40 s
+ Mean elapsed time per time step in seconds =   0.106950164    
+ Max norm displacement vector U in all slices (m) =    369.701874    
+ Max norm pressure P in all slices (Pa) =    650371.438    
+ Time steps done =         1500  out of        30000
+ Time steps remaining =        28500
+ Estimated remaining time in seconds =    3048.07959    
+ Estimated remaining time in hh:mm:ss =      0 h 50 m 48 s
+ Estimated total run time in seconds =    3208.50488    
+ Estimated total run time in hh:mm:ss =      0 h 53 m 28 s
+ We have done    5.00000000     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 18:07
+
+ Time step #         2000
+ Time:   -6.00500011      seconds
+ Elapsed time in seconds =    207.86014008522034     
+ Elapsed time in hh:mm:ss =      0 h 03 m 27 s
+ Mean elapsed time per time step in seconds =   0.103930071    
+ Max norm displacement vector U in all slices (m) =    2160.81934    
+ Max norm pressure P in all slices (Pa) =    3029974.50    
+ Time steps done =         2000  out of        30000
+ Time steps remaining =        28000
+ Estimated remaining time in seconds =    2910.04199    
+ Estimated remaining time in hh:mm:ss =      0 h 48 m 30 s
+ Estimated total run time in seconds =    3117.90210    
+ Estimated total run time in hh:mm:ss =      0 h 51 m 57 s
+ We have done    6.66666651     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 18:05
+
+ Time step #         2500
+ Time:   -3.50500011      seconds
+ Elapsed time in seconds =    257.35962510108948     
+ Elapsed time in hh:mm:ss =      0 h 04 m 17 s
+ Mean elapsed time per time step in seconds =   0.102943853    
+ Max norm displacement vector U in all slices (m) =    8066.20508    
+ Max norm pressure P in all slices (Pa) =    7774796.50    
+ Time steps done =         2500  out of        30000
+ Time steps remaining =        27500
+ Estimated remaining time in seconds =    2830.95581    
+ Estimated remaining time in hh:mm:ss =      0 h 47 m 10 s
+ Estimated total run time in seconds =    3088.31543    
+ Estimated total run time in hh:mm:ss =      0 h 51 m 28 s
+ We have done    8.33333302     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 18:04
+
+ Time step #         3000
+ Time:   -1.00500000      seconds
+ Elapsed time in seconds =    307.45012307167053     
+ Elapsed time in hh:mm:ss =      0 h 05 m 07 s
+ Mean elapsed time per time step in seconds =   0.102483377    
+ Max norm displacement vector U in all slices (m) =    19913.5234    
+ Max norm pressure P in all slices (Pa) =    9383388.00    
+ Time steps done =         3000  out of        30000
+ Time steps remaining =        27000
+ Estimated remaining time in seconds =    2767.05103    
+ Estimated remaining time in hh:mm:ss =      0 h 46 m 07 s
+ Estimated total run time in seconds =    3074.50122    
+ Estimated total run time in hh:mm:ss =      0 h 51 m 14 s
+ We have done    10.0000000     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 18:04
+
+ Time step #         3500
+ Time:    1.49500000      seconds
+ Elapsed time in seconds =    358.49012517929077     
+ Elapsed time in hh:mm:ss =      0 h 05 m 58 s
+ Mean elapsed time per time step in seconds =   0.102425747    
+ Max norm displacement vector U in all slices (m) =    34386.4805    
+ Max norm pressure P in all slices (Pa) =    3849812.00    
+ Time steps done =         3500  out of        30000
+ Time steps remaining =        26500
+ Estimated remaining time in seconds =    2714.28247    
+ Estimated remaining time in hh:mm:ss =      0 h 45 m 14 s
+ Estimated total run time in seconds =    3072.77246    
+ Estimated total run time in hh:mm:ss =      0 h 51 m 12 s
+ We have done    11.6666670     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 18:04
+
+ Time step #         4000
+ Time:    3.99499989      seconds
+ Elapsed time in seconds =    411.07338404655457     
+ Elapsed time in hh:mm:ss =      0 h 06 m 51 s
+ Mean elapsed time per time step in seconds =   0.102768347    
+ Max norm displacement vector U in all slices (m) =    45154.9688    
+ Max norm pressure P in all slices (Pa) =    13485112.0    
+ Time steps done =         4000  out of        30000
+ Time steps remaining =        26000
+ Estimated remaining time in seconds =    2671.97705    
+ Estimated remaining time in hh:mm:ss =      0 h 44 m 31 s
+ Estimated total run time in seconds =    3083.05029    
+ Estimated total run time in hh:mm:ss =      0 h 51 m 23 s
+ We have done    13.3333330     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 18:05
+
+ Time step #         4500
+ Time:    6.49499989      seconds
+ Elapsed time in seconds =    464.53047299385071     
+ Elapsed time in hh:mm:ss =      0 h 07 m 44 s
+ Mean elapsed time per time step in seconds =   0.103228994    
+ Max norm displacement vector U in all slices (m) =    50033.6562    
+ Max norm pressure P in all slices (Pa) =    13740142.0    
+ Time steps done =         4500  out of        30000
+ Time steps remaining =        25500
+ Estimated remaining time in seconds =    2632.33936    
+ Estimated remaining time in hh:mm:ss =      0 h 43 m 52 s
+ Estimated total run time in seconds =    3096.86987    
+ Estimated total run time in hh:mm:ss =      0 h 51 m 36 s
+ We have done    15.0000000     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 18:05
+
+ Time step #         5000
+ Time:    8.99499989      seconds
+ Elapsed time in seconds =    518.10687804222107     
+ Elapsed time in hh:mm:ss =      0 h 08 m 38 s
+ Mean elapsed time per time step in seconds =   0.103621379    
+ Max norm displacement vector U in all slices (m) =    51380.5078    
+ Max norm pressure P in all slices (Pa) =    4937360.50    
+ Time steps done =         5000  out of        30000
+ Time steps remaining =        25000
+ Estimated remaining time in seconds =    2590.53442    
+ Estimated remaining time in hh:mm:ss =      0 h 43 m 10 s
+ Estimated total run time in seconds =    3108.64136    
+ Estimated total run time in hh:mm:ss =      0 h 51 m 48 s
+ We have done    16.6666660     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 18:05
+
+
+ Total number of time steps written:         5000
+ Writing the seismograms in parallel took    5.21355629      seconds
+
+ Time step #         5500
+ Time:    11.4949999      seconds
+ Elapsed time in seconds =    577.91368818283081     
+ Elapsed time in hh:mm:ss =      0 h 09 m 37 s
+ Mean elapsed time per time step in seconds =   0.105075218    
+ Max norm displacement vector U in all slices (m) =    51607.9648    
+ Max norm pressure P in all slices (Pa) =    8391934.00    
+ Time steps done =         5500  out of        30000
+ Time steps remaining =        24500
+ Estimated remaining time in seconds =    2574.34277    
+ Estimated remaining time in hh:mm:ss =      0 h 42 m 54 s
+ Estimated total run time in seconds =    3152.25659    
+ Estimated total run time in hh:mm:ss =      0 h 52 m 32 s
+ We have done    18.3333340     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 18:06
+
+ Time step #         6000
+ Time:    13.9949999      seconds
+ Elapsed time in seconds =    632.83664798736572     
+ Elapsed time in hh:mm:ss =      0 h 10 m 32 s
+ Mean elapsed time per time step in seconds =   0.105472773    
+ Max norm displacement vector U in all slices (m) =    51632.1250    
+ Max norm pressure P in all slices (Pa) =    4813844.50    
+ Time steps done =         6000  out of        30000
+ Time steps remaining =        24000
+ Estimated remaining time in seconds =    2531.34668    
+ Estimated remaining time in hh:mm:ss =      0 h 42 m 11 s
+ Estimated total run time in seconds =    3164.18335    
+ Estimated total run time in hh:mm:ss =      0 h 52 m 44 s
+ We have done    20.0000000     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 18:06
+
+ Time step #         6500
+ Time:    16.4950008      seconds
+ Elapsed time in seconds =    686.49409699440002     
+ Elapsed time in hh:mm:ss =      0 h 11 m 26 s
+ Mean elapsed time per time step in seconds =   0.105614476    
+ Max norm displacement vector U in all slices (m) =    51634.5195    
+ Max norm pressure P in all slices (Pa) =    6694522.50    
+ Time steps done =         6500  out of        30000
+ Time steps remaining =        23500
+ Estimated remaining time in seconds =    2481.94019    
+ Estimated remaining time in hh:mm:ss =      0 h 41 m 21 s
+ Estimated total run time in seconds =    3168.43433    
+ Estimated total run time in hh:mm:ss =      0 h 52 m 48 s
+ We have done    21.6666660     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 18:05
+
+ Time step #         7000
+ Time:    18.9950008      seconds
+ Elapsed time in seconds =    736.96860504150391     
+ Elapsed time in hh:mm:ss =      0 h 12 m 16 s
+ Mean elapsed time per time step in seconds =   0.105281226    
+ Max norm displacement vector U in all slices (m) =    51634.4531    
+ Max norm pressure P in all slices (Pa) =    5811783.00    
+ Time steps done =         7000  out of        30000
+ Time steps remaining =        23000
+ Estimated remaining time in seconds =    2421.46826    
+ Estimated remaining time in hh:mm:ss =      0 h 40 m 21 s
+ Estimated total run time in seconds =    3158.43677    
+ Estimated total run time in hh:mm:ss =      0 h 52 m 38 s
+ We have done    23.3333340     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 18:05
+
+ Time step #         7500
+ Time:    21.4950008      seconds
+ Elapsed time in seconds =    782.72497510910034     
+ Elapsed time in hh:mm:ss =      0 h 13 m 02 s
+ Mean elapsed time per time step in seconds =   0.104363330    
+ Max norm displacement vector U in all slices (m) =    51633.7422    
+ Max norm pressure P in all slices (Pa) =    4534098.00    
+ Time steps done =         7500  out of        30000
+ Time steps remaining =        22500
+ Estimated remaining time in seconds =    2348.17480    
+ Estimated remaining time in hh:mm:ss =      0 h 39 m 08 s
+ Estimated total run time in seconds =    3130.89990    
+ Estimated total run time in hh:mm:ss =      0 h 52 m 10 s
+ We have done    25.0000000     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 18:05
+
+ Time step #         8000
+ Time:    23.9950008      seconds
+ Elapsed time in seconds =    823.72015500068665     
+ Elapsed time in hh:mm:ss =      0 h 13 m 43 s
+ Mean elapsed time per time step in seconds =   0.102965020    
+ Max norm displacement vector U in all slices (m) =    51633.7539    
+ Max norm pressure P in all slices (Pa) =    8676791.00    
+ Time steps done =         8000  out of        30000
+ Time steps remaining =        22000
+ Estimated remaining time in seconds =    2265.23047    
+ Estimated remaining time in hh:mm:ss =      0 h 37 m 45 s
+ Estimated total run time in seconds =    3088.95068    
+ Estimated total run time in hh:mm:ss =      0 h 51 m 28 s
+ We have done    26.6666660     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 18:05
+
+ Time step #         8500
+ Time:    26.4950008      seconds
+ Elapsed time in seconds =    863.30093312263489     
+ Elapsed time in hh:mm:ss =      0 h 14 m 23 s
+ Mean elapsed time per time step in seconds =   0.101564817    
+ Max norm displacement vector U in all slices (m) =    51634.6094    
+ Max norm pressure P in all slices (Pa) =    7142945.50    
+ Time steps done =         8500  out of        30000
+ Time steps remaining =        21500
+ Estimated remaining time in seconds =    2183.64355    
+ Estimated remaining time in hh:mm:ss =      0 h 36 m 23 s
+ Estimated total run time in seconds =    3046.94458    
+ Estimated total run time in hh:mm:ss =      0 h 50 m 46 s
+ We have done    28.3333340     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 18:03
+
+ Time step #         9000
+ Time:    28.9950008      seconds
+ Elapsed time in seconds =    901.85469317436218     
+ Elapsed time in hh:mm:ss =      0 h 15 m 01 s
+ Mean elapsed time per time step in seconds =   0.100206077    
+ Max norm displacement vector U in all slices (m) =    51637.4570    
+ Max norm pressure P in all slices (Pa) =    6708957.50    
+ Time steps done =         9000  out of        30000
+ Time steps remaining =        21000
+ Estimated remaining time in seconds =    2104.32764    
+ Estimated remaining time in hh:mm:ss =      0 h 35 m 04 s
+ Estimated total run time in seconds =    3006.18237    
+ Estimated total run time in hh:mm:ss =      0 h 50 m 06 s
+ We have done    30.0000000     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 18:03
+
+ Time step #         9500
+ Time:    31.4950008      seconds
+ Elapsed time in seconds =    940.15983796119690     
+ Elapsed time in hh:mm:ss =      0 h 15 m 40 s
+ Mean elapsed time per time step in seconds =    9.89641920E-02
+ Max norm displacement vector U in all slices (m) =    51641.3359    
+ Max norm pressure P in all slices (Pa) =    7375499.50    
+ Time steps done =         9500  out of        30000
+ Time steps remaining =        20500
+ Estimated remaining time in seconds =    2028.76599    
+ Estimated remaining time in hh:mm:ss =      0 h 33 m 48 s
+ Estimated total run time in seconds =    2968.92578    
+ Estimated total run time in hh:mm:ss =      0 h 49 m 28 s
+ We have done    31.6666660     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 18:03
+
+ Time step #        10000
+ Time:    33.9949989      seconds
+ Elapsed time in seconds =    977.58549308776855     
+ Elapsed time in hh:mm:ss =      0 h 16 m 17 s
+ Mean elapsed time per time step in seconds =    9.77585465E-02
+ Max norm displacement vector U in all slices (m) =    51645.6367    
+ Max norm pressure P in all slices (Pa) =    5637638.00    
+ Time steps done =        10000  out of        30000
+ Time steps remaining =        20000
+ Estimated remaining time in seconds =    1955.17102    
+ Estimated remaining time in hh:mm:ss =      0 h 32 m 35 s
+ Estimated total run time in seconds =    2932.75659    
+ Estimated total run time in hh:mm:ss =      0 h 48 m 52 s
+ We have done    33.3333321     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 18:02
+
+
+ Total number of time steps written:        10000
+ Writing the seismograms in parallel took    3.25569510      seconds
+
+ Time step #        10500
+ Time:    36.4949989      seconds
+ Elapsed time in seconds =    1017.7821190357208     
+ Elapsed time in hh:mm:ss =      0 h 16 m 57 s
+ Mean elapsed time per time step in seconds =    9.69316289E-02
+ Max norm displacement vector U in all slices (m) =    51648.0312    
+ Max norm pressure P in all slices (Pa) =    5605630.00    
+ Time steps done =        10500  out of        30000
+ Time steps remaining =        19500
+ Estimated remaining time in seconds =    1890.16675    
+ Estimated remaining time in hh:mm:ss =      0 h 31 m 30 s
+ Estimated total run time in seconds =    2907.94897    
+ Estimated total run time in hh:mm:ss =      0 h 48 m 27 s
+ We have done    35.0000000     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 18:02
+
+ Time step #        11000
+ Time:    38.9949989      seconds
+ Elapsed time in seconds =    1052.9712071418762     
+ Elapsed time in hh:mm:ss =      0 h 17 m 32 s
+ Mean elapsed time per time step in seconds =    9.57246572E-02
+ Max norm displacement vector U in all slices (m) =    51651.4531    
+ Max norm pressure P in all slices (Pa) =    5622957.00    
+ Time steps done =        11000  out of        30000
+ Time steps remaining =        19000
+ Estimated remaining time in seconds =    1818.76843    
+ Estimated remaining time in hh:mm:ss =      0 h 30 m 18 s
+ Estimated total run time in seconds =    2871.73975    
+ Estimated total run time in hh:mm:ss =      0 h 47 m 51 s
+ We have done    36.6666679     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 18:01
+
+ Time step #        11500
+ Time:    41.4949989      seconds
+ Elapsed time in seconds =    1086.9103889465332     
+ Elapsed time in hh:mm:ss =      0 h 18 m 06 s
+ Mean elapsed time per time step in seconds =    9.45139453E-02
+ Max norm displacement vector U in all slices (m) =    51657.1875    
+ Max norm pressure P in all slices (Pa) =    5582283.50    
+ Time steps done =        11500  out of        30000
+ Time steps remaining =        18500
+ Estimated remaining time in seconds =    1748.50806    
+ Estimated remaining time in hh:mm:ss =      0 h 29 m 08 s
+ Estimated total run time in seconds =    2835.41846    
+ Estimated total run time in hh:mm:ss =      0 h 47 m 15 s
+ We have done    38.3333321     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 18:00
+
+ Time step #        12000
+ Time:    43.9949989      seconds
+ Elapsed time in seconds =    1121.0430011749268     
+ Elapsed time in hh:mm:ss =      0 h 18 m 41 s
+ Mean elapsed time per time step in seconds =    9.34202522E-02
+ Max norm displacement vector U in all slices (m) =    51663.2773    
+ Max norm pressure P in all slices (Pa) =    4878306.50    
+ Time steps done =        12000  out of        30000
+ Time steps remaining =        18000
+ Estimated remaining time in seconds =    1681.56445    
+ Estimated remaining time in hh:mm:ss =      0 h 28 m 01 s
+ Estimated total run time in seconds =    2802.60742    
+ Estimated total run time in hh:mm:ss =      0 h 46 m 42 s
+ We have done    40.0000000     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 18:00
+
+ Time step #        12500
+ Time:    46.4949989      seconds
+ Elapsed time in seconds =    1153.3977169990540     
+ Elapsed time in hh:mm:ss =      0 h 19 m 13 s
+ Mean elapsed time per time step in seconds =    9.22718197E-02
+ Max norm displacement vector U in all slices (m) =    51668.5078    
+ Max norm pressure P in all slices (Pa) =    5927166.00    
+ Time steps done =        12500  out of        30000
+ Time steps remaining =        17500
+ Estimated remaining time in seconds =    1614.75684    
+ Estimated remaining time in hh:mm:ss =      0 h 26 m 54 s
+ Estimated total run time in seconds =    2768.15454    
+ Estimated total run time in hh:mm:ss =      0 h 46 m 08 s
+ We have done    41.6666679     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:59
+
+ Time step #        13000
+ Time:    48.9949989      seconds
+ Elapsed time in seconds =    1186.2478590011597     
+ Elapsed time in hh:mm:ss =      0 h 19 m 46 s
+ Mean elapsed time per time step in seconds =    9.12498385E-02
+ Max norm displacement vector U in all slices (m) =    51672.9141    
+ Max norm pressure P in all slices (Pa) =    5743132.00    
+ Time steps done =        13000  out of        30000
+ Time steps remaining =        17000
+ Estimated remaining time in seconds =    1551.24719    
+ Estimated remaining time in hh:mm:ss =      0 h 25 m 51 s
+ Estimated total run time in seconds =    2737.49512    
+ Estimated total run time in hh:mm:ss =      0 h 45 m 37 s
+ We have done    43.3333321     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:59
+
+ Time step #        13500
+ Time:    51.4949989      seconds
+ Elapsed time in seconds =    1218.9794909954071     
+ Elapsed time in hh:mm:ss =      0 h 20 m 18 s
+ Mean elapsed time per time step in seconds =    9.02947783E-02
+ Max norm displacement vector U in all slices (m) =    51677.3516    
+ Max norm pressure P in all slices (Pa) =    7764316.50    
+ Time steps done =        13500  out of        30000
+ Time steps remaining =        16500
+ Estimated remaining time in seconds =    1489.86377    
+ Estimated remaining time in hh:mm:ss =      0 h 24 m 49 s
+ Estimated total run time in seconds =    2708.84326    
+ Estimated total run time in hh:mm:ss =      0 h 45 m 08 s
+ We have done    45.0000000     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:58
+
+ Time step #        14000
+ Time:    53.9949989      seconds
+ Elapsed time in seconds =    1251.8535401821136     
+ Elapsed time in hh:mm:ss =      0 h 20 m 51 s
+ Mean elapsed time per time step in seconds =    8.94181132E-02
+ Max norm displacement vector U in all slices (m) =    51679.4531    
+ Max norm pressure P in all slices (Pa) =    5610886.00    
+ Time steps done =        14000  out of        30000
+ Time steps remaining =        16000
+ Estimated remaining time in seconds =    1430.68982    
+ Estimated remaining time in hh:mm:ss =      0 h 23 m 50 s
+ Estimated total run time in seconds =    2682.54321    
+ Estimated total run time in hh:mm:ss =      0 h 44 m 42 s
+ We have done    46.6666679     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:58
+
+ Time step #        14500
+ Time:    56.4949989      seconds
+ Elapsed time in seconds =    1284.6788320541382     
+ Elapsed time in hh:mm:ss =      0 h 21 m 24 s
+ Mean elapsed time per time step in seconds =    8.85985419E-02
+ Max norm displacement vector U in all slices (m) =    51679.1562    
+ Max norm pressure P in all slices (Pa) =    5886519.50    
+ Time steps done =        14500  out of        30000
+ Time steps remaining =        15500
+ Estimated remaining time in seconds =    1373.27734    
+ Estimated remaining time in hh:mm:ss =      0 h 22 m 53 s
+ Estimated total run time in seconds =    2657.95630    
+ Estimated total run time in hh:mm:ss =      0 h 44 m 17 s
+ We have done    48.3333321     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:57
+
+ Time step #        15000
+ Time:    58.9949989      seconds
+ Elapsed time in seconds =    1317.7679071426392     
+ Elapsed time in hh:mm:ss =      0 h 21 m 57 s
+ Mean elapsed time per time step in seconds =    8.78511965E-02
+ Max norm displacement vector U in all slices (m) =    51677.6289    
+ Max norm pressure P in all slices (Pa) =    6710470.50    
+ Time steps done =        15000  out of        30000
+ Time steps remaining =        15000
+ Estimated remaining time in seconds =    1317.76794    
+ Estimated remaining time in hh:mm:ss =      0 h 21 m 57 s
+ Estimated total run time in seconds =    2635.53589    
+ Estimated total run time in hh:mm:ss =      0 h 43 m 55 s
+ We have done    50.0000000     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:57
+
+
+ Total number of time steps written:        15000
+ Writing the seismograms in parallel took    2.06663990      seconds
+
+ Time step #        15500
+ Time:    61.4949989      seconds
+ Elapsed time in seconds =    1352.7921559810638     
+ Elapsed time in hh:mm:ss =      0 h 22 m 32 s
+ Mean elapsed time per time step in seconds =    8.72769132E-02
+ Max norm displacement vector U in all slices (m) =    51676.2188    
+ Max norm pressure P in all slices (Pa) =    7425888.00    
+ Time steps done =        15500  out of        30000
+ Time steps remaining =        14500
+ Estimated remaining time in seconds =    1265.51526    
+ Estimated remaining time in hh:mm:ss =      0 h 21 m 05 s
+ Estimated total run time in seconds =    2618.30737    
+ Estimated total run time in hh:mm:ss =      0 h 43 m 38 s
+ We have done    51.6666679     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:57
+
+ Time step #        16000
+ Time:    63.9949989      seconds
+ Elapsed time in seconds =    1384.1420860290527     
+ Elapsed time in hh:mm:ss =      0 h 23 m 04 s
+ Mean elapsed time per time step in seconds =    8.65088776E-02
+ Max norm displacement vector U in all slices (m) =    51677.3008    
+ Max norm pressure P in all slices (Pa) =    6118043.00    
+ Time steps done =        16000  out of        30000
+ Time steps remaining =        14000
+ Estimated remaining time in seconds =    1211.12427    
+ Estimated remaining time in hh:mm:ss =      0 h 20 m 11 s
+ Estimated total run time in seconds =    2595.26636    
+ Estimated total run time in hh:mm:ss =      0 h 43 m 15 s
+ We have done    53.3333321     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:56
+
+ Time step #        16500
+ Time:    66.4950027      seconds
+ Elapsed time in seconds =    1415.8088681697845     
+ Elapsed time in hh:mm:ss =      0 h 23 m 35 s
+ Mean elapsed time per time step in seconds =    8.58066007E-02
+ Max norm displacement vector U in all slices (m) =    51681.0977    
+ Max norm pressure P in all slices (Pa) =    7748559.50    
+ Time steps done =        16500  out of        30000
+ Time steps remaining =        13500
+ Estimated remaining time in seconds =    1158.38904    
+ Estimated remaining time in hh:mm:ss =      0 h 19 m 18 s
+ Estimated total run time in seconds =    2574.19800    
+ Estimated total run time in hh:mm:ss =      0 h 42 m 54 s
+ We have done    55.0000000     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:56
+
+ Time step #        17000
+ Time:    68.9950027      seconds
+ Elapsed time in seconds =    1448.2016789913177     
+ Elapsed time in hh:mm:ss =      0 h 24 m 08 s
+ Mean elapsed time per time step in seconds =    8.51883367E-02
+ Max norm displacement vector U in all slices (m) =    51683.6797    
+ Max norm pressure P in all slices (Pa) =    7001952.50    
+ Time steps done =        17000  out of        30000
+ Time steps remaining =        13000
+ Estimated remaining time in seconds =    1107.44836    
+ Estimated remaining time in hh:mm:ss =      0 h 18 m 27 s
+ Estimated total run time in seconds =    2555.64990    
+ Estimated total run time in hh:mm:ss =      0 h 42 m 35 s
+ We have done    56.6666679     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:55
+
+ Time step #        17500
+ Time:    71.4950027      seconds
+ Elapsed time in seconds =    1480.8169891834259     
+ Elapsed time in hh:mm:ss =      0 h 24 m 40 s
+ Mean elapsed time per time step in seconds =    8.46181139E-02
+ Max norm displacement vector U in all slices (m) =    51685.8438    
+ Max norm pressure P in all slices (Pa) =    7845396.00    
+ Time steps done =        17500  out of        30000
+ Time steps remaining =        12500
+ Estimated remaining time in seconds =    1057.72644    
+ Estimated remaining time in hh:mm:ss =      0 h 17 m 37 s
+ Estimated total run time in seconds =    2538.54346    
+ Estimated total run time in hh:mm:ss =      0 h 42 m 18 s
+ We have done    58.3333321     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:56
+
+ Time step #        18000
+ Time:    73.9950027      seconds
+ Elapsed time in seconds =    1512.9933619499207     
+ Elapsed time in hh:mm:ss =      0 h 25 m 12 s
+ Mean elapsed time per time step in seconds =    8.40551853E-02
+ Max norm displacement vector U in all slices (m) =    51688.7617    
+ Max norm pressure P in all slices (Pa) =    6233823.00    
+ Time steps done =        18000  out of        30000
+ Time steps remaining =        12000
+ Estimated remaining time in seconds =    1008.66223    
+ Estimated remaining time in hh:mm:ss =      0 h 16 m 48 s
+ Estimated total run time in seconds =    2521.65552    
+ Estimated total run time in hh:mm:ss =      0 h 42 m 01 s
+ We have done    60.0000000     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:55
+
+ Time step #        18500
+ Time:    76.4950027      seconds
+ Elapsed time in seconds =    1545.7841770648956     
+ Elapsed time in hh:mm:ss =      0 h 25 m 45 s
+ Mean elapsed time per time step in seconds =    8.35558996E-02
+ Max norm displacement vector U in all slices (m) =    51692.8516    
+ Max norm pressure P in all slices (Pa) =    8749830.00    
+ Time steps done =        18500  out of        30000
+ Time steps remaining =        11500
+ Estimated remaining time in seconds =    960.892883    
+ Estimated remaining time in hh:mm:ss =      0 h 16 m 00 s
+ Estimated total run time in seconds =    2506.67700    
+ Estimated total run time in hh:mm:ss =      0 h 41 m 46 s
+ We have done    61.6666679     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:55
+
+ Time step #        19000
+ Time:    78.9950027      seconds
+ Elapsed time in seconds =    1576.8625011444092     
+ Elapsed time in hh:mm:ss =      0 h 26 m 16 s
+ Mean elapsed time per time step in seconds =    8.29927623E-02
+ Max norm displacement vector U in all slices (m) =    51694.7656    
+ Max norm pressure P in all slices (Pa) =    5982909.50    
+ Time steps done =        19000  out of        30000
+ Time steps remaining =        11000
+ Estimated remaining time in seconds =    912.920410    
+ Estimated remaining time in hh:mm:ss =      0 h 15 m 12 s
+ Estimated total run time in seconds =    2489.78296    
+ Estimated total run time in hh:mm:ss =      0 h 41 m 29 s
+ We have done    63.3333321     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:54
+
+ Time step #        19500
+ Time:    81.4950027      seconds
+ Elapsed time in seconds =    1607.9496691226959     
+ Elapsed time in hh:mm:ss =      0 h 26 m 47 s
+ Mean elapsed time per time step in seconds =    8.24589580E-02
+ Max norm displacement vector U in all slices (m) =    51694.8555    
+ Max norm pressure P in all slices (Pa) =    9251474.00    
+ Time steps done =        19500  out of        30000
+ Time steps remaining =        10500
+ Estimated remaining time in seconds =    865.819031    
+ Estimated remaining time in hh:mm:ss =      0 h 14 m 25 s
+ Estimated total run time in seconds =    2473.76880    
+ Estimated total run time in hh:mm:ss =      0 h 41 m 13 s
+ We have done    65.0000000     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:54
+
+ Time step #        20000
+ Time:    83.9950027      seconds
+ Elapsed time in seconds =    1638.3099069595337     
+ Elapsed time in hh:mm:ss =      0 h 27 m 18 s
+ Mean elapsed time per time step in seconds =    8.19154978E-02
+ Max norm displacement vector U in all slices (m) =    51694.3828    
+ Max norm pressure P in all slices (Pa) =    6626963.00    
+ Time steps done =        20000  out of        30000
+ Time steps remaining =        10000
+ Estimated remaining time in seconds =    819.154968    
+ Estimated remaining time in hh:mm:ss =      0 h 13 m 39 s
+ Estimated total run time in seconds =    2457.46484    
+ Estimated total run time in hh:mm:ss =      0 h 40 m 57 s
+ We have done    66.6666641     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:54
+
+
+ Total number of time steps written:        20000
+ Writing the seismograms in parallel took    2.55853486      seconds
+
+ Time step #        20500
+ Time:    86.4950027      seconds
+ Elapsed time in seconds =    1671.5938441753387     
+ Elapsed time in hh:mm:ss =      0 h 27 m 51 s
+ Mean elapsed time per time step in seconds =    8.15411657E-02
+ Max norm displacement vector U in all slices (m) =    51692.6914    
+ Max norm pressure P in all slices (Pa) =    7230004.00    
+ Time steps done =        20500  out of        30000
+ Time steps remaining =         9500
+ Estimated remaining time in seconds =    774.641052    
+ Estimated remaining time in hh:mm:ss =      0 h 12 m 54 s
+ Estimated total run time in seconds =    2446.23486    
+ Estimated total run time in hh:mm:ss =      0 h 40 m 46 s
+ We have done    68.3333359     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:54
+
+ Time step #        21000
+ Time:    88.9950027      seconds
+ Elapsed time in seconds =    1702.2499151229858     
+ Elapsed time in hh:mm:ss =      0 h 28 m 22 s
+ Mean elapsed time per time step in seconds =    8.10595229E-02
+ Max norm displacement vector U in all slices (m) =    51690.3711    
+ Max norm pressure P in all slices (Pa) =    6360994.50    
+ Time steps done =        21000  out of        30000
+ Time steps remaining =         9000
+ Estimated remaining time in seconds =    729.535706    
+ Estimated remaining time in hh:mm:ss =      0 h 12 m 09 s
+ Estimated total run time in seconds =    2431.78564    
+ Estimated total run time in hh:mm:ss =      0 h 40 m 31 s
+ We have done    70.0000000     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:53
+
+ Time step #        21500
+ Time:    91.4950027      seconds
+ Elapsed time in seconds =    1733.4319791793823     
+ Elapsed time in hh:mm:ss =      0 h 28 m 53 s
+ Mean elapsed time per time step in seconds =    8.06247443E-02
+ Max norm displacement vector U in all slices (m) =    51686.3359    
+ Max norm pressure P in all slices (Pa) =    6201313.50    
+ Time steps done =        21500  out of        30000
+ Time steps remaining =         8500
+ Estimated remaining time in seconds =    685.310303    
+ Estimated remaining time in hh:mm:ss =      0 h 11 m 25 s
+ Estimated total run time in seconds =    2418.74219    
+ Estimated total run time in hh:mm:ss =      0 h 40 m 18 s
+ We have done    71.6666641     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:53
+
+ Time step #        22000
+ Time:    93.9950027      seconds
+ Elapsed time in seconds =    1765.0401890277863     
+ Elapsed time in hh:mm:ss =      0 h 29 m 25 s
+ Mean elapsed time per time step in seconds =    8.02290961E-02
+ Max norm displacement vector U in all slices (m) =    51683.2500    
+ Max norm pressure P in all slices (Pa) =    5267884.00    
+ Time steps done =        22000  out of        30000
+ Time steps remaining =         8000
+ Estimated remaining time in seconds =    641.832825    
+ Estimated remaining time in hh:mm:ss =      0 h 10 m 41 s
+ Estimated total run time in seconds =    2406.87305    
+ Estimated total run time in hh:mm:ss =      0 h 40 m 06 s
+ We have done    73.3333359     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:53
+
+ Time step #        22500
+ Time:    96.4950027      seconds
+ Elapsed time in seconds =    1797.0486900806427     
+ Elapsed time in hh:mm:ss =      0 h 29 m 57 s
+ Mean elapsed time per time step in seconds =    7.98688307E-02
+ Max norm displacement vector U in all slices (m) =    51678.4141    
+ Max norm pressure P in all slices (Pa) =    5115081.00    
+ Time steps done =        22500  out of        30000
+ Time steps remaining =         7500
+ Estimated remaining time in seconds =    599.016235    
+ Estimated remaining time in hh:mm:ss =      0 h 09 m 59 s
+ Estimated total run time in seconds =    2396.06494    
+ Estimated total run time in hh:mm:ss =      0 h 39 m 56 s
+ We have done    75.0000000     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:53
+
+ Time step #        23000
+ Time:    98.9950027      seconds
+ Elapsed time in seconds =    1828.5097529888153     
+ Elapsed time in hh:mm:ss =      0 h 30 m 28 s
+ Mean elapsed time per time step in seconds =    7.95004219E-02
+ Max norm displacement vector U in all slices (m) =    51671.6953    
+ Max norm pressure P in all slices (Pa) =    5735592.50    
+ Time steps done =        23000  out of        30000
+ Time steps remaining =         7000
+ Estimated remaining time in seconds =    556.502991    
+ Estimated remaining time in hh:mm:ss =      0 h 09 m 16 s
+ Estimated total run time in seconds =    2385.01270    
+ Estimated total run time in hh:mm:ss =      0 h 39 m 45 s
+ We have done    76.6666641     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:52
+
+ Time step #        23500
+ Time:    101.495003      seconds
+ Elapsed time in seconds =    1859.6134459972382     
+ Elapsed time in hh:mm:ss =      0 h 30 m 59 s
+ Mean elapsed time per time step in seconds =    7.91324899E-02
+ Max norm displacement vector U in all slices (m) =    51672.7773    
+ Max norm pressure P in all slices (Pa) =    6145850.00    
+ Time steps done =        23500  out of        30000
+ Time steps remaining =         6500
+ Estimated remaining time in seconds =    514.361145    
+ Estimated remaining time in hh:mm:ss =      0 h 08 m 34 s
+ Estimated total run time in seconds =    2373.97461    
+ Estimated total run time in hh:mm:ss =      0 h 39 m 33 s
+ We have done    78.3333359     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:53
+
+ Time step #        24000
+ Time:    103.995003      seconds
+ Elapsed time in seconds =    1889.5120711326599     
+ Elapsed time in hh:mm:ss =      0 h 31 m 29 s
+ Mean elapsed time per time step in seconds =    7.87296668E-02
+ Max norm displacement vector U in all slices (m) =    51673.7578    
+ Max norm pressure P in all slices (Pa) =    5820428.50    
+ Time steps done =        24000  out of        30000
+ Time steps remaining =         6000
+ Estimated remaining time in seconds =    472.378021    
+ Estimated remaining time in hh:mm:ss =      0 h 07 m 52 s
+ Estimated total run time in seconds =    2361.89014    
+ Estimated total run time in hh:mm:ss =      0 h 39 m 21 s
+ We have done    80.0000000     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:52
+
+ Time step #        24500
+ Time:    106.495003      seconds
+ Elapsed time in seconds =    1919.7440741062164     
+ Elapsed time in hh:mm:ss =      0 h 31 m 59 s
+ Mean elapsed time per time step in seconds =    7.83568993E-02
+ Max norm displacement vector U in all slices (m) =    51674.2578    
+ Max norm pressure P in all slices (Pa) =    4457177.50    
+ Time steps done =        24500  out of        30000
+ Time steps remaining =         5500
+ Estimated remaining time in seconds =    430.962952    
+ Estimated remaining time in hh:mm:ss =      0 h 07 m 10 s
+ Estimated total run time in seconds =    2350.70703    
+ Estimated total run time in hh:mm:ss =      0 h 39 m 10 s
+ We have done    81.6666641     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:52
+
+ Time step #        25000
+ Time:    108.995003      seconds
+ Elapsed time in seconds =    1950.3183901309967     
+ Elapsed time in hh:mm:ss =      0 h 32 m 30 s
+ Mean elapsed time per time step in seconds =    7.80127347E-02
+ Max norm displacement vector U in all slices (m) =    51675.3672    
+ Max norm pressure P in all slices (Pa) =    4472105.50    
+ Time steps done =        25000  out of        30000
+ Time steps remaining =         5000
+ Estimated remaining time in seconds =    390.063690    
+ Estimated remaining time in hh:mm:ss =      0 h 06 m 30 s
+ Estimated total run time in seconds =    2340.38208    
+ Estimated total run time in hh:mm:ss =      0 h 39 m 00 s
+ We have done    83.3333359     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:53
+
+
+ Total number of time steps written:        25000
+ Writing the seismograms in parallel took    1.66073108      seconds
+
+ Time step #        25500
+ Time:    111.495003      seconds
+ Elapsed time in seconds =    1982.6836481094360     
+ Elapsed time in hh:mm:ss =      0 h 33 m 02 s
+ Mean elapsed time per time step in seconds =    7.77522996E-02
+ Max norm displacement vector U in all slices (m) =    51676.6523    
+ Max norm pressure P in all slices (Pa) =    3968120.25    
+ Time steps done =        25500  out of        30000
+ Time steps remaining =         4500
+ Estimated remaining time in seconds =    349.885345    
+ Estimated remaining time in hh:mm:ss =      0 h 05 m 49 s
+ Estimated total run time in seconds =    2332.56909    
+ Estimated total run time in hh:mm:ss =      0 h 38 m 52 s
+ We have done    85.0000000     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:52
+
+ Time step #        26000
+ Time:    113.995003      seconds
+ Elapsed time in seconds =    2013.8431620597839     
+ Elapsed time in hh:mm:ss =      0 h 33 m 33 s
+ Mean elapsed time per time step in seconds =    7.74555057E-02
+ Max norm displacement vector U in all slices (m) =    51678.5078    
+ Max norm pressure P in all slices (Pa) =    6168385.50    
+ Time steps done =        26000  out of        30000
+ Time steps remaining =         4000
+ Estimated remaining time in seconds =    309.822021    
+ Estimated remaining time in hh:mm:ss =      0 h 05 m 09 s
+ Estimated total run time in seconds =    2323.66528    
+ Estimated total run time in hh:mm:ss =      0 h 38 m 43 s
+ We have done    86.6666641     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:52
+
+ Time step #        26500
+ Time:    116.495003      seconds
+ Elapsed time in seconds =    2043.7309939861298     
+ Elapsed time in hh:mm:ss =      0 h 34 m 03 s
+ Mean elapsed time per time step in seconds =    7.71219209E-02
+ Max norm displacement vector U in all slices (m) =    51681.0391    
+ Max norm pressure P in all slices (Pa) =    5399548.50    
+ Time steps done =        26500  out of        30000
+ Time steps remaining =         3500
+ Estimated remaining time in seconds =    269.926727    
+ Estimated remaining time in hh:mm:ss =      0 h 04 m 29 s
+ Estimated total run time in seconds =    2313.65771    
+ Estimated total run time in hh:mm:ss =      0 h 38 m 33 s
+ We have done    88.3333359     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:51
+
+ Time step #        27000
+ Time:    118.995003      seconds
+ Elapsed time in seconds =    2073.4046139717102     
+ Elapsed time in hh:mm:ss =      0 h 34 m 33 s
+ Mean elapsed time per time step in seconds =    7.67927617E-02
+ Max norm displacement vector U in all slices (m) =    51684.6445    
+ Max norm pressure P in all slices (Pa) =    4888521.00    
+ Time steps done =        27000  out of        30000
+ Time steps remaining =         3000
+ Estimated remaining time in seconds =    230.378296    
+ Estimated remaining time in hh:mm:ss =      0 h 03 m 50 s
+ Estimated total run time in seconds =    2303.78296    
+ Estimated total run time in hh:mm:ss =      0 h 38 m 23 s
+ We have done    90.0000000     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:52
+
+ Time step #        27500
+ Time:    121.495003      seconds
+ Elapsed time in seconds =    2103.9274611473083     
+ Elapsed time in hh:mm:ss =      0 h 35 m 03 s
+ Mean elapsed time per time step in seconds =    7.65064508E-02
+ Max norm displacement vector U in all slices (m) =    51688.2656    
+ Max norm pressure P in all slices (Pa) =    5742589.50    
+ Time steps done =        27500  out of        30000
+ Time steps remaining =         2500
+ Estimated remaining time in seconds =    191.266129    
+ Estimated remaining time in hh:mm:ss =      0 h 03 m 11 s
+ Estimated total run time in seconds =    2295.19360    
+ Estimated total run time in hh:mm:ss =      0 h 38 m 15 s
+ We have done    91.6666641     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:51
+
+ Time step #        28000
+ Time:    123.995003      seconds
+ Elapsed time in seconds =    2133.5760900974274     
+ Elapsed time in hh:mm:ss =      0 h 35 m 33 s
+ Mean elapsed time per time step in seconds =    7.61991441E-02
+ Max norm displacement vector U in all slices (m) =    51691.9102    
+ Max norm pressure P in all slices (Pa) =    5668295.00    
+ Time steps done =        28000  out of        30000
+ Time steps remaining =         2000
+ Estimated remaining time in seconds =    152.398285    
+ Estimated remaining time in hh:mm:ss =      0 h 02 m 32 s
+ Estimated total run time in seconds =    2285.97437    
+ Estimated total run time in hh:mm:ss =      0 h 38 m 05 s
+ We have done    93.3333359     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:52
+
+ Time step #        28500
+ Time:    126.495003      seconds
+ Elapsed time in seconds =    2164.6280889511108     
+ Elapsed time in hh:mm:ss =      0 h 36 m 04 s
+ Mean elapsed time per time step in seconds =    7.59518594E-02
+ Max norm displacement vector U in all slices (m) =    51695.3242    
+ Max norm pressure P in all slices (Pa) =    4616508.00    
+ Time steps done =        28500  out of        30000
+ Time steps remaining =         1500
+ Estimated remaining time in seconds =    113.927795    
+ Estimated remaining time in hh:mm:ss =      0 h 01 m 53 s
+ Estimated total run time in seconds =    2278.55591    
+ Estimated total run time in hh:mm:ss =      0 h 37 m 58 s
+ We have done    95.0000000     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:51
+
+ Time step #        29000
+ Time:    128.994995      seconds
+ Elapsed time in seconds =    2196.0761971473694     
+ Elapsed time in hh:mm:ss =      0 h 36 m 36 s
+ Mean elapsed time per time step in seconds =    7.57267624E-02
+ Max norm displacement vector U in all slices (m) =    51698.8164    
+ Max norm pressure P in all slices (Pa) =    4469776.00    
+ Time steps done =        29000  out of        30000
+ Time steps remaining =         1000
+ Estimated remaining time in seconds =    75.7267685    
+ Estimated remaining time in hh:mm:ss =      0 h 01 m 15 s
+ Estimated total run time in seconds =    2271.80298    
+ Estimated total run time in hh:mm:ss =      0 h 37 m 51 s
+ We have done    96.6666641     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:51
+
+ Time step #        29500
+ Time:    131.494995      seconds
+ Elapsed time in seconds =    2226.7700700759888     
+ Elapsed time in hh:mm:ss =      0 h 37 m 06 s
+ Mean elapsed time per time step in seconds =    7.54837319E-02
+ Max norm displacement vector U in all slices (m) =    51703.1641    
+ Max norm pressure P in all slices (Pa) =    5389445.50    
+ Time steps done =        29500  out of        30000
+ Time steps remaining =          500
+ Estimated remaining time in seconds =    37.7418671    
+ Estimated remaining time in hh:mm:ss =      0 h 00 m 37 s
+ Estimated total run time in seconds =    2264.51196    
+ Estimated total run time in hh:mm:ss =      0 h 37 m 44 s
+ We have done    98.3333359     % of that
+ The run will finish approximately on (in local time): Tue Jun 04, 2019 17:51
+
+ Time step #        30000
+ Time:    133.994995      seconds
+ Elapsed time in seconds =    2256.7903230190277     
+ Elapsed time in hh:mm:ss =      0 h 37 m 36 s
+ Mean elapsed time per time step in seconds =    7.52263442E-02
+ Max norm displacement vector U in all slices (m) =    51707.9375    
+ Max norm pressure P in all slices (Pa) =    4895535.50    
+ Time steps done =        30000  out of        30000
+ Time steps remaining =            0
+ Estimated remaining time in seconds =    0.00000000    
+ Estimated remaining time in hh:mm:ss =      0 h 00 m 00 s
+ Estimated total run time in seconds =    2256.79028    
+ Estimated total run time in hh:mm:ss =      0 h 37 m 36 s
+ We have done    100.000000     % of that
+
+
+ Total number of time steps written:        30000
+ Writing the seismograms in parallel took    5.12920475      seconds
+
+ Time-Loop Complete. Timing info:
+ Total elapsed time in seconds =    2262.0554311275482     
+ Total elapsed time in hh:mm:ss =      0 h 37 m 42 s
+
+ End of the simulation
+

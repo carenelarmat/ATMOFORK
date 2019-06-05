@@ -1,0 +1,264 @@
+
+ ******************************************
+ *** Specfem3D MPI meshfem3D - f90 version ***
+ ******************************************
+
+ Reading mesh parameters from file ./DATA/meshfem3D_files/Mesh_Par_file
+
+ Reading interface data from file ./DATA/meshfem3D_files/interfaces.dat
+ maximum interface points x/y =          240         240
+
+ Creating global slice addressing
+
+ Spatial distribution of slice numbers:
+   24   25   26   27   28   29   30   31 
+   16   17   18   19   20   21   22   23 
+    8    9   10   11   12   13   14   15 
+    0    1    2    3    4    5    6    7 
+ This is process            0
+ There are           32  MPI processes
+ Processes are numbered from 0 to           31
+
+ There are           48  elements along xi
+ There are           48  elements along eta
+ There are           43  elements along Z
+
+ There are           10  spectral elements along Z in layer            1
+ There are            3  spectral elements along Z in layer            2
+ There are           30  spectral elements along Z in layer            3
+
+ There are            8  slices along xi
+ There are            4  slices along eta
+ There is a total of           32  slices
+
+ Shape functions defined by NGNOD =            8  control nodes
+ Surface shape functions defined by NGNOD2D =            4  control nodes
+ Beware! Curvature (i.e. HEX27 elements) is not handled by our internal mesher
+
+ region selected:
+
+ latitude min =   -15.355000000000000     
+ latitude max =   -14.904999999999999     
+
+ longitude min =   -172.20400000000001     
+ longitude max =   -171.73400000000001     
+
+ this is mapped to UTM in region           -2
+
+ UTM X min =    370768.79689891700     
+ UTM X max =    421052.90068203874     
+
+ UTM Y min =    8302064.0045680860     
+ UTM Y max =    8352065.8235377213     
+
+ UTM size of model along X is    50.284103783121743       km
+ UTM size of model along Y is    50.001818969635295       km
+
+ Bottom of the mesh is at a depth of    16.000000000000000       km
+
+
+ using UTM projection in region           -2
+
+
+ **************************
+ Creating interfaces
+ **************************
+
+ Reading interface data from file ./DATA/meshfem3D_files/interfaces.dat
+
+ number of interfaces:            3
+
+ mesh:
+   origin UTM minimum x/y        (m) =    370768.812       8302064.00    
+                      lat/lon  (deg) =   -15.3548660      -172.203995    
+   origin UTM maximum x/y        (m) =    421052.906       8352066.00    
+                      lat/lon  (deg) =   -14.9048691      -171.733994    
+
+ reading interface            1
+   interface file   : GEBCO_2019_-172.5_-14.5_-171.5_-15.5.SEM
+
+   number of points x/y =          240         240
+   origin x/y     (deg) =   -172.497910      -15.4979162    
+   spacing x/y    (deg) =    4.16666688E-03   4.16666688E-03
+                    (m) =    463.832886       463.832886    
+
+   dimension x-direction (deg) =   -172.497910     /  -171.497910    
+   dimension y-direction (deg) =   -15.4979162     /  -14.4979162    
+
+   total number of file points =        57600  should be        57600
+   this point total is okay
+
+   original elevation min/max             =   -8198.70996      -629.057007    
+   interpolated mesh elevation min/max    =   -5278.23389      -774.635559    
+
+   interpolated mesh longitude min/max (deg) =   -172.203995     /  -171.733994    
+   interpolated mesh latitude  min/max (deg) =   -15.3569040     /  -14.9028931    
+
+   interpolated mesh UTM minimum x/y (m) =    370768.812       8302064.00    
+   interpolated mesh UTM maximum x/y (m) =    421052.906       8352066.00    
+
+ reading interface            2
+   interface file   : top_water.dat
+
+   number of points x/y =            2           2
+   origin x/y     (deg) =   -180.000000      -90.0000000    
+   spacing x/y    (deg) =    360.000000       180.000000    
+                    (m) =    40075160.0       20037580.0    
+
+   dimension x-direction (deg) =   -180.000000     /   540.000000    
+   dimension y-direction (deg) =   -90.0000000     /   270.000000    
+
+   total number of file points =            4  should be            4
+   this point total is okay
+
+   original elevation min/max             =    0.00000000       0.00000000    
+   interpolated mesh elevation min/max    =    0.00000000       0.00000000    
+
+   interpolated mesh longitude min/max (deg) =   -172.203995     /  -171.733994    
+   interpolated mesh latitude  min/max (deg) =   -15.3569040     /  -14.9028931    
+
+   interpolated mesh UTM minimum x/y (m) =    370768.812       8302064.00    
+   interpolated mesh UTM maximum x/y (m) =    421052.906       8352066.00    
+
+ reading interface            3
+   interface file   : top_atmo.dat
+
+   number of points x/y =            2           2
+   origin x/y     (deg) =   -180.000000      -90.0000000    
+   spacing x/y    (deg) =    360.000000       180.000000    
+                    (m) =    40075160.0       20037580.0    
+
+   dimension x-direction (deg) =   -180.000000     /   540.000000    
+   dimension y-direction (deg) =   -90.0000000     /   270.000000    
+
+   total number of file points =            4  should be            4
+   this point total is okay
+
+   original elevation min/max             =    30000.0000       30000.0000    
+   interpolated mesh elevation min/max    =    30000.0000       30000.0000    
+
+   interpolated mesh longitude min/max (deg) =   -172.203995     /  -171.733994    
+   interpolated mesh latitude  min/max (deg) =   -15.3569040     /  -14.9028931    
+
+   interpolated mesh UTM minimum x/y (m) =    370768.812       8302064.00    
+   interpolated mesh UTM maximum x/y (m) =    421052.906       8352066.00    
+
+
+ **************************
+ Creating mesh in the model
+ **************************
+
+ allocating mesh arrays
+
+ number of subregions =            3
+   defining subregion            1
+   defining subregion            2
+   defining subregion            3
+
+ number of mesh regions =            1
+   creating mesh region            1
+
+ mesh dimensions:
+   Xmin and Xmax of the model =    370768.812       421052.906    
+   Ymin and Ymax of the model =    8302064.00       8352066.00    
+   Zmin and Zmax of the model =   -16000.0000       30000.0000    
+
+ exact area =    2.51429658E+09 (m^2)
+            =    2514.29663     (km^2)
+
+ creating indirect addressing for unstructured mesh
+
+
+ File "./DATA/meshfem3D_files/no_cavity.dat" not found: assume no cavity
+
+
+ saving mesh files
+
+ **************************
+ Checking mesh quality
+ **************************
+
+ start computing the minimum and maximum edge size
+ done processing 
+
+ ------------
+ mesh quality parameter definitions:
+
+ equiangle skewness: 0. perfect,  1. bad
+ skewness max deviation angle: 0. perfect,  90. bad
+ edge aspect ratio: 1. perfect,  above 1. gives stretching factor
+ diagonal aspect ratio: 1. perfect,  above 1. gives stretching factor
+ ------------
+
+ minimum length of an edge in the whole mesh (m) =    258.21184540378340     
+
+ maximum length of an edge in the whole mesh (m) =    1747.7953669590106     
+
+ ***
+ *** max equiangle skewness =   0.50568829819823080       in element          677  of slice           19
+ ***
+
+ max deviation angle from a right angle (90 degrees) is therefore =    45.511946837840775     
+
+ worst angle in the mesh is therefore    44.488053162159225     
+ or    135.51194683784078       degrees
+
+ max edge aspect ratio =    4.6013496833131917     
+
+ max diagonal aspect ratio =    1.8838750043040744     
+
+ ***
+ *** Maximum suggested time step for simulation =    0.01417120
+ ***
+ *** Max CFL stability condition of the time scheme (must be below about 0.55 or so) =   0.47039999999999998     
+ *** computed using the maximum P wave velocity =    1480.0000000000000     
+ ***
+ that value is below the upper CFL limit of   0.55000000000000004     
+ therefore the run should be stable
+
+ creating histogram of mesh quality
+
+ histogram of skewness (0. good - 1. bad):
+
+   0.00000000      -    5.00000007E-02       93752     94.6301651      %
+   5.00000007E-02  -   0.100000001            2660     2.68491602      %
+  0.100000001      -   0.150000006            1501     1.51505971      %
+  0.150000006      -   0.200000003             665    0.671229005      %
+  0.200000003      -   0.250000000             265    0.267482221      %
+  0.250000000      -   0.300000012             108    0.109011628      %
+  0.300000012      -   0.349999994              50     5.04683480E-02  %
+  0.349999994      -   0.400000006              37     3.73465754E-02  %
+  0.400000006      -   0.449999988              20     2.01873388E-02  %
+  0.449999988      -   0.500000000              10     1.00936694E-02  %
+  0.500000000      -   0.550000012               4     4.03746776E-03  %
+  0.550000012      -   0.600000024               0     0.00000000      %
+  0.600000024      -   0.649999976               0     0.00000000      %
+  0.649999976      -   0.699999988               0     0.00000000      %
+  0.699999988      -   0.750000000               0     0.00000000      %
+  0.750000000      -   0.800000012               0     0.00000000      %
+  0.800000012      -   0.850000024               0     0.00000000      %
+  0.850000024      -   0.899999976               0     0.00000000      %
+  0.899999976      -   0.949999988               0     0.00000000      %
+  0.949999988      -    1.00000000               0     0.00000000      %
+
+
+ Repartition of elements:
+ -----------------------
+
+ total number of elements in mesh slice 0:         3096
+ total number of points in mesh slice 0:         4004
+
+ total number of elements in entire mesh:        99072
+ approximate total number of points in entire mesh (with duplicates on MPI edges):    128128.00000000000     
+ approximate total number of DOFs in entire mesh (with duplicates on MPI edges):    384384.00000000000     
+
+ using single precision for the calculations
+
+ smallest and largest possible floating-point numbers are:    1.17549435E-38   3.40282347E+38
+
+
+ Elapsed time for mesh generation and buffer creation in seconds =   0.92351388931274414     
+ End of mesh generation
+
+ done
+

@@ -1,0 +1,26 @@
+# number of interfaces
+ 3
+#
+# We describe each interface below, structured as a 2D-grid, with several parameters : 
+# number of points along XI and ETA, minimal XI ETA coordinates 
+# and spacing between points which must be constant.
+# Then the records contain the Z coordinates of the NXI x NETA points.
+#
+# interface number 1 (bathymetry)
+# SUPPRESS_UTM_PROJECTION  NXI  NETA LONG_MIN   LAT_MIN    SPACING_XI SPACING_ETA
+.false.		240	240	-172.497916667 -15.4979166667 0.00416666666667 0.00416666666667 
+GEBCO_2019_-172.5_-14.5_-171.5_-15.5.SEM
+
+# interface number 2 (top of water)
+# SUPPRESS_UTM_PROJECTION  NXI  NETA LONG_MIN   LAT_MIN    SPACING_XI SPACING_ETA
+ .false.                    2  2  -180.d0  -90.d0 360.d0    180.d0
+ top_water.dat
+# interface number 3 (top of the mesh)
+# SUPPRESS_UTM_PROJECTION  NXI  NETA LONG_MIN   LAT_MIN    SPACING_XI SPACING_ETA
+ .false.                    2  2  -180.d0  -90.d0 360.d0    180.d0
+ top_atmo.dat
+# for each layer, we give the number of spectral elements in the vertical direction
+# layer number 1 (bottom to top)
+ 10
+ 3
+ 30

@@ -477,11 +477,11 @@
 
 !! Socal1D example
 !! size of topography and bathymetry file for EXAMPLE/meshfem3D_examples/socal1D/DATA/meshfem3D_files/interface4.dat
-  integer, parameter :: NX_TOPO_FILE = 2,NY_TOPO_FILE = 2
-  double precision, parameter :: ORIG_LAT_TOPO = 32.d0
-  double precision, parameter :: ORIG_LONG_TOPO = -121.d0
-  double precision, parameter :: DEGREES_PER_CELL_TOPO = 6.d0
-  character(len=*), parameter :: TOPO_FILE = 'DATA/meshfem3D_files/interface4.dat'
+!  integer, parameter :: NX_TOPO_FILE = 2,NY_TOPO_FILE = 2
+!  double precision, parameter :: ORIG_LAT_TOPO = 32.d0
+!  double precision, parameter :: ORIG_LONG_TOPO = -121.d0
+!  double precision, parameter :: DEGREES_PER_CELL_TOPO = 6.d0
+!  character(len=*), parameter :: TOPO_FILE = 'DATA/meshfem3D_files/interface4.dat'
 
 !! Many interfaces example
 !! size of topography and bathymetry file for EXAMPLE/meshfem3D_examples/socal1D/DATA/meshfem3D_files/interface4.dat

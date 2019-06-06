@@ -295,15 +295,20 @@
 ! plots VTK cross-section planes instead of model surface
 ! (EXPERIMENTAL feature)
 ! (requires MOVIE_SURFACE set to .true. in Par_file)
-  logical, parameter :: PLOT_CROSS_SECTIONS = .false.
-  real(kind=CUSTOM_REAL),parameter :: CROSS_SECTION_X = 67000.0_CUSTOM_REAL
-  real(kind=CUSTOM_REAL),parameter :: CROSS_SECTION_Y = 65500.0_CUSTOM_REAL
-  real(kind=CUSTOM_REAL),parameter :: CROSS_SECTION_Z = -30000.0_CUSTOM_REAL
+!  logical, parameter :: PLOT_CROSS_SECTIONS = .false.
+!  real(kind=CUSTOM_REAL),parameter :: CROSS_SECTION_X = 67000.0_CUSTOM_REAL
+!  real(kind=CUSTOM_REAL),parameter :: CROSS_SECTION_Y = 65500.0_CUSTOM_REAL
+!  real(kind=CUSTOM_REAL),parameter :: CROSS_SECTION_Z = -30000.0_CUSTOM_REAL
 !=== case KELUD
-!  logical, parameter :: PLOT_CROSS_SECTIONS = .true.
+!  logical, parameter :: PLOT_CROSS_SECTIONS = .false.
 !  real(kind=CUSTOM_REAL),parameter :: CROSS_SECTION_X = 371041.0_CUSTOM_REAL
 !  real(kind=CUSTOM_REAL),parameter :: CROSS_SECTION_Y = 999999.0_CUSTOM_REAL
 !  real(kind=CUSTOM_REAL),parameter :: CROSS_SECTION_Z = 200000.0_CUSTOM_REAL
+!=== case Samoa
+  logical, parameter :: PLOT_CROSS_SECTIONS = .true.
+  real(kind=CUSTOM_REAL),parameter :: CROSS_SECTION_X = 394863.0_CUSTOM_REAL
+  real(kind=CUSTOM_REAL),parameter :: CROSS_SECTION_Y = 8326020.0_CUSTOM_REAL
+  real(kind=CUSTOM_REAL),parameter :: CROSS_SECTION_Z = 0.0_CUSTOM_REAL
 
 ! plots PNM cross-section image
 ! (EXPERIMENTAL feature)

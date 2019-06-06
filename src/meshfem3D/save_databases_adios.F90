@@ -94,7 +94,7 @@ subroutine save_databases_adios(LOCAL_PATH, myrank, sizeprocs, &
   ! first dimension  : material_id
   ! second dimension : #rho  #vp  #vs  #Q_Kappa  #Q_mu  #anisotropy_flag  #domain_id  #material_id
   double precision , dimension(NMATERIALS,NUMBER_OF_MATERIAL_PROPERTIES) :: material_properties
-  charater(len=MAX_STRING_LEN) , dimension(NMATERIALS) :: material_files
+  character(len=MAX_STRING_LEN) , dimension(NMATERIALS) :: material_files
 
   ! CPML
   integer, intent(in) :: nspec_CPML

@@ -252,6 +252,9 @@
     write(IMAIN,*)
     if (PLOT_CROSS_SECTIONS) then
       write(IMAIN,*) '  used on cross-sections'
+      write(IMAIN,*) '    cross_section_x: ',CROSS_SECTION_X
+      write(IMAIN,*) '    cross_section_y: ',CROSS_SECTION_Y
+      write(IMAIN,*) '    cross_section_z: ',CROSS_SECTION_Z
       write(IMAIN,*)
     endif
     ! shakemaps

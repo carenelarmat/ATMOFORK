@@ -93,8 +93,8 @@
   call utm_geo(long,lat,xval,yval,IUTM2LONGLAT)
 
   ! get coordinate of corner in bathy/topo model
-  icornerlong = int((long - ORIG_LONG_TOPO) / DEGREES_PER_CELL_TOPO) + 1
-  icornerlat = int((lat - ORIG_LAT_TOPO) / DEGREES_PER_CELL_TOPO) + 1
+  icornerlong = int((long - ORIG_LONG_TOPO) / DEGREES_PER_CELL_TOPO_X) + 1
+  icornerlat = int((lat - ORIG_LAT_TOPO) / DEGREES_PER_CELL_TOPO_Y) + 1
 
   ! avoid edge effects and extend with identical point if outside model
   if (icornerlong < 1) icornerlong = 1
@@ -103,12 +103,12 @@
   if (icornerlat > NY_TOPO-1) icornerlat = NY_TOPO-1
 
   ! compute coordinates of corner
-  long_corner = ORIG_LONG_TOPO + (icornerlong-1)*DEGREES_PER_CELL_TOPO
-  lat_corner = ORIG_LAT_TOPO + (icornerlat-1)*DEGREES_PER_CELL_TOPO
+  long_corner = ORIG_LONG_TOPO + (icornerlong-1)*DEGREES_PER_CELL_TOPO_X
+  lat_corner = ORIG_LAT_TOPO + (icornerlat-1)*DEGREES_PER_CELL_TOPO_Y
 
   ! compute ratio for interpolation
-  ratio_xi = (long - long_corner) / DEGREES_PER_CELL_TOPO
-  ratio_eta = (lat - lat_corner) / DEGREES_PER_CELL_TOPO
+  ratio_xi = (long - long_corner) / DEGREES_PER_CELL_TOPO_X
+  ratio_eta = (lat - lat_corner) / DEGREES_PER_CELL_TOPO_Y
 
   ! avoid edge effects
   if (ratio_xi < 0.) ratio_xi = 0.

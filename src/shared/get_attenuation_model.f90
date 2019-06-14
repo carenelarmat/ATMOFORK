@@ -320,6 +320,8 @@
             ! takes Q set in (CUBIT) mesh
             Q_kappa = qkappa_attenuation_store(i,j,k,ispec)
           endif
+!DEBUG 
+!          write(*,*) 'DEBUG ',minval(qkappa_attenuation_store),Q_kappa
 
           ! attenuation zero (means negligible attenuation)
           if (Q_kappa <= 1.e-5) Q_kappa = ATTENUATION_COMP_MAXIMUM

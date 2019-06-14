@@ -473,12 +473,28 @@
 ! specifies topography file to determine the (exact) elevation of each GLL point at the free surface
 ! in case TOPOGRAPHY = .true. (used for ocean load approximation)
 ! in case MODELING_ATMO = .true. and not USE_SOURCE_RECEIVERS_Z (used for localisation source/receivers)
+!! MARS HRSC DEM Golombek 2017 
+
+! integer, parameter :: NX_TOPO_FILE = 1184, NY_TOPO_FILE = 1483
+! double precision, parameter :: ORIG_LAT_TOPO =  5.5d0
+! double precision, parameter :: ORIG_LONG_TOPO = 134.5d0
+! double precision, parameter :: DEGREES_PER_CELL_TOPO_X = 0.00169061707523d0,DEGREES_PER_CELL_TOPO_Y = -0.00168690958165d0
+! character(len=*), parameter :: TOPO_FILE = 'DATA/meshfem3D_files/dtm_ins_el0315_mr.da5_SEM.dat'
+
+!! MARS MOLA CASE 463m
+
+ integer, parameter :: NX_TOPO_FILE = 3840, NY_TOPO_FILE = 1920
+ double precision, parameter :: ORIG_LAT_TOPO =  10.d0
+ double precision, parameter :: ORIG_LONG_TOPO = 130.d0
+ double precision, parameter :: DEGREES_PER_CELL_TOPO_X = 0.00390625d0,DEGREES_PER_CELL_TOPO_Y = -0.0078125d0
+ character(len=*), parameter :: TOPO_FILE = 'DATA/meshfem3D_files/Mars_MGS_MOLA_DEM_463_Insight.dat'
+
 !! ATMO CASE FLAT TOPO
- integer, parameter :: NX_TOPO_FILE = 2, NY_TOPO_FILE = 2
- double precision, parameter :: ORIG_LAT_TOPO =  -1000000.d0
- double precision, parameter :: ORIG_LONG_TOPO = -1000000.d0
- double precision, parameter :: DEGREES_PER_CELL_TOPO = 2000000.d0
- character(len=*), parameter :: TOPO_FILE = 'DATA/topo_flat.dat'
+! integer, parameter :: NX_TOPO_FILE = 2, NY_TOPO_FILE = 2
+! double precision, parameter :: ORIG_LAT_TOPO =  -1000000.d0
+! double precision, parameter :: ORIG_LONG_TOPO = -1000000.d0
+! double precision, parameter :: DEGREES_PER_CELL_TOPO = 2000000.d0
+! character(len=*), parameter :: TOPO_FILE = 'DATA/topo_flat.dat'
 
 !! Socal1D example
 !! size of topography and bathymetry file for EXAMPLE/meshfem3D_examples/socal1D/DATA/meshfem3D_files/interface4.dat

@@ -505,6 +505,7 @@ end subroutine init_tomography_files
     ! user output
     if (myrank_tomo == 0) then
       write(IMAIN,*) '     number of grid points = NX*NY*NZ:',nrecord(imat)
+      if (has_q_values) write(IMAIN,*) '     min/max attenuation: ',minval(qp_tomography),maxval(qp_tomography)
       write(IMAIN,*)
       call flush_IMAIN()
     endif
@@ -910,6 +911,7 @@ end subroutine init_tomography_files
       qkappa_atten = (1.0 - L_val) * qp_final * qs_final / (qs_final - L_val * qp_final)
     endif
 
+
     ! attenuation zero (means negligible attenuation)
     if (qmu_atten <= 1.e-5) qmu_atten = ATTENUATION_COMP_MAXIMUM
     if (qkappa_atten <= 1.e-5) qkappa_atten = ATTENUATION_COMP_MAXIMUM
@@ -929,6 +931,8 @@ end subroutine init_tomography_files
 
   ! value found
   has_tomo_value = .true.
+!DEBUG 
+!    write(45346,*) 'DEBUG ',qkappa_atten,qmu_atten
 
   contains
 

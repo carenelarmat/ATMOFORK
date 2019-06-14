@@ -276,7 +276,7 @@ MPILIBS += @ASDF_LIBS@
 # B : build directory
 B = @top_builddir@
 # E : executables directory
-E = $B/bin
+E = $B/bin_Mars_HRSC
 # O : objects directory
 O = $B/obj
 # S_TOP : source file root directory

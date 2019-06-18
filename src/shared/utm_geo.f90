@@ -109,7 +109,10 @@
 ! double precision, parameter :: SEMI_MAJOR_AXIS = 6378206.4d0, SEMI_MINOR_AXIS = 6356583.8d0
 
 ! WGS84 (World Geodetic System 1984)
-  double precision, parameter :: SEMI_MAJOR_AXIS = 6378137.0d0, SEMI_MINOR_AXIS = 6356752.314245d0
+!  double precision, parameter :: SEMI_MAJOR_AXIS = 6378137.0d0, SEMI_MINOR_AXIS = 6356752.314245d0
+
+! Mars
+  double precision, parameter :: SEMI_MAJOR_AXIS = 3396190.d0, SEMI_MINOR_AXIS = 3376200.d0
 
 ! Note that the UTM grids are actually Mercators which
 ! employ the standard UTM scale factor 0.9996 and set the Easting Origin to 500,000.

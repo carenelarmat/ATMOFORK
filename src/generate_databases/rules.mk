@@ -57,6 +57,7 @@ generate_databases_OBJECTS = \
 	$O/model_1d_cascadia.gen.o \
 	$O/model_1d_prem.gen.o \
 	$O/model_1d_socal.gen.o \
+	$O/model_1d_EH45TcoldCrust1rq.gen.o \
 	$O/model_aniso.gen.o \
 	$O/model_coupled.gen.o \
 	$O/model_default.gen.o \

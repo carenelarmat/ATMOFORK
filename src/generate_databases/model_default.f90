@@ -41,7 +41,7 @@
 
 ! takes model values specified by mesh properties
 
-  use generate_databases_par, only: IDOMAIN_ACOUSTIC,IDOMAIN_ELASTIC,IDOMAIN_POROELASTIC
+  use generate_databases_par, only: IDOMAIN_ACOUSTIC,IDOMAIN_ELASTIC,IDOMAIN_POROELASTIC,MODEL_EH45T
   use create_regions_mesh_ext_par, only: CUSTOM_REAL,MAX_STRING_LEN
 
   implicit none
@@ -70,7 +70,7 @@
   logical :: has_tomo_value
   character(len=MAX_STRING_LEN) :: str_domain
   integer :: ier
-
+ 
   ! check if the material is known or unknown
   if (imaterial_id > 0) then
     ! gets velocity model as specified by (cubit) mesh files for elastic & acoustic
@@ -82,20 +82,30 @@
     select case (idomain_id)
 
     case (IDOMAIN_ACOUSTIC,IDOMAIN_ELASTIC)
-      ! (visco)elastic or acoustic
 
-      ! density
-      ! materials_ext_mesh format:
-      ! #index1 = rho #index2 = vp #index3 = vs #index4 = Q_Kappa #index5 = Q_mu #index6 = iflag_aniso
-      rho = materials_ext_mesh(1,imaterial_id)
+     
+      if (MODEL_EH45T.and.imaterial_id==1) then 
 
-      ! isotropic values: vp, vs
-      vp = materials_ext_mesh(2,imaterial_id)
-      vs = materials_ext_mesh(3,imaterial_id)
+        call model_1D_EH45TcoldCrust1rq(xmesh,ymesh,zmesh,rho,vp,vs,qkappa_atten,qmu_atten)
 
-      ! attenuation
-      qkappa_atten = materials_ext_mesh(4,imaterial_id)
-      qmu_atten = materials_ext_mesh(5,imaterial_id)
+      else
+
+        ! (visco)elastic or acoustic
+
+        ! density
+        ! materials_ext_mesh format:
+        ! #index1 = rho #index2 = vp #index3 = vs #index4 = Q_Kappa #index5 = Q_mu #index6 = iflag_aniso
+        rho = materials_ext_mesh(1,imaterial_id)
+
+        ! isotropic values: vp, vs
+        vp = materials_ext_mesh(2,imaterial_id)
+        vs = materials_ext_mesh(3,imaterial_id)
+
+        ! attenuation
+        qkappa_atten = materials_ext_mesh(4,imaterial_id)
+        qmu_atten = materials_ext_mesh(5,imaterial_id)
+      
+      endif
 
       ! anisotropy
       iflag_aniso = nint(materials_ext_mesh(6,imaterial_id))
@@ -166,13 +176,14 @@
       ! material definition undefined, uses definition from tomography model
 
       ! gets model values from tomography file
-      call model_tomography(xmesh,ymesh,zmesh,rho,vp,vs,qkappa_atten,qmu_atten,imaterial_id,has_tomo_value)
+       call model_tomography(xmesh,ymesh,zmesh,rho,vp,vs,qkappa_atten,qmu_atten,imaterial_id,has_tomo_value)
 
       ! checks if value was found
       if (.not. has_tomo_value) then
         print *,'Error: tomography value not defined for model material id ',imaterial_id
         stop 'Error no matching material value found'
       endif
+
 
       ! no anisotropy
       iflag_aniso = 0

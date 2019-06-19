@@ -167,6 +167,9 @@
   logical,dimension(:),allocatable :: ispec_is_surface_external_mesh,iglob_is_surface_external_mesh
   integer :: nfaces_surface,nfaces_surface_glob_ext_mesh
 
+  !hard-written modification to allow EH45T modeling
+  logical, parameter :: MODEL_EH45T = .true.
+
   end module generate_databases_par
 
 !

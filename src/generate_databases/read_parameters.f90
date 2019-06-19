@@ -213,7 +213,7 @@
   use generate_databases_par
   implicit none
 
-  if (APPROXIMATE_OCEAN_LOAD .and. TOPOGRAPHY) then
+  if (MODEL_EH45T.or.(APPROXIMATE_OCEAN_LOAD .and. TOPOGRAPHY)) then
 
     ! values given in constants.h
     NX_TOPO = NX_TOPO_FILE

@@ -485,7 +485,7 @@
     call read_value_logical(SAVE_SEISMOGRAMS_DERIVATIVE, 'SAVE_SEISMOGRAMS_DERIVATIVE', ier)
     if (ier /= 0) then
       some_parameters_missing_from_Par_file = .true.
-      write(*,'(a)') 'SAVE_SEISMOGRAMS_DERIVATIVEE       = .false.'
+      write(*,'(a)') 'SAVE_SEISMOGRAMS_DERIVATIVE       = .false.'
       write(*,*)
     endif
 
@@ -973,6 +973,7 @@
     call bcast_all_singlel(SAVE_SEISMOGRAMS_VELOCITY)
     call bcast_all_singlel(SAVE_SEISMOGRAMS_ACCELERATION)
     call bcast_all_singlel(SAVE_SEISMOGRAMS_PRESSURE)
+    call bcast_all_singlel(SAVE_SEISMOGRAMS_DERIVATIVE)
     call bcast_all_singlel(SAVE_SEISMOGRAMS_IN_ADJOINT_RUN)
     call bcast_all_singlel(USE_BINARY_FOR_SEISMOGRAMS)
     call bcast_all_singlel(SU_FORMAT)
@@ -1051,6 +1052,10 @@
         SAVE_SEISMOGRAMS_ACCELERATION)) stop 'USE_TRICK_FOR_BETTER_PRESSURE is currently incompatible with &
         &SAVE_SEISMOGRAMS_DISPLACEMENT .or. SAVE_SEISMOGRAMS_VELOCITY .or. SAVE_SEISMOGRAMS_ACCELERATION, &
         &only SAVE_SEISMOGRAMS_PRESSURE can be used'
+
+  !SAVE_SEISMOGRAMS_DERIVATIVE STILL EXPERIMENTAL
+  if (SAVE_SEISMOGRAMS_DERIVATIVE .and. (GPU_MODE .or. SU_FORMAT)) &
+        stop 'SAVE_SEISMOGRAMS_DERIVATIVE only for ascii format'
 
   ! LDDRK
   if (USE_LDDRK) then

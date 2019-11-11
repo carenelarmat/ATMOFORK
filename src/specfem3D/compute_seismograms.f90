@@ -32,6 +32,7 @@
   use specfem_par_acoustic
   use specfem_par_elastic
   use specfem_par_poroelastic
+!  use shared_par, only :: SAVE_SEISMOGRAMS_DERIVATIVE
 
   implicit none
 
@@ -39,6 +40,7 @@
   real(kind=CUSTOM_REAL),dimension(NDIM,NGLLX,NGLLY,NGLLZ):: displ_element,veloc_element,accel_element
   ! interpolated wavefield values
   double precision :: dxd,dyd,dzd,vxd,vyd,vzd,axd,ayd,azd,pd
+  double precision :: div,curlx,curly,curlz
 
   integer :: irec_local,irec
   integer :: iglob,ispec,i,j,k
@@ -49,6 +51,9 @@
   real(kind=CUSTOM_REAL):: stf_deltat
   double precision :: stf
   double precision,dimension(NDIM,NDIM) :: rotation_seismo
+
+!DEBUG
+!  if (it==10 .and. myrank==8 ) write(IMAIN,*) 'HELLO ',myrank,SAVE_SEISMOGRAMS_DERIVATIVE,nrec_local,shape(seismograms_der)
 
   do irec_local = 1,nrec_local
 
@@ -95,10 +100,22 @@
       ! elastic wave field
       if (ispec_is_elastic(ispec)) then
         ! interpolates displ/veloc/accel at receiver locations
-        call compute_interpolated_dva_viscoelast(displ,veloc,accel,NGLOB_AB, &
+        if (SAVE_SEISMOGRAMS_DERIVATIVE) then 
+            call compute_interpolated_dva_div(displ,veloc,accel,NGLOB_AB, &
+                        ispec,NSPEC_AB, &
+                        xix,xiy,xiz,etax,etay,etaz,gammax,gammay,gammaz, &
+                        hprime_xx,hprime_yy,hprime_zz, &
+                        jacobian, ibool, &
+                        xi_receiver(irec),eta_receiver(irec),gamma_receiver(irec),&
+                        hxir,hetar,hgammar, &
+                        dxd,dyd,dzd,vxd,vyd,vzd,axd,ayd,azd, &
+                        div,curlx,curly,curlz)
+        else ! call original subroutine
+          call compute_interpolated_dva_viscoelast(displ,veloc,accel,NGLOB_AB, &
                                       ispec,NSPEC_AB,ibool, &
                                       hxir,hetar,hgammar, &
                                       dxd,dyd,dzd,vxd,vyd,vzd,axd,ayd,azd)
+        endif
       endif ! elastic
 
       ! acoustic wave field
@@ -118,6 +135,17 @@
                                              ispec,NSPEC_AB,ibool, &
                                              hxir,hetar,hgammar, &
                                              dxd,dyd,dzd,vxd,vyd,vzd,axd,ayd,azd,pd,USE_TRICK_FOR_BETTER_PRESSURE)
+        if (SAVE_SEISMOGRAMS_DERIVATIVE) & 
+            call compute_interpolated_dva_ac_div(displ_element,veloc_element,&
+                        potential_dot_dot_acoustic,potential_dot_acoustic,&
+                        potential_acoustic,NGLOB_AB, &
+                        ispec,NSPEC_AB, &
+                        xix,xiy,xiz,etax,etay,etaz,gammax,gammay,gammaz, &
+                        hprime_xx,hprime_yy,hprime_zz, &
+                        jacobian, ibool, &
+                        hxir,hetar,hgammar, &
+                        dxd,dyd,dzd,vxd,vyd,vzd,axd,ayd,azd,div)
+    
       endif ! acoustic
 
       ! poroelastic wave field
@@ -229,6 +257,8 @@
 
     ! only one scalar in the case of pressure
     if (SAVE_SEISMOGRAMS_PRESSURE) seismograms_p(1,irec_local,seismo_current) = real(pd,kind=CUSTOM_REAL)
+    !
+    if (SAVE_SEISMOGRAMS_DERIVATIVE) seismograms_der(1,irec_local,seismo_current) = real(div)
 
     ! adjoint simulations
     if (SIMULATION_TYPE == 2) then

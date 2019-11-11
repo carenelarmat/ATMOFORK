@@ -107,6 +107,10 @@
               call write_seismograms_to_file(seismograms_a,3)
             if (SAVE_SEISMOGRAMS_PRESSURE) &
               call write_seismograms_to_file(seismograms_p,4)
+            if (SAVE_SEISMOGRAMS_DERIVATIVE) &
+              write(IMAIN,*) 'I AM HERE SEISMO_DER' 
+              write(IMAIN,*) 'SEISMOGRAMS_DER ',shape(seismograms_der),shape(seismograms_p)
+              call write_seismograms_to_file(seismograms_der,5)
           else
             ! SU_format
             ! write ONE binary file for all receivers (nrec_local) within one proc
@@ -221,6 +225,8 @@
     component = 'a'
   else if (istore == 4) then
     component = 'p'
+  else if (istore == 5) then 
+    component = 'd'
   else
     call exit_MPI(myrank,'wrong component to save for seismograms')
   endif
@@ -267,7 +273,14 @@
       ! writes out this seismogram
       do i = 1,seismo_current
         one_seismogram(:,i) = seismograms(:,irec_local,i)
-      enddo
+!DEBUG
+!      if (myrank==8 .and. istore ==4)  then
+!           write(1025,*) one_seismogram(:,i),shape(seismograms)
+!      endif
+!      if (myrank==8 .and. istore ==5) then
+!           write(1026,*) one_seismogram(:,i),shape(seismograms)
+!      endif
+     enddo
 
       call write_one_seismogram(one_seismogram,irec_local,irec,component,istore)
 
@@ -439,7 +452,7 @@
   character(len=3) :: channel
 
   ! see how many components we need to store: 1 for pressure, NDIM for a vector
-  if (istore == 4) then ! this is for pressure
+  if (istore == 4 .or. istore==5 ) then ! this is for pressure
     number_of_components = 1
   else
     number_of_components = NDIM
@@ -449,7 +462,7 @@
   do iorientation = 1,number_of_components
 
     ! gets channel name
-    if (istore == 4) then ! this is for pressure
+    if (istore == 4.or.istore==5) then ! this is for pressure
       call write_channel_name(istore,channel)
     else
       call write_channel_name(iorientation,channel)
@@ -686,7 +699,10 @@
       channel = bic(1:2)//'Z'
     case (4)
       channel = bic(1:2)//'P'  ! for pressure seismograms
+    case (5) 
+      channel = bic(1:2)//'D'  ! for divergence
     case default
+      write(*,*) 'error channel orientation',iorientation
       call exit_mpi(0,'error channel orientation value')
     end select
 
@@ -703,7 +719,10 @@
       channel = bic(1:2)//'Z'
     case (4)
       channel = bic(1:2)//'P'  ! for pressure seismograms
+    case (5) 
+      channel = bic(1:2)//'D' ! for divergence displacement
     case default
+      write(*,*) 'error channel orientation',iorientation
       call exit_mpi(0,'error channel orientation value')
     end select
 

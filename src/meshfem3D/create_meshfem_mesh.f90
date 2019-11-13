@@ -172,12 +172,18 @@ end module create_meshfem_par
                        NSPEC2D_BOTTOM,NSPEC2D_TOP, &
                        NSPEC2DMAX_XMIN_XMAX,NSPEC2DMAX_YMIN_YMAX)
 
+!DEBUG 
+  write(IMAIN,*) 'I AM HERE 01',material_properties(:,2)
   ! checks mesh resolution
-  VP_MAX = maxval(material_properties(:,2))
+  !VP_MAX = maxval(material_properties(:,2))
+  VP_MAX = 1480.d0
+  write(IMAIN,*) 'VP MAX ',VP_MAX
   call check_mesh_quality(myrank,VP_MAX,nglob,nspec, &
                         nodes_coords(:,1),nodes_coords(:,2),nodes_coords(:,3),ibool, &
                         CREATE_VTK_FILES,prname)
 
+!DEBUG
+  write(IMAIN,*) 'I AM HERE 02'
 
   ! saves mesh as databases file
   if (ADIOS_FOR_DATABASES) then
@@ -192,6 +198,8 @@ end module create_meshfem_par
                               nspec_CPML,CPML_to_spec,CPML_regions,is_CPML)
   else
     ! saves mesh as databases file  !! VM VM added xstore, ystore, zstore used for Axisem Coupling
+!DEBUG 
+    write(IMAIN,*) 'I AM HERE'
     call save_databases(prname,nspec,nglob,iproc_xi_current,iproc_eta_current, &
                         NPROC_XI,NPROC_ETA,addressing,iMPIcut_xi,iMPIcut_eta, &
                         ibool,nodes_coords,ispec_material_id, &
